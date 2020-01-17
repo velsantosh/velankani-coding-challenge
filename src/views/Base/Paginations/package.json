@@ -1,6 +1,6 @@
 {
-  "name": "Pagnations",
+  "name": "Paginations",
   "version": "0.0.0",
   "private": true,
-  "main": "./Pagnations.js"
+  "main": "./Question.js"
 }

@@ -23,18 +23,20 @@ import Charts from './Charts';
 import Dashboard from './Dashboard';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
-import { Login, Page404, Page500, Register } from './Pages';
-import { Colors, Typography } from './Theme';
+import { Login, Page404, Page500, Register, ForgotPassword } from './Pages';
+import { UserDetails, UserRegistration, Typography } from './ManageUser';
 import Widgets from './Widgets';
 
 export {
   Badges,
   Typography,
-  Colors,
+  UserDetails,
+  UserRegistration,
   CoreUIIcons,
   Page404,
   Page500,
   Register,
+  ForgotPassword,
   Login,
   Modals,
   Alerts,

@@ -1,0 +1,6 @@
+{
+  "name": "RecruitDefaultLayout",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RecruitDefaultLayout.js"
+}
