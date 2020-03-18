@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import UsersDataService from '../../../service/UsersDataService'
 //import logo from '../../assets/img/brand/cil-building.png'
 
 //const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
@@ -21,7 +22,7 @@ class UserRegistration extends Component {
       errors: {},
       value: "C",
       value1: "CA",
-      value2: "CB"
+      response:false
     }
   }
 
@@ -87,6 +88,7 @@ class UserRegistration extends Component {
   contactSubmit(e){
     e.preventDefault();
     if(this.handleValidation()){
+      this.registerUser();
       alert("Form submitted");
     }else{
       alert("Form has errors.")
@@ -98,8 +100,43 @@ class UserRegistration extends Component {
     fields[field] = e.target.value;        
     this.setState({fields});
   }
+
+  registerUser(){
+    let data={
+      "name":this.state.fields["username"],
+      "userName":this.state.fields["email"],
+      "password":this.state.fields["password"],
+      "role_id":this.state["value"],
+      "experience":this.state["value1"],
+      }
+console.log("User Detials:",data)
+    //let permissionFlag= false;
+    UsersDataService.createUser(data)
+    .then(
+        response => {
+          console.log("UserResponse : ",response.status)
+            if(response.status === 200){
+              
+             this.setState({response:true})
+          }else{
+            console.log("UserResponse : ",response.data)
+          this.props.history.push(`/404`)}
+        }
+    )
+    
+} 
   
   render() {
+    if(this.state.response){
+      return (
+  // <Redirect from="/login" to="/manageUser/UserList" />
+                <Redirect to={{
+                   pathname: '/manageUser/UserList'
+                   
+                }}
+/>
+);
+    }else{
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -117,17 +154,26 @@ class UserRegistration extends Component {
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input ref="username"type="text" placeholder="Username" autoComplete="username" onChange={this.handleChange.bind(this, "username")} value={this.state.fields["username"]}/>
+                      <Input ref="username"type="text" placeholder="Name" autoComplete="username" onChange={this.handleChange.bind(this, "username")} value={this.state.fields["username"]}/>
                     </InputGroup>
 
+                    <span style={{color: "red"}} className="error">{this.state.errors["email"]}</span>
                     <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>@</InputGroupText>
+                      </InputGroupAddon>
+                      <Input ref="email" type="text" placeholder="Email" autoComplete="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]}/>
+                       
+                    </InputGroup>
+
+                    {/* <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                         <img src={'../../assets/img/avatars/cil-building.png'} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input ref="companyname"type="text" placeholder="Companyname" autoComplete="companyname" onChange={this.handleChange.bind(this, "companyname")} value={this.state.fields["companyname"]}/>
-                    </InputGroup>
+                    </InputGroup> */}
 
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -139,8 +185,8 @@ class UserRegistration extends Component {
                       <select  className="form-control" id="exampleFormControlSelect1" value={this.state.value1} onChange={(e)=>{this.setState({value1: e.target.value})}}>
                         <option value="CA" disabled>Experience</option>
                         <option key={2} value={2}>{"Below 3 yrs"}</option>
-                        <option key={3} value={3}>{"3 to 5"}</option>
-                        <option key={4} value={4}>{"5 to 8"}</option>
+                        <option key={3} value={5}>{"3 to 5"}</option>
+                        <option key={4} value={7}>{"5 to 8"}</option>
                       </select> 
                     </InputGroup>
                     <InputGroup className="mb-3">
@@ -150,22 +196,17 @@ class UserRegistration extends Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.fields["role"]}/> */}
-                      <select  class="form-control" id="exampleFormControlSelect1" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}>
+                      <select  className="form-control" id="exampleFormControlSelect" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}>
                         <option value="C" disabled>Role</option>
-                        <option key={2} value={2}>{"Admin"}</option>
-                        <option key={3} value={3}>{"Recruitment"}</option>
-                        <option key={4} value={4}>{"Candidate"}</option>
+                        <option key={2} value={"ADMIN"}>{"ADMIN"}</option>
+                        <option key={3} value={"RECRUITMENT"}>{"RECRUITMENT"}</option>
+                        <option key={4} value={"CANDIDATE"}>{"CANDIDATE"}</option>
+                        <option key={5} value={"INTERVIEWER"}>{"INTERVIEWER"}</option>
+                        <option key={6} value={"GUEST"}>{"GUEST"}</option>
                     </select>  
                     </InputGroup>
 
-                    <span style={{color: "red"}} className="error">{this.state.errors["email"]}</span>
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>@</InputGroupText>
-                      </InputGroupAddon>
-                      <Input ref="email" type="text" placeholder="Email" autoComplete="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]}/>
-                       
-                    </InputGroup>
+                    
                     <span style={{color: "red"}} className="error">{this.state.errors["password"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -190,7 +231,7 @@ class UserRegistration extends Component {
                       <Button className="btn-success mb-1" block><span>Submit</span></Button>
                     </Col>
                     <Col xs="12" sm="6">
-                    <Link to="/manageUser/editUser">
+                    <Link to="/manageUser/UserList">
                       <Button className="btn-danger mb-1" block><span>Cancel</span></Button>
                       </Link>
                     </Col>
@@ -203,7 +244,8 @@ class UserRegistration extends Component {
         </Container>
       </div>
     );
+                  }
   }
 }
 
-export default UserRegistration;
+export default withRouter(UserRegistration);

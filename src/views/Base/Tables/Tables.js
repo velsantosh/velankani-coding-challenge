@@ -28,8 +28,8 @@ class Tables extends Component {
   console.log("i've loaded");
 }`}
   setOptions={{
-  enableBasicAutocompletion: false,
-  enableLiveAutocompletion: false,
+  enableBasicAutocompletion: true,
+  enableLiveAutocompletion: true,
   enableSnippets: false,
   showLineNumbers: true,
   tabSize: 2,
