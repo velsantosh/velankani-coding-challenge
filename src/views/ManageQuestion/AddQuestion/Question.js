@@ -16,9 +16,9 @@ class Question extends Component {
       
     state = {
         step: 1,
-        technology: '',
-        type:'',
-        experience: ''
+        technology: 'C',
+        type:'CA',
+        experience: 'CB'
     }
 
     nextStep = () => {
@@ -54,7 +54,7 @@ class Question extends Component {
         )
       case 2:
         console.log(this.state.type);
-        if(this.state.type === "Objective"){
+        if(this.state.type === "OBJECTIVE"){
           return (
             <ObjectiveQues nextStep={this.nextStep}
                         prevStep={this.prevStep}
@@ -71,7 +71,7 @@ class Question extends Component {
             />
             )}
         case 3:
-          if(this.state.type === "Subjective"){
+          if(this.state.type === "SUBJECTIVE"){
         return (
           <Tabs nextStep={this.nextStep}
                       prevStep={this.prevStep}

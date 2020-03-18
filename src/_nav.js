@@ -1,39 +1,15 @@
 export default {
   
   items: [
-    // {
-    //   name: 'Create User',
-    //   url: '/dashboard',
-    //   //icon: 'icon-speedometer',
-    //   badge: {
-    //     variant: 'info',
-    //     //text: 'NEW',
-    //   },
-    // },
+    
     {
-      name: 'Manage User',
-      url: '/manageUser/editUser',
+      name: 'VIEW_USER',
+      url: '/manageUser/UserList',
       icon: 'icon-user',
-      // children: [
-      //       {
-      //         name: 'Add User',
-      //         url: '/manageUser/createUser',
-      //         icon: 'icon-user',
-      //       },
-      //       {
-      //         name: 'Edit User',
-      //         url: '/manageUser/editUser',
-      //         icon: 'icon-user',
-      //       },
-      //       {
-      //         name: 'Delete User',
-      //         url: '/manageUser/deleteUser',
-      //         icon: 'icon-user',
-      //       },
-      //     ],
+      
      },
     {
-      name: 'Manage Questions',
+      name: 'VIEW_QUESTION',
       url: '/manageQuestion/addQuestion',
       icon: 'icon-pencil',
     },

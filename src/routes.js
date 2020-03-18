@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ManageUser from "../src/views/ManageUser/UserDetails/UserDetails";
 
 
 const Navs = React.lazy(() => import('./views/Base/Navs'));
@@ -22,8 +22,10 @@ const Alerts = React.lazy(() => import('./views/Notifications/Alerts'));
 const Badges = React.lazy(() => import('./views/Notifications/Badges'));
 const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 const Typography = React.lazy(() => import('./views/ManageUser/Typography'));
-const ManageUser = React.lazy(() => import('./views/ManageUser/UserDetails/UserDetails'));
+// const ManageUser = React.lazy(() => import('./views/ManageUser/UserDetails/UserDetails'));
 const UserRegistration = React.lazy(() => import('./views/ManageUser/UserRegistration'));
+
+
 
 const AddQuestion = React.lazy(() => import('./views/ManageQuestion/AddQuestion'));
 //const ObjectiveQues = React.lazy(() => import('./views/ManageQuestion/ObjectiveQues'));
@@ -36,6 +38,8 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 const AdminDefault = React.lazy(() => import('./containers/AdminDefaultLayout'));
 const RecruitDefault = React.lazy(() => import('./containers/RecruitDefaultLayout'));
+
+const UserEdit = React.lazy(() => import('./views/Users/UserEdit'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -78,7 +82,12 @@ const routes = [
   { path: '/manageQuestion/deleteQuestion', name: 'Delete_Question', component: Typography },
   { path: '/manageQuestion/add', name: 'Question', component: Typography },
 
-  { path: '/manageUser/editUser', name: 'Manage User', component: UserRegistration },
+  { path: '/manageUser/UserList', name: 'Manage User', component: Users },
+  { path: '/manageUser/user/:id', exact: true, name: 'User Details', component: User },
+  { path: '/manageUser/user/:id/edit', exact: true, name: 'Edit User', component: UserEdit },
+  { path: '/manageUser/user/:userName', exact: true, name: 'User Details', component: User },
+
+
   { path: '/manageUser/createUser', name: 'Add User', component: UserRegistration },
   { path: '/manageUser/deleteUser', name: 'Delete User', component: UserRegistration },
 
@@ -93,7 +102,7 @@ const routes = [
   { path: '/manageDashbord/user', name: 'user', component: AdminDefault },
   { path: '/manageDashbord/users', name: 'Users', component: RecruitDefault },
 
-  { path: '/manage/CREATE_USER', name: 'Add_User', component: ManageUser },
+  { path: '/manage/CREATE_USER', name: 'Add_User', component: Users },
   { path: '/manage/DELETE_USER', name: 'Delete_User', component: ManageUser },
   { path: '/manage/MODIFY_USER', name: 'Edit_User', component: ManageUser },
   { path: '/manage/VIEW_USER', name: 'Users', component: ManageUser },

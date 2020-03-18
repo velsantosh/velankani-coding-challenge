@@ -35,23 +35,23 @@ continue = e => {
             
           <Form name="registerform" className="registerform" >
                     <span style={{color: "red"}} className="error"></span>
-                    <select  class="form-control" id="exampleFormControlSelect1" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')}>
                       <option value="C" disabled>Select Technology</option>
                         
-                        <option key={2} value={2}>{"Java"}</option>
-                        <option key={3} value={3}>{".Net"}</option>
-                        <option key={4} value={4}>{"C"}</option>
+                        <option key={2} value={"Java"}>{"Java"}</option>
+                        <option key={3} value={".Net"}>{".Net"}</option>
+                        <option key={4} value={"C"}>{"C"}</option>
                     </select>  
                     <br></br>
-                    <select  class="form-control" id="exampleFormControlSelect1" value={values.type} onChange={handleChange('type')}>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.type} onChange={handleChange('type')}>
                       <option value="CA" disabled>Question Type</option>
                         
-                        <option key={2} value={"Objective"}>{"Objective"}</option>
-                        <option key={3} value={"Subjective"}>{"Subjective"}</option>
+                        <option key={2} value={"OBJECTIVE"}>{"Objective"}</option>
+                        <option key={3} value={"SUBJECTIVE"}>{"Subjective"}</option>
                         
                     </select>  
                     <br></br>
-                    <select  class="form-control" id="exampleFormControlSelect1" value={this.state.value2} onChange={(e)=>{this.setState({value2: e.target.value2})}}>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.experience} onChange={handleChange('experience')}>
                       <option value="CB" disabled>Experience</option>
                         
                         <option key={2} value={2}>{"Below 3 yrs"}</option>
