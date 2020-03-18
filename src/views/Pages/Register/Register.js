@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import UsersDataService from '../../../service/UsersDataService'
+
 class Register extends Component {
 
   constructor(props){
@@ -18,13 +18,13 @@ class Register extends Component {
     let formIsValid = true;
 
     //Name
-    if(!fields["name"]){
+    if(!fields["username"]){
       formIsValid = false;
-      errors["name"] = "Field cannot be empty";
+      errors["username"] = "Field cannot be empty";
     }
-    else if(typeof fields["name"] !== "undefined" && !fields["name"].match(/^[a-zA-Z]+$/)){
+    else if(typeof fields["username"] !== "undefined" && !fields["username"].match(/^[a-zA-Z]+$/)){
         formIsValid = false;
-        errors["name"] = "Only letters";
+        errors["username"] = "Only letters";
     } 
     
     if(!fields["password"]){
@@ -74,7 +74,6 @@ class Register extends Component {
   contactSubmit(e){
     e.preventDefault();
     if(this.handleValidation()){
-        this.registerUser();
       alert("Form submitted");
     }else{
       alert("Form has errors.")
@@ -86,29 +85,6 @@ class Register extends Component {
     fields[field] = e.target.value;        
     this.setState({fields});
   }
-
-  registerUser(){
-    let data={
-      "name":this.state.fields["name"],
-      "email":this.state.fields["email"],
-      "password":this.state.fields["password"]
-      }
-console.log("User Detials:",data)
-    //let permissionFlag= false;
-    UsersDataService.createUser(data)
-    .then(
-        response => {
-          console.log("UserResponse : ",response.status)
-            if(response.status === 200){
-              
-              window.location.href = "/Login";
-          }else{
-            console.log("UserResponse : ",response.data)
-          this.props.history.push(`/404`)}
-        }
-    )
-    
-} 
   
   render() {
     return (
@@ -121,14 +97,14 @@ console.log("User Detials:",data)
                   <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)}>
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
-                    <span style={{color: "red"}} className="error">{this.state.errors["name"]}</span>
+                    <span style={{color: "red"}} className="error">{this.state.errors["username"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input ref="name"type="text" placeholder="Name" autoComplete="name" onChange={this.handleChange.bind(this, "name")} value={this.state.fields["name"]}/>
+                      <Input ref="username"type="text" placeholder="Username" autoComplete="username" onChange={this.handleChange.bind(this, "username")} value={this.state.fields["username"]}/>
                     </InputGroup>
                     <span style={{color: "red"}} className="error">{this.state.errors["email"]}</span>
                     <InputGroup className="mb-3">
@@ -155,7 +131,7 @@ console.log("User Detials:",data)
                       </InputGroupAddon>
                       <Input ref="rep_password" type="password" placeholder="Repeat password" autoComplete="new-password" onChange={this.handleChange.bind(this, "rep_password")} value={this.state.fields["rep_password"]}/>
                     </InputGroup>
-                    <Button type="submit" color="primary" className="px-4" id="submit" value="Submit">Create Account</Button>
+                    <Button color="success" block>Create Account</Button>
                   </Form>
                 </CardBody>
               </Card>

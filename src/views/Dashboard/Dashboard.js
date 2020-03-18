@@ -31,13 +31,13 @@ class Dashboard extends Component {
     let formIsValid = true;
 
     //Name
-    if(!fields["Name"]){
+    if(!fields["username"]){
       formIsValid = false;
-      errors["Name"] = "Field cannot be empty";
+      errors["username"] = "Field cannot be empty";
     }
-    else if(typeof fields["Name"] !== "undefined" && !fields["Name"].match(/^[a-zA-Z]+$/)){
+    else if(typeof fields["username"] !== "undefined" && !fields["username"].match(/^[a-zA-Z]+$/)){
         formIsValid = false;
-        errors["Name"] = "Only letters";
+        errors["username"] = "Only letters";
     } 
     
     if(!fields["password"]){
@@ -110,33 +110,24 @@ class Dashboard extends Component {
                   <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)}>
                     <h1>Register</h1>
                     <p className="text-muted">Create user account</p>
-                    <span style={{color: "red"}} className="error">{this.state.errors["Name"]}</span>
+                    <span style={{color: "red"}} className="error">{this.state.errors["username"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input ref="Name"type="text" placeholder="Name" autoComplete="Name" onChange={this.handleChange.bind(this, "Name")} value={this.state.fields["Name"]}/>
+                      <Input ref="username"type="text" placeholder="Username" autoComplete="username" onChange={this.handleChange.bind(this, "username")} value={this.state.fields["username"]}/>
                     </InputGroup>
 
-                    <span style={{color: "red"}} className="error">{this.state.errors["email"]}</span>
                     <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>@</InputGroupText>
-                      </InputGroupAddon>
-                      <Input ref="email" type="text" placeholder="Email" autoComplete="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]}/>
-                       
-                    </InputGroup>
-
-                    {/* <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                         <img src={'../../assets/img/avatars/cil-building.png'} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input ref="companyname"type="text" placeholder="Companyname" autoComplete="companyname" onChange={this.handleChange.bind(this, "companyname")} value={this.state.fields["companyname"]}/>
-                    </InputGroup> */}
+                    </InputGroup>
 
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -148,8 +139,8 @@ class Dashboard extends Component {
                       <select  class="form-control" id="exampleFormControlSelect1" value={this.state.value1} onChange={(e)=>{this.setState({value1: e.target.value})}}>
                         <option value="CA" disabled>Experience</option>
                         <option key={2} value={2}>{"Below 3 yrs"}</option>
-                        <option key={3} value={5}>{"3 to 5"}</option>
-                        <option key={4} value={7}>{"5 to 8"}</option>
+                        <option key={3} value={3}>{"3 to 5"}</option>
+                        <option key={4} value={4}>{"5 to 8"}</option>
                       </select> 
                     </InputGroup>
                     <InputGroup className="mb-3">
@@ -161,15 +152,20 @@ class Dashboard extends Component {
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.fields["role"]}/> */}
                       <select  class="form-control" id="exampleFormControlSelect1" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}>
                         <option value="C" disabled>Role</option>
-                        <option key={2} value={1}>{"ADMIN"}</option>
-                        <option key={3} value={2}>{"RECRUITMENT"}</option>
-                        <option key={4} value={3}>{"CANDIDATE"}</option>
-                        <option key={4} value={4}>{"INTERVIEWER"}</option>
-                        <option key={4} value={5}>{"GUEST"}</option>
+                        <option key={2} value={2}>{"Admin"}</option>
+                        <option key={3} value={3}>{"Recruitment"}</option>
+                        <option key={4} value={4}>{"Candidate"}</option>
                     </select>  
                     </InputGroup>
 
-                   
+                    <span style={{color: "red"}} className="error">{this.state.errors["email"]}</span>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>@</InputGroupText>
+                      </InputGroupAddon>
+                      <Input ref="email" type="text" placeholder="Email" autoComplete="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]}/>
+                       
+                    </InputGroup>
                     <span style={{color: "red"}} className="error">{this.state.errors["password"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">

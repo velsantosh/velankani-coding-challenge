@@ -20,15 +20,15 @@ class RecruitDefaultHeader extends Component {
     const { children, ...attributes } = this.props;
 
     return (
-      <React.Fragment >
+      <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: logo, width: 85, height: 50, alt: 'Velankani' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'Velankani' }} 
+          minimized={{ src: sygnet, width: 30, height: 30, alt: 'Velankani' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
-        <Nav className="d-md-down-none" navbar >
+        <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>

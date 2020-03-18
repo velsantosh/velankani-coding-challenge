@@ -1,25 +1,19 @@
 import axios from 'axios'
 //const INSTRUCTOR = 'in28minutes'
-var apiBaseUrl = "http://localhost:8765/aaservice";
-// var headers = {
-//     'Content-Type': 'application/json',
-//     }
+var apiBaseUrl = "http://localhost:8080/";
+
 class UsersDataService {
     
-    
     validateLogin(email, password){
-        // return axios.get(`${apiBaseUrl}/validateLogin/${email}/${password}`)
-        return axios.get(`http://localhost:8081/validateLogin/${email}/${password}`)
+        return axios.get(`${apiBaseUrl}/validateLogin/${email}/${password}`)
     }
 
-    getPermission(userName){
-        // return axios.get(`${apiBaseUrl}/permByUserName/ADMIN`)
-        return axios.get(`http://localhost:8081/permByUserName/${userName}`)
+    getPermission(email){
+        return axios.get(`${apiBaseUrl}/permByUserName/${email}`)
     }
 
     getAllUser(){
-        // return axios.get(`${apiBaseUrl}/users/`)
-        return axios.get(`http://localhost:8081/users`)
+        return axios.get(`${apiBaseUrl}/vehicle/vehicles/`)
     }
 
     deleteUser(id) {
@@ -36,8 +30,7 @@ class UsersDataService {
     }
     createUser(user) {
         //console.log('executed service')
-        // return axios.post(`${apiBaseUrl}/user`, user);
-        return axios.post(`http://localhost:8081/user`, user);
+        return axios.post(`${apiBaseUrl}/user`, user);
     }
 }
 

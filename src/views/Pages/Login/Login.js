@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link,  withRouter, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row} from 'reactstrap';
 //import axios from 'axios';
 import UsersDataService from '../../../service/UsersDataService'
-import { Helmet } from 'react-helmet';
+
 class Login extends Component {
 
   
@@ -25,9 +25,9 @@ class Login extends Component {
 
     this.submituserRegistrationForm = this.submituserRegistrationForm.bind(this);
 
-    this.validateLogin = this.validateLogin.bind(this);
+    this.refreshCourses = this.refreshCourses.bind(this);
 
-    //this.getPermission = this.getPermission.bind(this);
+    this.getPermission = this.getPermission.bind(this);
   }
 
      handleChangeEmail(e) {
@@ -41,13 +41,14 @@ class Login extends Component {
   submituserRegistrationForm(e) {
     e.preventDefault();
         if (this.validateForm()) {
-             this.validateLogin()
-             
+             this.refreshCourses()
+             console.log("*&*&",this.state.permissionFlag);
+             console.log(this.state);
      }
   }
        
 
-  validateLogin(){
+    refreshCourses(){
       //let permissionFlag= false;
       UsersDataService.validateLogin(this.state.email, this.state.password)
       .then(
@@ -56,22 +57,55 @@ class Login extends Component {
               this.setState({permissionFlag:response.data})
               console.log("##",this.state.permissionFlag);
               if(response.data){ 
-                // this.getPermission();
-                // //window.location.href = "/";
-                // console.log("###",response.data);
-                // this.setState({permissionFlag:true})
-                 console.log("##$$",this.state.email);
-                // return this.state.permissionFlag;
-                // this.props.history.push({pathname: '/recruit', state: { detail: this.state.email }})
-                // this.props.history.push('/manageDashbord/users');
-            }else{
-            this.props.history.push(`/Login`)
-              console.log("###$$",this.state.permissionFlag);
+                this.getPermission();
+                //window.location.href = "/";
+                console.log("###",response.data);
+                this.setState({permissionFlag:true})
+                console.log("##$$",this.state.permissionFlag);
+                return this.state.permissionFlag;
             }
+              
+              console.log("##$$",this.state.permissionFlag);
           }
       )
+      //console.log("##$$",permissionFlag);
+      return this.state.permissionFlag;
+  }
+
+  getPermission(){
+      console.log("@@@@",this.state.permission)
+      UsersDataService.getPermission(this.state.email)
+            .then(
+               response => {
+               console.log("@@@",response.data)
+              this.setState({permissionList:response.data})
+              console.log("@@@##",this.state.permissionList)
+              let itemlist=[];
+              const itemnav=  this.state.permissionList.map(value => {
       
-  } 
+                 if(value==="CREATE_USER" || value==="DELETE_USER" || value==="MODIFY_USER" || value==="VIEW_USER"){
+                   itemlist.push("Manage User");
+                  }
+
+                  if(value==="CREATE_Q" || value==="DELETE_Q" || value==="MODIFY_Q" || value==="VIEW_Q" || value==="ASSIGN_Q"){
+                    itemlist.push("Manage Question");
+                  }  
+                   return itemlist;
+                 })
+             
+             const navlist = itemlist.filter((item,index) =>itemlist.indexOf(item)=== index);
+             //Array.from(new Set(itemlist));
+             console.log("**##",itemnav);
+             console.log("**##",navlist);
+             this.setState({navPermission:navlist});
+             console.log("**##**",this.state.navPermission);
+            }
+            
+            
+      )
+      this.props.history.push(`//manage/CREATE_USER/`)
+    }
+    
     
     validateForm() {
         let errors = {};
@@ -83,18 +117,11 @@ class Login extends Component {
     
     if (typeof this.state.email !== "undefined") {
         //regular expression for email validation
-        let lastAtPos = this.state.email.lastIndexOf('@');
-        let lastDotPos = this.state.email.lastIndexOf('.');
-  
-        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!pattern.test(this.state.email)) {
           formIsValid = false;
-          errors["userName"] = "Email is not valid";
+          errors["email"] = "Please enter valid email-ID.";
         }
-        // var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        // if (!pattern.test(this.state.email)) {
-        //   formIsValid = false;
-        //   errors["email"] = "Please enter valid email-ID.";
-        // }
       }
     
     if (!this.state.password) {
@@ -117,22 +144,8 @@ class Login extends Component {
     }
 
   render() {
-    if(this.state.permissionFlag){
-      return (
-        // <Redirect from="/login" to="/manageUser/UserList" />
-        <Redirect to={{
-                         pathname: '/',
-                         state: { userName: this.state.email }
-                      }}
-/>
-      );
-    }else{
     return (
-      
       <div className="app flex-row align-items-center">
-        <Helmet>
-          <title>Recruit | Login</title>
-        </Helmet>
         <Container>
           <Row className="justify-content-center">
             <Col md="8">
@@ -192,8 +205,7 @@ class Login extends Component {
         </Container>
       </div>
     );
-    }
   }
 }
 
-export default  withRouter(Login);
+export default Login;
