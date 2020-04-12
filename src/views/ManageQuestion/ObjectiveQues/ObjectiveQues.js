@@ -38,33 +38,38 @@ class ObjectiveQues extends Component {
   }
 
   contactSubmit(e){
+    console.log("Objective US", this.props.userName);
     e.preventDefault();
       this.addQuestion();
-      alert("Form submitted");
+      
   }
 
   addQuestion(){
     let data={
       "statement":this.state.fields["statement"],
-      "options":`${this.state.fields["option1"]},${this.state.fields["option2"]},${this.state.fields["option3"]},${this.state.fields["option4"]}`,
+      "options":[this.state.fields["option1"],this.state.fields["option2"],this.state.fields["option3"],this.state.fields["option4"]],
       "correct_option":this.state.fields["answer"],
       "language":this.props.values.technology,
       "type":this.props.values.type,
       "experience":this.props.values.experience,
+      "createdUserid": this.props.userName.length >0 && this.props.userName
       }
 console.log("Question Detials:",data)
     //let permissionFlag= false;
-    QuestionService.addQuestion(data)
+    QuestionService.addObjQuestion(data)
     .then(
         response => {
           console.log("UserResponse : ",response.status)
-          //   if(response.status === 200){
-              
+            if(response.status === 200){
+            alert("Form submitted");
+            //this.props.history.push(`/dashboard`)
+            
           //    this.setState({response:true})
-          // }else{
-          //   console.log("UserResponse : ",response.data)
-          // this.props.history.push(`/404`)}
+           }else{
+            console.log("UserResponse : ",response.data)
+           //this.props.history.push(`/404`)
         }
+      }
     )
     
 } 

@@ -25,10 +25,10 @@ continue = e => {
     const { handleChange, values } = this.props; 
     return (
       <div className="animated fadeIn">
-        <Row xs="6" className="justify-content-center">
+        <Row xs="20" className="justify-content-center">
           <Col xs="6">
         <Card>
-          <CardHeader>
+          <CardHeader className="bg-success mb-12">
           <i className="fa fa-align-justify"></i> 
           </CardHeader>
           <CardBody>
@@ -55,8 +55,8 @@ continue = e => {
                       <option value="CB" disabled>Experience</option>
                         
                         <option key={2} value={2}>{"Below 3 yrs"}</option>
-                        <option key={3} value={3}>{"3 to 5"}</option>
-                        <option key={4} value={4}>{"5 to 8"}</option>
+                        <option key={3} value={4}>{"3 to 5"}</option>
+                        <option key={4} value={6}>{"5 to 8"}</option>
                     </select>  
                     <br></br>
                     <Row className="justify-content-left">
@@ -64,7 +64,7 @@ continue = e => {
                         <Button className="btn-success mb-1" onClick={this.continue}>Next</Button>
                           
                           <span> </span>
-                          <Link to="/manageQuestion">
+                          <Link to="/manageQuestion/questionList">
                           <Button className="btn-danger mb-1" >Cancel</Button>
                           </Link>
                         </Col>

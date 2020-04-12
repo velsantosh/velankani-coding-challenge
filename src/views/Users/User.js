@@ -24,7 +24,7 @@ class User extends Component {
     retrieveUsers(){
       
       console.log("#$#$#$",this.props.match.params.id)
-      UsersDataService.retrieveUsers(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
         .then(
             response => {
               if(response.data === null){
@@ -41,7 +41,7 @@ class User extends Component {
 
     handleDelete(){
       console.log("handleDelete",this.props.match.params.id)
-      UsersDataService.retrieveUsers(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)

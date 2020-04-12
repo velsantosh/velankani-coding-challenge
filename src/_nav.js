@@ -3,15 +3,25 @@ export default {
   items: [
     
     {
-      name: 'VIEW_USER',
-      url: '/manageUser/UserList',
+      name: 'MANAGE_USER',
+      url: '/manageUser/users',
       icon: 'icon-user',
       
      },
     {
-      name: 'VIEW_QUESTION',
+      name: 'MANAGE_QUESTION',
       url: '/manageQuestion/addQuestion',
       icon: 'icon-pencil',
+    },
+    {
+      name: 'ASSIGN_QUESTION',
+      url: '/assignQuestion/AssignQuestion',
+      icon: 'icon-pencil'
+    },
+    {
+      name: 'TAKE_TEST',
+      url: '/takechallenge',
+      icon: 'icon-puzzle',
     },
     {
       name: 'Manage MANAGE_USER',

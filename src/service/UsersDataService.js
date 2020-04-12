@@ -23,21 +23,37 @@ class UsersDataService {
     }
 
     deleteUser(id) {
-        return axios.delete(`${apiBaseUrl}/user/${id}`);
+        //return axios.delete(`${apiBaseUrl}/user/${id}`);
+        return axios.delete(`http://localhost:8081/user/${id}`);
     }
 
     retrieveUsers(id) {
         return axios.get(`${apiBaseUrl}/user/${id}`);
     }
 
+    retrieveUserByUserName(id) {
+        //return axios.get(`${apiBaseUrl}/user/uname/${id}`);
+        return axios.get(`http://localhost:8081/user/uname/${id}`);
+    }
+
     updateUser(id, user) {
         //console.log('executed service')
         return axios.put(`${apiBaseUrl}/user/${id}`, user);
     }
-    createUser(user) {
+
+    updateUserUsingUserName(id, user) {
         //console.log('executed service')
+        return axios.put(`${apiBaseUrl}/user/uname/${id}`, user);
+    }
+    createUser(user) {
+        console.log('Create User',user);
         // return axios.post(`${apiBaseUrl}/user`, user);
         return axios.post(`http://localhost:8081/user`, user);
+    }
+
+    retrieveUsersByRole(roleId){
+        // return axios.get(`${apiBaseUrl}/users/`)
+        return axios.get(`http://localhost:8081/usersByRole/${roleId}`)
     }
 }
 

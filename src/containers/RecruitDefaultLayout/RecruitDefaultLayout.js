@@ -50,10 +50,11 @@ class RecruitDefaultLayout extends Component {
 
   render() {
      let redirectdom;
+     
     if(this.props.location.pathname === "/" && this.props.location.state === undefined ){
       console.log("Step:1 Login",this.props);
       redirectdom = (
-                       <Redirect to='login'/>
+                       <Redirect to='/login'/>
                     );
     }
     else if(this.props.location.pathname === "/" && this.props.location.state !== null){
@@ -65,12 +66,12 @@ class RecruitDefaultLayout extends Component {
         <Redirect to='/dashboard'/>
       );
       }
+      
     console.log("History Data",this.props);
-    console.log("userName",this.state.userName);
      const permissionNav=navigation.items;
-     console.log("###########$$",permissionNav);
-    console.log("###########",navigation.items);
-    
+     console.log("List of Navigation Item::",permissionNav);
+    //console.log("###########",navigation.items);
+    console.log("route Path",this.route);
     // console.log("&*&**",this.state.permissionList);
      return (
        

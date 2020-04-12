@@ -25,7 +25,7 @@ class NavConfig extends Component {
   
 getPermission(){
    let userName = this.props.userName;
-      console.log("@@@@ getPermission: ",userName)
+      console.log("getPermission for user: ",userName)
       UsersDataService.getPermission(userName)
             .then(
                response => {
@@ -35,14 +35,24 @@ getPermission(){
                 )
         }
   
-        render() {
+   render() {
             console.log("(NavConfig:)=>",this.props);
             console.log("(11)=>"+this.state.permissionList);
             const itemnav = this.props.items.filter((item) =>   {
-              // console.log("(2)=>"+item);
-           return this.state.permissionList.includes(item.name);
+            //  if(this.state.permissionList.includes(item.name)){
+            //    if(item.url === ''){
+            //    item.url=`${item.name}/${this.props.userName}`
+               return this.state.permissionList.includes(item.name);
+              //  }
+               
+           //return this.state.permissionList.includes(item.name);
+              //}
           });
-  console.log("(4)=>",itemnav);
+  console.log("Component based on User Permission",itemnav);
+  // const items = itemnav.map((item) => {
+  // return item.url = `${item.url}/${this.props.userName}`
+  // });
+  // console.log("Component based on User ",items);
   return(
         <div>
         <NavItems items={itemnav}/>

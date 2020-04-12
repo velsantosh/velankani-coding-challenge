@@ -9,10 +9,15 @@ class QuestionService {
     
     addQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
-        return axios.post(`http://localhost:8082/question`,question,{
+        return axios.post(`http://localhost:8082/subQuestion`,question,{
             headers: {
               'Content-Type': `multipart/form-data; boundary=${question._boundary}`,
             }});
+    }
+
+    addObjQuestion(question) {
+        // return axios.get(`${apiBaseUrl}/question`,question);
+        return axios.post(`http://localhost:8082/question`,question);
     }
 
     updateUser(id, user) {
@@ -23,6 +28,17 @@ class QuestionService {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
         return axios.get(`http://localhost:8082/questions`);
+    }
+
+    getQuestionsByType(type) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.get(`http://localhost:8082/questionsByType/${type}`);
+    }
+
+    assignObjQuestion(question) {
+        // return axios.get(`${apiBaseUrl}/question`,question);
+        return axios.post(`http://localhost:8083/bulkAssignUser`,question);
     }
 }
 

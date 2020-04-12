@@ -6,12 +6,11 @@ import React, { Component } from 'react';
 //import Paginations from './Paginations';
 //import Typography from './Typography';
 import AddQuestion from './AddQuestion';
-import Tabs from '../Tabs/Tabs';
 import SubjectiveQues from '../SubjectiveQues/SubjectiveQues';
 import ObjectiveQues from '../ObjectiveQues/ObjectiveQues';
 
-
-
+import { connect } from "react-redux";
+import * as actionTypes from "../../../store/Actions";
 class Question extends Component {
       
     state = {
@@ -43,13 +42,14 @@ class Question extends Component {
     const { step } = this.state;
     const { technology, experience, type } = this.state;
     const values = {technology, type, experience}
-
+   console.log("UserName Store in Redux",this.props.userName);
     switch(step) {
       case 1:
         return (
           <AddQuestion nextStep={this.nextStep}
                        handleChange={this.handleChange}
                        values={values}
+                       userName ={this.props.userName}
           />
         )
       case 2:
@@ -60,6 +60,7 @@ class Question extends Component {
                         prevStep={this.prevStep}
                          handleChange={this.handleChange}
                          values={values}
+                         userName ={this.props.userName}
             />
           ) }
           else{
@@ -68,22 +69,12 @@ class Question extends Component {
             prevStep={this.prevStep}
              handleChange={this.handleChange}
              values={values}
+             userName ={this.props.userName}
             />
             )}
         case 3:
-          if(this.state.type === "SUBJECTIVE"){
-        return (
-          <Tabs nextStep={this.nextStep}
-                      prevStep={this.prevStep}
-                       handleChange={this.handleChange}
-                       values={values}
-          />
-        ) }
-        else{
           return <h1>success</h1>
-        }
-        case 4:
-        return <h1>success</h1>
+        
         default:
             return <h1>success</h1> 
     }
@@ -91,4 +82,12 @@ class Question extends Component {
 }
 
 
-export default Question
+//export default Question
+const mapStateToProps = state => {
+  // console.log(state.userName);
+  return {
+    userName : state.userName
+  };
+};
+
+export default connect(mapStateToProps)(Question)

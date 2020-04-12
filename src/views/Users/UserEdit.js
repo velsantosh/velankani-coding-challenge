@@ -22,7 +22,7 @@ class UserEdit extends Component {
     }
     refreshCourses(){
       console.log("Mitendra",this.props.match.params.id)
-      UsersDataService.retrieveUsers(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)
@@ -137,7 +137,7 @@ class UserEdit extends Component {
 
     retrieveUsers(){
       console.log("#$#$#$",this.props.match.params.id)
-      UsersDataService.retrieveUsers(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)
@@ -190,7 +190,7 @@ class UserEdit extends Component {
 // console.log("User Detials:",data)
 console.log("User Detials:",this.state.users)
     //let permissionFlag= false;
-    UsersDataService.updateUser(this.props.match.params.id, this.state.users)
+    UsersDataService.updateUserUsingUserName(this.props.match.params.id, this.state.users)
     .then(
         response => {
           console.log("UserResponse : ",response.status)
@@ -214,11 +214,11 @@ console.log("User Detials:",this.state.users)
 
     return (
       <div className="animated fadeIn">
-        <Row>
+        <Row className="justify-content-center">
           <Col lg={6}>
             <Card>
-              <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User id: {this.props.match.params.id}</strong>
+              <CardHeader className="bg-success mb-12">
+                <strong><i className="icon-info pr-1"></i>{this.props.match.params.id}</strong>
               </CardHeader>
               <CardBody>
                   {/* <Table responsive striped hover>
@@ -320,7 +320,7 @@ console.log("User Detials:",this.state.users)
                     <CardFooter>
              
                 <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Update</Button>
-                <Link to="/"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Cancel</Button></Link>
+                <Link to="/manageUser/UserList"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Cancel</Button></Link>
               </CardFooter>
                   </Form>
               </CardBody>

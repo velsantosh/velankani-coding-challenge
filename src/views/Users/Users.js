@@ -7,7 +7,7 @@ import UsersDataService from '../../service/UsersDataService'
 function UserRow(props) {
   const user = props.user
   const userLink = `/manageUser/user/${user.id}`
-  // const userLink1 = `/manageUser/user/${user.userName}`
+  const userLink1 = `/manageUser/user/${user.userName}`
 
   const getBadge = (status) => {
     return status === 'ADMIN' ? 'success' :
@@ -19,12 +19,12 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
+      <th scope="row"><Link to={userLink1}>{user.id}</Link></th>
+      <td><Link to={userLink1}>{user.name}</Link></td>
       <td>{user.userName}</td>
       <td>{user.experience}</td>
       {/* <td>{user.role_id}</td> */}
-      <td><Badge color={getBadge(user.role_id)}>{user.role_id}</Badge></td>
+      <td><Badge color={getBadge(user.roleId)}>{user.roleId}</Badge></td>
     </tr>
   )
 }

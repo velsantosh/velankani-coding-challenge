@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Card,  CardBody,  CardHeader,  CardFooter, Button, Col,  Form,  FormGroup,  Input,  Label,  Row,} from 'reactstrap';
 import QuestionService from '../../../service/QuestionService'
 class SubjectiveQues extends Component {
@@ -46,7 +47,7 @@ class SubjectiveQues extends Component {
   contactSubmit(e){
     e.preventDefault();
       this.addQuestion();
-      alert("Form submitted");
+      
   }
 
   addQuestion(){
@@ -73,7 +74,8 @@ class SubjectiveQues extends Component {
     formData.append('language', this.props.values.technology);
     formData.append('type', this.props.values.type);
     formData.append('experience', this.props.values.experience);
-    
+    formData.append('createdUserid', this.props.userName.length >0 && this.props.userName);
+
     for (var key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
   }
@@ -82,12 +84,13 @@ class SubjectiveQues extends Component {
     .then(
         response => {
           console.log("UserResponse : ",response.status)
-          //   if(response.status === 200){
+             if(response.status === 200){
               
-          //    this.setState({response:true})
-          // }else{
-          //   console.log("UserResponse : ",response.data)
-          // this.props.history.push(`/404`)}
+              alert("Form submitted");
+              this.props.nextStep();
+           }else{
+             console.log("UserResponse : ",response.data)
+           this.props.history.push(`/404`)}
         }
     )
     
@@ -137,7 +140,7 @@ class SubjectiveQues extends Component {
                     </Col>
                   </FormGroup>
                   <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" ></i> Submit</Button>
+                  <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" ></i> Submit</Button>
                 <span> </span>
                 <Button  primary = "false" size="sm" color="danger" onClick={this.back}><i className="fa fa-ban"></i> Previous</Button>
               </CardFooter>

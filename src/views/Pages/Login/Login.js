@@ -4,6 +4,11 @@ import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGr
 //import axios from 'axios';
 import UsersDataService from '../../../service/UsersDataService'
 import { Helmet } from 'react-helmet';
+
+import { connect } from "react-redux";
+import * as actionTypes from "../../../store/Actions";
+import {compose} from 'redux';
+
 class Login extends Component {
 
   
@@ -52,21 +57,23 @@ class Login extends Component {
       UsersDataService.validateLogin(this.state.email, this.state.password)
       .then(
           response => {
-           console.log("@",response.data)
+           //console.log("@",response.data)
               this.setState({permissionFlag:response.data})
-              console.log("##",this.state.permissionFlag);
+              console.log("permissionFlag",this.state.permissionFlag);
               if(response.data){ 
+                this.props.setUserName(this.state.email);
                 // this.getPermission();
                 // //window.location.href = "/";
                 // console.log("###",response.data);
                 // this.setState({permissionFlag:true})
-                 console.log("##$$",this.state.email);
+                 console.log("UserName",this.state.email);
                 // return this.state.permissionFlag;
                 // this.props.history.push({pathname: '/recruit', state: { detail: this.state.email }})
                 // this.props.history.push('/manageDashbord/users');
             }else{
-            this.props.history.push(`/Login`)
-              console.log("###$$",this.state.permissionFlag);
+              alert("Invalid UserName/Password");
+            this.props.history.push(`/Login`);
+              //console.log("###$$",this.state.permissionFlag);
             }
           }
       )
@@ -180,7 +187,7 @@ class Login extends Component {
                     <div>
                       <h2>Sign up</h2>
                       <p>Welcome to Velankani Coding Challenge Tool</p>
-                      <Link to="/Register">
+                      <Link to="/register">
                         <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
                       </Link>
                     </div>
@@ -193,7 +200,30 @@ class Login extends Component {
       </div>
     );
     }
+
   }
 }
 
-export default  withRouter(Login);
+const mapDispatchToProps = dispatch => {
+  return {
+    setUserName: userName =>
+      dispatch({ type: actionTypes.SETUSERNAME, value: userName })
+  };
+};
+
+// there might be a issue with the following syntax
+//so try using the second one.
+
+//1st syntax
+// export default connect(
+//   null,
+//   mapDispatchToProps
+// )(withRouter(Login)
+// );
+
+//2nd syntax //for using this, you need to import compose from redux
+export default compose(
+  withRouter,
+  connect("", mapDispatchToProps)
+)(Login);
+//export default  withRouter(Login);
