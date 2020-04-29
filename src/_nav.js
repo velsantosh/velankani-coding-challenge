@@ -3,33 +3,39 @@ export default {
   items: [
     
     {
-      name: 'MANAGE_USER',
+      name :'Manage User',
+      actual_name: 'MANAGE_USER',
       url: '/manageUser/users',
       icon: 'icon-user',
       
      },
     {
-      name: 'MANAGE_QUESTION',
-      url: '/manageQuestion/addQuestion',
+      name :'Manage Question',
+      actual_name: 'MANAGE_QUESTION',
+       url: '/manageQuestion/questionList',
       icon: 'icon-pencil',
     },
     {
-      name: 'ASSIGN_QUESTION',
+      name :'Assign Question',
+      actual_name: 'ASSIGN_QUESTION',
       url: '/assignQuestion/AssignQuestion',
       icon: 'icon-pencil'
     },
     {
-      name: 'TAKE_TEST',
+      name :'Take Test',
+      actual_name: 'TAKE_TEST',
       url: '/takechallenge',
       icon: 'icon-puzzle',
     },
     {
-      name: 'Manage MANAGE_USER',
+      name :'Manage User',
+      actual_name: 'Manage MANAGE_USER',
       url: '/manageQuestion/addQuestion',
       icon: 'icon-pencil',
     },
     {
-      name: 'Editor',
+      name:'Editor',
+      actual_name: 'Editor',
       url: '/base/tables',
       icon: 'icon-pencil',
       // children: [

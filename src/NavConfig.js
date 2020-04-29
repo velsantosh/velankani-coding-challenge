@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import navigation from './_nav';
-import UsersDataService from '../../velankani-coding-challenge-master/src/service/UsersDataService'
+import UsersDataService from '../../velankani-coding-challenge/src/service/UsersDataService'
 import NavItems from './NavItems';
 // import AdminDefaultLayout from './containers/AdminDefaultLayout/AdminDefaultLayout';
 
@@ -42,7 +42,7 @@ getPermission(){
             //  if(this.state.permissionList.includes(item.name)){
             //    if(item.url === ''){
             //    item.url=`${item.name}/${this.props.userName}`
-               return this.state.permissionList.includes(item.name);
+               return this.state.permissionList.includes(item.actual_name);
               //  }
                
            //return this.state.permissionList.includes(item.name);

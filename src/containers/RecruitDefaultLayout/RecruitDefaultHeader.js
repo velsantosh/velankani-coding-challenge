@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/download.png'
 import sygnet from '../../assets/img/brand/download.png'
+import classes from "./RecruitDefaultHeader.module.css";
+import cx from "classnames";
 
 const propTypes = {
   children: PropTypes.node,
@@ -18,7 +20,7 @@ class RecruitDefaultHeader extends Component {
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
-
+    
     return (
       <React.Fragment >
         <AppSidebarToggler className="d-lg-none" display="md" mobile />

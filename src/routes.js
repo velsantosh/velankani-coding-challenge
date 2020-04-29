@@ -27,8 +27,8 @@ const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 
 const UserRegistration_1 = React.lazy(() => import('./views/Users/UserRegistration'));
 
-const AddQuestion = React.lazy(() => import('./views/ManageQuestion/AddQuestion'));
-const QuestionList = React.lazy(() => import('./views/ManageQuestion/QuestionsList'));
+//const AddQuestion = React.lazy(() => import('./views/ManageQuestion/AddQuestion'));
+const QuestionList = React.lazy(() => import('./views/ManageQuestion/QuestionsList/Questions'));
 
 const QuestionType = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/QuestionType'));
 const AssignQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignQuestion'));
@@ -49,6 +49,13 @@ const EditorJava = React.lazy(() => import('./views/Component/EditorJava'));
 const TakeTest = React.lazy(() => import('./views/Component/TakeChallenge/TakeTest'));
 const TakeChallenge = React.lazy(() => import('./views/Component/TakeChallenge/TakeChallenge'));
 const ObjectiveQuestionWizard = React.lazy(()=> import('./views/Component/TakeChallenge/ObjectiveQuestionWizard/ObjectiveQuestionWizard'));
+
+const CreateQuestion = React.lazy(() => import('./views/ManageQuestion/CreateQuestion/CreateQuestion'));
+const CreateSubjective = React.lazy(() => import('./views/ManageQuestion/CreateSubjective/CreateSubjective'));
+const CreateObjective = React.lazy(() => import('./views/ManageQuestion/CreateObjective/CreateObjective'));
+
+const ModifySubjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifySubjectiveQuestion/ModifySubjectiveQuestion'));
+const ModifyObjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifyObjectiveQuestion/ModifyObjectiveQuestion'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -80,8 +87,14 @@ const routes = [
 
 
   { path: '/manageQuestion/questionList', name: 'Add_Question', component: QuestionList },
-  { path: '/manageQuestion/addQuestion', name: 'Add_Question', component: AddQuestion },
+  //{ path: '/manageQuestion/addQuestion', name: 'Add_Question', component: AddQuestion },
   { path: '/manageQuestion/editQuestion', name: 'Edit_Question', component: Navs },
+
+  { path: '/manageQuestion/createQuestion', name: 'Create_Question', component : CreateQuestion},
+  {path: '/manageQuestion/createSubjective', name: 'Create_Subjective', component : CreateSubjective},
+  {path :'/manageQuestion/CreateObjective', name: 'Create_Objective', component: CreateObjective},
+  {path :'/manageQuestion/modifySubjectiveQuestion', name: 'Modify_Question', component: ModifySubjectiveQuestion},
+  {path :'/manageQuestion/modifyObjectiveQuestion',name:'Modify_Question',component: ModifyObjectiveQuestion},
 
   { path: '/manageUser/users', name: 'Manage User', component: Users },
   { path: '/manageUser/user/:id', exact: true, name: 'User Details', component: User },
@@ -103,11 +116,11 @@ const routes = [
 
   { path: '/manage/CREATE_USER', name: 'Add_User', component: Users },
 
-  { path: '/manage/CREATE_Q', name: 'Add_Question', component: AddQuestion },
-  { path: '/manage/DELETE_Q', name: 'Delete_Question', component: AddQuestion },
-  { path: '/manage/MODIFY_Q', name: 'Edit_Question', component: AddQuestion },
-  { path: '/manage/VIEW_Q', name: 'Questions', component: AddQuestion },
-  { path: '/manage/ASSIGN_Q', name: 'Assign_Questions', component: AddQuestion },
+  // { path: '/manage/CREATE_Q', name: 'Add_Question', component: AddQuestion },
+  // { path: '/manage/DELETE_Q', name: 'Delete_Question', component: AddQuestion },
+  // { path: '/manage/MODIFY_Q', name: 'Edit_Question', component: AddQuestion },
+  // { path: '/manage/VIEW_Q', name: 'Questions', component: AddQuestion },
+  // { path: '/manage/ASSIGN_Q', name: 'Assign_Questions', component: AddQuestion },
 
   { path: '/manage/SCHEDULE_TEST', name: 'Schedule_Test', component: BrandButtons },
   { path: '/manage/TAKE_TEST', name: 'Take_Test', component: BrandButtons },

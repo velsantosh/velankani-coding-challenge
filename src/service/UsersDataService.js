@@ -14,7 +14,14 @@ class UsersDataService {
 
     getPermission(userName){
         // return axios.get(`${apiBaseUrl}/permByUserName/ADMIN`)
-        return axios.get(`http://localhost:8081/permByUserName/${userName}`)
+        return axios.get(`http://localhost:8081/permByUserId/${userName}`,
+         {headers: {
+             'Content-Type':'application/json','Access-Control-Allow-Origin': '*'
+            },
+        crossdomain: true
+        }
+        );
+       // return axios.get(`http://localhost:8081/permByUserName/${userName}`)
     }
 
     getAllUser(){

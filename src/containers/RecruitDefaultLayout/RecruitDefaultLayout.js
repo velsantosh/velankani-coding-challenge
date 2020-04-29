@@ -50,7 +50,17 @@ class RecruitDefaultLayout extends Component {
 
   render() {
      let redirectdom;
-     
+
+     const hfColor ={
+      backgroundColor:'#e7e7e7'
+    };
+    const mainContainerStyle ={
+      backgroundColor: 'white '
+    };
+    const marginBottom ={
+      marginBottom :'20px'
+    }
+
     if(this.props.location.pathname === "/" && this.props.location.state === undefined ){
       console.log("Step:1 Login",this.props);
       redirectdom = (
@@ -76,7 +86,7 @@ class RecruitDefaultLayout extends Component {
      return (
        
       <div className="app">
-        <AppHeader fixed>
+        <AppHeader style={hfColor} fixed>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader onLogout={e=>this.signOut(e)}/>
           </Suspense>
@@ -93,9 +103,9 @@ class RecruitDefaultLayout extends Component {
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
-          <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router} />
-            <Container fluid>
+          <main className="main" style={mainContainerStyle}>
+            {/* <AppBreadcrumb appRoutes={routes} router={router} /> */}
+            <Container fluid style={marginBottom}>
               <Suspense fallback={this.loading()}>
                 <Switch>
                   {routes.map((route, idx) => {
@@ -122,7 +132,7 @@ class RecruitDefaultLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter>
+        <AppFooter style={hfColor}>
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>
