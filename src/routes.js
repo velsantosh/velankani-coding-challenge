@@ -57,6 +57,10 @@ const CreateObjective = React.lazy(() => import('./views/ManageQuestion/CreateOb
 const ModifySubjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifySubjectiveQuestion/ModifySubjectiveQuestion'));
 const ModifyObjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifyObjectiveQuestion/ModifyObjectiveQuestion'));
 
+const TestAccordion =React.lazy(() => import('./views/Component/TakeChallenge/Test/TestAccordionLayout'));
+const SolveQuestion =React.lazy(() => import('./views/Component/TakeChallenge/Test/SolveQuestion'));
+const SubQuestionsList =React.lazy(() => import('./views/Component/TakeChallenge/Test/SubQuestionsList'));
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -132,7 +136,12 @@ const routes = [
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },
   {path: '/takeobjectivetest', name: 'ObjectiveQuestionWizard', component: ObjectiveQuestionWizard},
-  
+  {path: '/testAccordion', name: 'ObjectiveQuestionWizard', component: TestAccordion},
+  {path: '/solveQuestion', name: 'ObjectiveQuestionWizard', component: SolveQuestion},
+  {path: '/subQuestionsList', name: 'SubQuestionsList', component: SubQuestionsList},
+
+
+
 ];
 
 export default routes;

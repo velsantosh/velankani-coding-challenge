@@ -33,6 +33,17 @@ class ScheduledChallengeDataService {
         return axios.post(`http://localhost:8083/addSubjRes`, subQuesResultSet);
     }
 
+    
+    submitScheduledSubQuestionResultsListByUserId(subQuesResultSet) {
+
+        console.log("submitScheduledSubQuestionResultsByUserId submitted : ", subQuesResultSet);
+        return axios.post(`http://localhost:8083/addSubQResList`, subQuesResultSet,{
+            headers: {
+                'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+            },
+            crossdomain: true
+        });
+    }
     runScheduledQuestionTestCases(validateProgramContent)  {
 
         console.log("runScheduledQuestionTestCases submitted : ", validateProgramContent);

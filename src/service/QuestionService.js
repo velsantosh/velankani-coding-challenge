@@ -63,6 +63,16 @@ class QuestionService {
         console.log("jst before calling api",questionData);
         return axios.put(`http://localhost:8082/update/obj/question/${qId}`,questionData);
     }
+    getQuestionsByTech(type) {
+        //console.log('getQuestionsByTech');      
+        return axios.get(`http://localhost:8082/questions/tech/${type}`);
+    }
+
+    getQuestionsById(id) {
+        //console.log('getQuestionsById')
+
+        return axios.get(`http://localhost:8082/question/${id}`);
+    }
 }
 
 export default new QuestionService()

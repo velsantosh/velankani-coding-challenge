@@ -28,6 +28,12 @@ export default {
       icon: 'icon-puzzle',
     },
     {
+      name: 'Test',
+      actual_name: 'TAKE',
+      url: '/testAccordion',
+      icon: 'icon-puzzle',
+    },
+    {
       name :'Manage User',
       actual_name: 'Manage MANAGE_USER',
       url: '/manageQuestion/addQuestion',

@@ -1,69 +1,85 @@
-import React, { Component} from 'react';
-import {Nav, NavItem, NavLink,Card,CardBody, CardHeader} from 'reactstrap';
+import React, { Component } from 'react';
+import { Nav, NavItem, NavLink, Button, CardGroup, Container, Card, CardBody, CardHeader, CardText, CardTitle, Col, Row } from 'reactstrap';
 import { Link, NavLink as RRNavLink } from "react-router-dom";
+import cx from "classnames";
 import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
 
 class TakeChallenge extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          isChallengeFetched : false,
-          responsedata:[]
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChallengeFetched: false,
+      responsedata: []
+    };
 
-    async componentDidMount(){
-      console.log("takechallenge -> componentWillMount");
-      if(!this.state.isChallengeFetched){
-        let challengeQuestions = await ScheduledChallengeDataService.getScheduledQuestionByUserId('sanotsh_001');
-        //.then(
-        //  response => {
-        //    console.log("response data");
-        //    console.log(response);
-        //    console.log("response data ", response.data);
-        //    this.setState({
-        //      responsedata:response.data
-        //    });
-        //  }
-        //);
+    console.log("takechallenge -> props:",this.props);
 
-        console.log('challenge questions ',challengeQuestions);
-      }
-    }
+  }
 
-    render(){
-      console.log("state data ", this.state.responsedata);
-        return (
-            <div className="animated fadeIn">
-            <Card>
-              <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Subject Test</strong>                
-              </CardHeader>
-              <CardBody>
-                <p>Take Subject challenge  - This type of test consists of one coding test. To solve the challenge click on below link.</p>
-                <Nav>
-                  <NavItem>
-                    <NavLink tag={RRNavLink} to="/taketest">Take Subject Challenge</NavLink>
-                  </NavItem>                 
-                </Nav>               
-              </CardBody>
-            </Card>
-            <Card>
-              <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Objective Test</strong>                
-              </CardHeader>
-              <CardBody>
-                <p>Take Subject challenge  - This type of test consists of questions against which options are provided to select.To solve the challenge click on below link.</p>
-                <Nav>
-                  <NavItem>
-                    <NavLink tag={RRNavLink} to="/takeobjectivetest">Take Objective Challenge</NavLink>
-                  </NavItem>                 
-                </Nav>               
-              </CardBody>
-            </Card>
-            </div>
-        );
+  async componentDidMount() {
+    console.log("takechallenge -> componentDidMount");
+  }
+
+  render() {
+
+    const buttonContainer = {
+      marginBottom: '20px !important',
+      backgroundColor: '#1dafe2',
+      color: 'white'
+    };
+    const cardStyle = {
+      backgroundColor: '#80808014',
+      marginLeft: '20px',
+      border: '2px solid grey'
+    };
+
+    const titleStyle = {
+      alignText: 'center',
+      marginLeft: '50px',
+      fontWeight: 'bold'
     }
+    console.log("state data ", this.state.responsedata);
+    return (
+      <>
+        <div>
+          <h1>Complete your scheduled Question</h1>
+        </div>
+        <Container>
+          <Row className="">
+            <Col md="12">
+              <CardGroup>
+                <Card style={cardStyle}>
+                  <CardBody>
+                    <CardTitle style={titleStyle}>Programming Question</CardTitle>
+                    <CardText>Take a coding challenge in various programming languages and run all test cases to validate candidate solutions.</CardText>
+                    <Link
+                      to={{
+                        pathname: '/subQuestionsList',
+                        state: {
+                          scheduledQuestions: true
+                        }
+                      }}>
+                      <Button className="btn btn-primary mb-1" style={buttonContainer}>Subjective Question Challenge</Button>
+                    </Link>
+                  </CardBody>
+                </Card>
+                <Card style={cardStyle}>
+                  <CardBody>
+                    <CardTitle style={titleStyle}>Mutilpe Choice Question</CardTitle>
+                    <CardText>Multiple answer options with only one correct answer.</CardText>
+                    <Link to="/takeobjectivetest">
+                      <Button className="btn btn-primary mb-1" style={buttonContainer}>Objective Question Challenge</Button>
+                    </Link>
+                  </CardBody>
+                </Card>
+              </CardGroup>
+            </Col>
+          </Row>
+        </Container>
+      </>
+    );
+
+  }
 }
 
 export default TakeChallenge;

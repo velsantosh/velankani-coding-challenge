@@ -4,9 +4,12 @@ import EditorJava from '../EditorJava';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
-
+import TestResult from '../TakeChallenge/Test/TestResult';
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
+import { Tabs, Tab } from 'react-bootstrap';
+import Popup from "reactjs-popup";
+import { Link, NavLink as RRNavLink } from "react-router-dom";
 
 import {
   Badge,
@@ -19,6 +22,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CardText,
   Col,
   Dropdown,
   DropdownItem,
@@ -45,20 +49,25 @@ class TakeTest extends Component {
       dropDownValue: 'Language',
       editorContent: '',
       questionContent: '',
-      qId: ''
+      qId: '',
+      testCaseResults: '',
+      showPopup: false
+
     };
     this.toggle = this.toggle.bind(this);
     this.toggleItem = this.toggleItem.bind(this);
     this.changeValue = this.changeValue.bind(this);
     this.updatedEditorContent = this.updatedEditorContent.bind(this);
+
   }
 
   componentDidMount() {
+    console.log("componentDidMount this.props:", this.props)
     this.updateScheduledQuesWithState();
   }
 
   updateScheduledQuesWithState() {
-    ScheduledChallengeDataService.getScheduledQuestionByUserId(this.props.userName.length >0 && this.props.userName).then(
+    ScheduledChallengeDataService.getScheduledQuestionByUserId(this.props.userName.length > 0 && this.props.userName).then(
       response => {
         if (response.data === null) {
           console.log("response null")
@@ -75,14 +84,13 @@ class TakeTest extends Component {
           });
 
           this.setState({
-            editorContent: ` Class ExampleClass{
+            editorContent: `public class ExampleClass{
                   public static void main(String[] str){
                     System.out.println("Start the take test");
                   }}`});
         }
       }
     )
-    console.log('challenge questions ');
   }
 
   lorem() {
@@ -135,57 +143,83 @@ class TakeTest extends Component {
 
   handleSubmit = (event) => {
 
-    console.log("clicked on submit event: ", event);
     let key = {
       qid: this.state.qId,
-      userId: "test_user"
-      //userId : this.props.userId
+      userId: "admin@abc.com"//userId : this.props.userId            
     }
 
     let resultValue = {
       program: this.state.editorContent,
       consolidatedoutput: this.state.editorContent,
+      className: "ExampleClass",
       key: key
     };
 
-    console.log("clicked on submit new values here : ", this.state.editorContent);
-    ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue);
 
+    console.log("clicked on submit new values here : ", this.state.editorContent);
+    ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
+      .then(
+        response => {
+          console.log("subjective questions testCaseResultss: ", response.data)
+          this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
+          //hardcoded for now
+          this.setState({
+            showPopup: !this.state.showPopup
+          });
+
+        }
+      );
   }
 
   handleRunTest = (e) => {
 
-    console.log("my question id ", this.state.qId);
-
-    let questionProgramMap = {
-      qId : this.state.qId,
-      questId : this.state.editorContent
-
+    console.log("clicked on run test", this.props);
+    let quesResponseObj = {
+      qId: this.state.qId,
+      userInput: this.state.editorContent,
     }
 
     let validateProgramContent = {
-      userId: "test_user",
-      questionProgramMap: questionProgramMap,
+      className: "ExampleClass",
+      quesResponseObj: quesResponseObj,
+      userId: "admin@abc.com"
     };
 
-    console.log("clicked on run test");
     this.setState({ runtestClicked: true });
-    ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent);
+    ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent)
+      .then(
+        response => {
+          console.log("subjective questions testCaseResultss: ", response.data)
+          this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
+        }
+      );
 
   };
 
   render() {
-    let unitTestResult;
-    if (this.state.runtestClicked) {
-      unitTestResult = (
-        <Row className="p-xl-2">
-          <Col xs="12" sm="9" lg="12">
-            <EditorJava content={this.state.editorContent} showGutter="true"></EditorJava>
-          </Col>
-        </Row>);
+
+    const headingStyle = {
+      backgroundColor: '#80808014',
+      font: 'inherit',
+      // border : '1px solid blue',
+      padding: '8px',
+      marginLeft: '10px',
+      "width": "170px",
     }
+    const marginRight = {
+      marginRight: '0.5%'
+  };
+
     return (
       <div className="animated fadeIn">
+        if (this.state.showPopup) {
+          <Row>
+            <abbr class="no-border" style={marginRight} >
+              <Link to="/subQuestionsList">
+                <Button block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
+              </Link>
+            </abbr>
+          </Row>}
         <Row>
           <Col xs="12" md="12" className="mb-4">
             <Nav tabs>
@@ -193,9 +227,7 @@ class TakeTest extends Component {
                 <NavLink
                   active={this.state.activeTab[0] === '1'}
                   onClick={() => { this.toggle(0, '1'); }}
-                >
-                  Challenge
-                                    </NavLink>
+                > Challenge </NavLink>
               </NavItem>
             </Nav>
             <TabContent activeTab={this.state.activeTab[0]}>
@@ -207,19 +239,6 @@ class TakeTest extends Component {
           <Col xs="12" sm="9" lg="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Solution - Editor</strong>
-                <div className="card-header-actions">
-                  <Dropdown isOpen={this.state.dropdownOpen[0]} toggle={() => {
-                    this.toggleItem(0);
-                  }}>
-                    <DropdownToggle caret>
-                      {this.state.dropDownValue}
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem onClick={this.changeValue}>Java</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                </div>
               </CardHeader>
               <CardBody>
                 <EditorJava content={this.state.editorContent} showGutter="true" updatedContent={this.updatedEditorContent} ></EditorJava>
@@ -235,7 +254,28 @@ class TakeTest extends Component {
             <Button active block color="primary" aria-pressed="true" onClick={this.handleRunTest}>Run Test</Button>
           </Col>
         </Row>
-        {unitTestResult}
+        <Row>
+          <Col xs="12" md="12" className="mb-4">
+
+            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+              <Tab eventKey="home" title="OutPut">
+                <Card>
+                  <CardBody>
+                    <CardTitle style={headingStyle}>OutPut</CardTitle>
+                    <CardText>{this.state.testCaseResults}</CardText>
+                  </CardBody>
+                </Card>                                            </Tab>
+              <Tab eventKey="profile" title="Test: 0 pass/ 3 fail">
+                <Card>
+                  <CardBody>
+                    <CardTitle style={headingStyle}>JUnit teat case Report</CardTitle>
+                    <CardText>{this.state.testCaseResults}</CardText>
+                  </CardBody>
+                </Card>
+              </Tab>
+            </Tabs>
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -245,7 +285,7 @@ class TakeTest extends Component {
 const mapStateToProps = state => {
   console.log(state.userName);
   return {
-    userName : state.userName
+    userName: state.userName
   };
 };
 
