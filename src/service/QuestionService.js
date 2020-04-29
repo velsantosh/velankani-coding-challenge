@@ -31,7 +31,7 @@ class QuestionService {
     }
 
     getQuestionsByType(type) {
-        //console.log('executed service')
+        //console.log('executed service')htt
         // return axios.get(`${apiBaseUrl}/questions`);
         return axios.get(`http://localhost:8082/questionsByType/${type}`);
     }
@@ -39,6 +39,29 @@ class QuestionService {
     assignObjQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
         return axios.post(`http://localhost:8083/bulkAssignUser`,question);
+    }
+
+    getQuestionsByTypeTech(type,tech){
+        return axios.get(`http://localhost:8082/questions/type/${type}/tech/${tech}`,
+        {headers: {
+            'Content-Type':'application/json','access-control-allow-origin': '*'
+           },
+       crossdomain: true
+       }
+        )
+    }
+    addSubjectiveQuestion(subjectiveQuestionData){
+        return axios.post('http://localhost:8082/add/sub/question',subjectiveQuestionData);
+    }
+    addObjectiveQuestion(objectiveQuestionData){
+        return axios.post('http://localhost:8082/add/obj/question',objectiveQuestionData);
+    }
+    modifySubjectiveQuestion(qId,questionData){
+        return axios.put(`http://localhost:8082/update/sub/question/${qId}`,questionData);
+    }
+    modifyObjectiveQuestion(qId,questionData){
+        console.log("jst before calling api",questionData);
+        return axios.put(`http://localhost:8082/update/obj/question/${qId}`,questionData);
     }
 }
 

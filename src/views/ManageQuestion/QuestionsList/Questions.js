@@ -1,120 +1,172 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup,Input } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup, Input, Container } from 'reactstrap';
 import QuestionService from '../../../service/QuestionService'
+import classes from "./Questions.module.css";
+import cx from "classnames";
+import { connect } from "react-redux";
+import * as actionTypes from "../../../store/Actions";
+import parse from 'html-react-parser';
 // import usersData from './UsersData'
 
 function QuestionRow(props) {
   const question = props.question
-  //const questionLink = `/manageQuestion/question/${question.id}`
+  const questiontype = question.type.toLowerCase();
+  console.log(question.type);
+  let questionLink ;
+  if(questiontype =="subjective"){
+  questionLink= `/manageQuestion/modifySubjectiveQuestion`;
+  }
+  if(questiontype =="objective"){
+    questionLink= `/manageQuestion/modifyObjectiveQuestion`;
+    }
   // const userLink1 = `/manageUser/user/${user.userName}`
 
-  const getExp = (status) => {
-    return status === '2' ? 'Below 3 yrs' :
-    status === '3' ? '3 to 5' :
-      status === '4' ? '3 to 5' :
-        status === '6' ? '5 to 8' :
-         'Above 8 yrs'
-  }
-
   return (
-    // <tr key={user.id}>
-    //   <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-    //   <td><Link to={userLink}>{user.name}</Link></td>
-    //   <td>{user.userName}</td>
-    //   <td>{user.experience}</td>
-    //   {/* <td>{user.role_id}</td> */}
-    //   {/* <td><Badge color={getBadge(user.role_id)}>{user.role_id}</Badge></td> */}
-    // </tr>
-    
-            <Card className="justify-content-center">
-              <CardHeader className="bg-success mb-12">
-                {/* <strong><i className="icon-info pr-1"></i>Question ID: {question.id}</strong> */}
-                <table><thead>
-                    <tr>
-                        <th width="200px">Language:{question.language}</th><span></span>
-                        <th width="200px">Type:{question.type}</th><span></span>
-                        <th width="200px">Experience:{getExp(question.experience)}</th>
-                    </tr>
-                  </thead></table>
-              </CardHeader>
-              <CardBody>
-                  <Table responsive striped hover>
-                  {/* <thead>
-                    <tr>
-                        <th>Language:{question.language}</th>
-                        <th>Type:{question.type}</th>
-                        <th>Experience:{getExp(question.experience)}</th>
-                    </tr>
-                  </thead> */}
-                    <tbody>
-                      {
-                        <tr width="200px"><Input type="textarea" name="textarea-input" rows="3" width="200px"
-                                   value={question.statement}/></tr>
-                      }
-                    </tbody>
-                  </Table>
-              </CardBody>
-              <CardFooter>
-              <Link to={`/manageQuestion/addQuestion`}>
-                <Button type="submit" size="sm" color="primary" ><i className="fa fa-dot-circle-o"></i> Assign</Button></Link>
-                {/* <Link to="/manageUser/UserList"><Button type="reset" size="sm" color="danger" hidden={this.state.flag} onClick={this.handleDelete}><i className="fa fa-ban"></i> Delete</Button></Link> */}
-                <Link to="/assignQuestion/AssignQuestion"><Button type="reset" size="sm" color="danger" ><i className="fa fa-ban"></i> Cancel</Button></Link>
-              </CardFooter>
-            </Card>
-            
-    )
+    <tr key={question.id}>
+      <th scope="row" onClick ={props.clickEvent}>
+        <Link to={questionLink}>{question.title}</Link></th>
+      {/* <td>{dangerouslySetInnerHTML={ __html: question.statement}}</td> */}
+      <td>{question.statement}</td>
+      <td>{question.type}</td>
+      <td>{question.difficulty}</td>
+      <td>{question.experience}</td>
+    </tr>
+  )
 }
 
 class Questions extends Component {
 
   constructor(props) {
     super(props)
-    this.state={
-        questions: [],
-        message: null
+    this.state = {
+      questions: [],
+      type: '',
+      selectedType :'',
+      selectedTechnology :'',
+      activeType :'subjective',
+      activeTechnology :'java'
     }
-    this.getQuestions = this.getQuestions.bind(this)
-}
+  }
 
-    componentDidMount(){
-        this.getQuestions();
-    }
-    getQuestions(){
-      QuestionService.getQuestions()
-        .then(
-            response => {
-                console.log("***************",response.data)
-                this.setState({questions:response.data})
-            }
-        )
-    }
+  componentDidMount() {
+    this.getQuestionsByTypeTech(this.state.activeType,this.state.activeTechnology);
+  }
+ 
+  handleType(e){
+    this.setState({
+      activeType : e.target.value
+    },()=>{
+      this.getQuestionsByTypeTech(this.state.activeType,this.state.activeTechnology);});
+  }
 
-    back = e => {
-      e.preventDefault();
-      this.props.prevStep();
-      
-    }
+  handleTech(e){
+    this.setState({
+      activeTechnology :e.target.value
+    },()=>{this.getQuestionsByTypeTech(this.state.activeType,this.state.activeTechnology);});
+  }
+  getQuestionsByTypeTech(type,tech) {
+    QuestionService.getQuestionsByTypeTech(type,tech)
+      .then(
+        response => {
+          this.setState({ questions: response.data })
+        }
+      )
+  }
+
+  setQuestionInfo =(q)=>{
+    this.props.setSelectedQuestion(q);
+  }
 
   render() {
-
+    const marginRight = {
+      marginRight: '3%'
+    }
+   
     // const userList = usersData.filter((user) => user.id < 10)
     const questionsList = this.state.questions
 
     return (
       <div className="animated fadeIn">
-        <Row xs="10" className="justify-content-center">
-          <Col xl={10}>
-            
-                    {questionsList.map((question, index) =>
-                      <QuestionRow key={index} question={question}/>
-                    )}
-                  
-          </Col>
-        </Row>
+        <Container>
+          <Row className={cx(classes.filterContainer)}>
+            <div className="col-xs-10 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
+              <h4>Type</h4>
+
+              <abbr class="no-border" style={marginRight}>
+                <Button block outline className={cx(classes.filterBtn,
+                this.state.activeType === "subjective" ? classes.showActive : ""
+                  )} color="primary" onClick={this.handleType.bind(this)} value="subjective">Subjective</Button>
+              </abbr>
+
+
+              <abbr class="no-border" style={marginRight}>
+                <Button block outline className={cx(classes.filterBtn,
+                this.state.activeType === "objective" ? classes.showActive : ""
+                  )} color="primary" onClick={this.handleType.bind(this)} value="objective">Objective</Button>
+              </abbr>
+            </div>
+          </Row>
+          <Row className={cx(classes.filterContainer)}>
+            <div className="col-xs-10 big-line btn-group" id="technology" style={{ padding: '.5rem' }}>
+              <h4>Technology</h4>
+
+              <abbr class="no-border" style={marginRight}>
+                <Button block outline className={cx(classes.filterBtn,
+                this.state.activeTechnology === "javascript" ? classes.showActive : ""
+                  )} color="primary" onClick={this.handleTech.bind(this)} value="javascript">Javascript</Button>
+              </abbr>
+              <abbr class="no-border" style={marginRight}>
+                <Button block outline className={cx(classes.filterBtn,
+                this.state.activeTechnology === "java" ? classes.showActive : ""
+                  )} color="primary" onClick={this.handleTech.bind(this)} value="java">Java</Button>
+              </abbr>
+            </div>
+          </Row>
+          <Row xs={2} md={4} lg={6}>
+            <Col md={{ span: 6, offset: 10 }}>
+              <Link to="/manageQuestion/createQuestion">
+                <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Create New Question</Button>
+              </Link>
+            </Col>
+          </Row>
+
+          <Row xs="12" className="justify-content-center">
+            <Col xl={10}>
+              <Table responsive hover striped>
+                <thead>
+                  <tr>
+                    <th scope="col" className="headingPrimary">TITLE</th>
+                    <th scope="col" className="headingPrimary">STATEMENT</th>
+                    <th scope="col" className="headingPrimary">TYPE</th>
+                    <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                    <th scope="col" className="headingPrimary">EXPERIENCE</th>
+                    {/* <th scope="col" className="headingPrimary">EXPECTED TIME</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {questionsList.map((question, index) =>
+                    <QuestionRow key={index} question={question} clickEvent={this.setQuestionInfo.bind(this,{question})} />
+                  )}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </Container>
       </div>
     )
   }
 }
 
-export default Questions;
+const mapDispatchToProps = dispatch => {
+  return {
+    setSelectedQuestion: selectedQuestionData =>
+      dispatch({ type: actionTypes.SELECTEDQUESTIONDATA, value: selectedQuestionData })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Questions);
+
