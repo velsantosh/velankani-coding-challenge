@@ -29,7 +29,7 @@ export default {
     },
     {
       name: 'Test',
-      actual_name: 'TAKE',
+      actual_name: 'TEST',
       url: '/testAccordion',
       icon: 'icon-puzzle',
     },

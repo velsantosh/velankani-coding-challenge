@@ -10,7 +10,7 @@ import Questions from '../../ManageQuestion/QuestionsList/Questions';
 import SelectQuestions from './SelectQuestions';
 
 import { connect } from "react-redux";
-import * as actionTypes from "../../../store/Actions";
+//import * as actionTypes from "../../../store/Actions";
 
 
 class AssignQuestion extends Component {

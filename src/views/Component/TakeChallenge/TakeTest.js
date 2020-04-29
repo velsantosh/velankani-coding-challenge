@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
 import TestResult from '../TakeChallenge/Test/TestResult';
 import { connect } from "react-redux";
-import * as actionTypes from "../../../store/Actions";
+//import * as actionTypes from "../../../store/Actions";
 import { Tabs, Tab } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import { Link, NavLink as RRNavLink } from "react-router-dom";
