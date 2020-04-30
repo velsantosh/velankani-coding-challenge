@@ -14,23 +14,23 @@ export class Confirm extends Component {
   constructor(props) {
 
     super(props)
-    console.log("from confirmAndContinue this.props", props);
-
     this.state = {
       value: false,
-      questionLink: '/subQuestionsList'
+      questionLink: '/subQuestionsList',
+
     }
   }
   confirmAndContinue = e => {
     e.preventDefault();
+    console.log("from confirmAndContinue this.props ##############", this.props);
 
-    console.log("from confirmAndContinue this.props.result", this.props.result.length);
     ScheduledChallengeDataService.submitScheduledQuestionResultsByUserId(this.props.result)
       .then(
         response => {         
           this.setState({ value: true });
           const count = this.props.result.length;
-          if (count > 2 )
+
+          if (this.props.isScheduledPage)
            this.setState({ questionLink: '/takechallenge' }); 
         });
 

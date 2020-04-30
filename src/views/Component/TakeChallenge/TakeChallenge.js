@@ -67,7 +67,12 @@ class TakeChallenge extends Component {
                   <CardBody>
                     <CardTitle style={titleStyle}>Mutilpe Choice Question</CardTitle>
                     <CardText>Multiple answer options with only one correct answer.</CardText>
-                    <Link to="/takeobjectivetest">
+                    <Link to={{
+                        pathname: '/takeobjectivetest',
+                        state: {
+                          scheduledQuestions: true
+                        }
+                      }}>
                       <Button className="btn btn-primary mb-1" style={buttonContainer}>Objective Question Challenge</Button>
                     </Link>
                   </CardBody>
