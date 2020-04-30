@@ -57,7 +57,7 @@ class ObjectiveQuestion extends Component {
       <div key={this.props.id} className="animated fadeIn">
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Objetive Test</strong>
+            <i className="fa fa-align-justify"></i><strong>Objective Test</strong>
           </CardHeader>
           <CardBody>
             <QuestionCount counter={this.props.id + 1} total={this.props.count} />

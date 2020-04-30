@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import TestAccordion from "./TestAccordion";
 import { Link } from '@material-ui/core';
 import { Accordion, Card, CardColumns, useAccordionToggle } from 'react-bootstrap';
-import "./styles.css";
+//import "./styles.css";
 
 function TestAccordionLayout() {
 

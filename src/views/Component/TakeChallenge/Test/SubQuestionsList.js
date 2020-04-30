@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup, Input, Container } from 'reactstrap';
 import QuestionService from '../../../../service/QuestionService';
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
+import { connect } from "react-redux";
 
 // import usersData from './UsersData'
 
@@ -13,7 +14,6 @@ function QuestionRow(props) {
   if (question.type === 'OBJECTIVE') {
     questionLink = `/takeobjectivetest/${question.id}`
   }
-  // const userLink1 = `/manageUser/user/${user.userName}`
   console.log("question  QuestionRow: ", question);
   console.log("question  QuestionRow: .technology ", question.technology);
 
@@ -59,9 +59,8 @@ class SubQuestionsList extends Component {
   }
 
   getScheduledQuestionsByUserId() {
-    //(this.props.userName.length > 0 && this.props.userName)
     const questions = [];
-    ScheduledChallengeDataService.getScheduledQuestionByUserId("admin@abc.com").then(
+    ScheduledChallengeDataService.getScheduledQuestionByUserId(this.props.userName).then(
       response => {
         console.log("getScheduledQuestionsByUserId :", response.data.length)
         response.data.map((question) => {
@@ -149,4 +148,14 @@ class SubQuestionsList extends Component {
   }
 }
 
-export default SubQuestionsList;
+//export default SubQuestionsList;
+
+
+//export default Question
+const mapStateToProps = state => {
+  return {
+    userName : state.userName
+  };
+};
+
+export default connect(mapStateToProps)(SubQuestionsList)

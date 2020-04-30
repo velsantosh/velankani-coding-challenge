@@ -15,6 +15,7 @@ import TestResult from './TestResult';
 import QuestionService from '../../../../service/QuestionService'
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { connect } from "react-redux";
 
 class SolveQuestion extends Component {
 
@@ -55,7 +56,7 @@ class SolveQuestion extends Component {
         let validateProgramContent = {
             className: "ExampleClass",
             quesResponseObj: quesResponseObj,
-            userId: "admin@abc.com"
+            userId: this.props.userName
         };
         ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent)
             .then(
@@ -70,7 +71,7 @@ class SolveQuestion extends Component {
 
         let key = {
             qid: this.state.qId,
-            userId: "admin@abc.com"//userId : this.props.userId            
+            userId: this.props.userName            
         }
 
         let resultValue = {
@@ -291,4 +292,10 @@ class SolveQuestion extends Component {
     }
 }
 
-export default SolveQuestion;
+const mapStateToProps = state => {
+    return {
+      userName: state.userName
+    };
+  };
+  
+  export default connect(mapStateToProps)(SolveQuestion)

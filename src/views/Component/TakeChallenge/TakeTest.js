@@ -145,7 +145,7 @@ class TakeTest extends Component {
 
     let key = {
       qid: this.state.qId,
-      userId: "admin@abc.com"//userId : this.props.userId            
+      userId: this.props.userName           
     }
 
     let resultValue = {
@@ -182,7 +182,7 @@ class TakeTest extends Component {
     let validateProgramContent = {
       className: "ExampleClass",
       quesResponseObj: quesResponseObj,
-      userId: "admin@abc.com"
+      userId: this.props.userName
     };
 
     this.setState({ runtestClicked: true });
@@ -283,7 +283,6 @@ class TakeTest extends Component {
 
 //export default Question
 const mapStateToProps = state => {
-  console.log(state.userName);
   return {
     userName: state.userName
   };
