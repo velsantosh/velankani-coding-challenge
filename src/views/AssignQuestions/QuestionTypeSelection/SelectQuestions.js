@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, Form, CardGroup,Input } from 'reactstrap';
 import QuestionService from '../../../service/QuestionService'
@@ -6,70 +7,45 @@ import PopulateQid from './PopulateQid';
 import AssignSubjective from './AssignSubjective';
 // import usersData from './UsersData'
 
-function QuestionRow(props) {
-  const question = props.question
-  let qids = [];
-  //const questionLink = `/manageQuestion/question/${question.id}`
-  // const userLink1 = `/manageUser/user/${user.userName}`
-
-  const getExp = (status) => {
-    return status === '2' ? 'Below 3 yrs' :
-    status === '3' ? '3 to 5' :
-      status === '4' ? '3 to 5' :
-        status === '6' ? '5 to 8' :
-         'Above 8 yrs'
-  }
-
-  return (
-    // <tr key={user.id}>
-    //   <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-    //   <td><Link to={userLink}>{user.name}</Link></td>
-    //   <td>{user.userName}</td>
-    //   <td>{user.experience}</td>
-    //   {/* <td>{user.role_id}</td> */}
-    //   {/* <td><Badge color={getBadge(user.role_id)}>{user.role_id}</Badge></td> */}
-    // </tr>
-                    <tr key={question.id}>
-                      <td><input type="checkbox" onChange={e => {
-                                    let value = e.target.checked;
-                                    if(value){
-                                      qids.push(question.id,question.id);
-                                    }
-                                    console.log("Testtttttttttttttttt",qids);
-                                  }}/></td>
-                    <td>{question.statement}</td>
-                    <td>{question.type}</td>
-                    </tr>
-    )
-}
-
 class SelectQuestions extends Component {
 
   constructor(props) {
     super(props)
     this.state={
-        questions: [],
-        qidList:[],
-        message: null,
-        userList:[this.props.values.users]
-    }
+               questions: [],
+               qidList:[],
+               message: null,
+               userList:[this.props.values.users],
+               type:'SUBJECTIVE',
+               flag:true,
+               redirectToBaseView :false
+              }
     this.getQuestionsByType = this.getQuestionsByType.bind(this)
-}
+  }
 
-    componentDidMount(){
-        this.getQuestionsByType();
-    }
-    getQuestionsByType(){
-      console.log("Users",this.props.values.users);
-      console.log("Question Type",this.props.values.type);
-      QuestionService.getQuestionsByType(this.props.values.type)
+   componentDidMount(){
+     this.getQuestionsByType();
+  }
+
+   selectedType = (e) =>{
+       let type=e.target.value;
+       QuestionService.getQuestionsByTypeTech(e.target.value,this.props.values.technology)
+        .then(
+          response => {
+              this.setState({questions:response.data, qidList:[]}, ()=> console.log("clean list",this.state.qidList))
+              this.setState({type:type})
+              }
+          );
+  }
+    
+   getQuestionsByType(){
+       QuestionService.getQuestionsByTypeTech(this.state.type,this.props.values.technology)
         .then(
             response => {
-                console.log("***************",response.data)
                 this.setState({questions:response.data})
             }
         )
-    }
+  }
 
     back = e => {
       e.preventDefault();
@@ -81,74 +57,132 @@ class SelectQuestions extends Component {
       console.log("qwerty",selectedValue);
       this.setState({qidList: [...this.state.qidList,selectedValue]
       },
-      () => console.log("Selected UserId",this.state.qidList));
-
-      
+      () => {console.log("Selected Objective Q List",this.state.qidList);
+              this.setState({flag:false})
+            });
     }
 
     handleSubjectiveChange = (selectedValue) =>{
       console.log("Subjective radio",selectedValue);
       this.setState({qidList: [selectedValue]},
-      () => console.log("Selected UserId",this.state.qidList));
-
-      
+      () => {console.log("Selected Subjective Q list",this.state.qidList);
+              this.setState({flag:false})
+            });
     }
 
-    removeQuestion = itemId => {
-    console.log("ItemId::",itemId);
-    const items = this.state.qidList.filter(item => item !== itemId);
-    this.setState({ qidList: items },()=>console.log("Removed UserId",this.state.qidList));
-    
-  }
+  removeQuestion = itemId => {
+        console.log("ItemId::",itemId);
+        const items = this.state.qidList.filter(item => item !== itemId);
+        this.setState({ qidList: items },
+         () => {console.log("Removed UserId",this.state.qidList);
+                  if(this.state.qidList === []){
+                    this.setState({flag:true})
+                }
+              });
+    }
 
   contactSubmit(e){
-    //this.setState({userList:this.props.values.users})
-    console.log("Question Detials:",this.state.userList)
-    e.preventDefault();
-      this.addQuestion();
-      alert("Form submitted");
-  }
+      console.log("Question Detials:",this.state.userList)
+       e.preventDefault();
+       this.addQuestion();
+    }
 
   addQuestion(){
-    let data={
-      "qidList":this.state.qidList,
-      "assigneduidList":this.state.userList,
-      "assigneruid":this.props.userName.length >0 && this.props.userName,
+     let qidSize = this.state.qidList
+     if(this.state.qidList.length !== 0){
+
+     let data={
+         "qidList":this.state.qidList,
+         "assigneduidList":this.state.userList,
+         "assigneruid":this.props.userName.length > 0 && this.props.userName,
       }
-console.log("Question Detials:",data)
-    //let permissionFlag= false;
-    QuestionService.assignObjQuestion(data)
-    .then(
-        response => {
-          console.log("UserResponse : ",response.status)
-          //   if(response.status === 200){
-              
-          //    this.setState({response:true})
-          // }else{
-          //   console.log("UserResponse : ",response.data)
-          // this.props.history.push(`/404`)}
+
+     QuestionService.getAllSchQuestionsByUserId(this.props.values.users).then(response => {
+            let assignQidList = response.data;
+            let assignList = assignQidList.filter((ques) => {
+              return this.state.qidList.includes(ques.id);
+          });
+          console.log("assignList length",assignList.length)
+          if(assignList.length === 0){
+            this.assignQuestion(data);
+          }
+          else{
+            alert("Already Question Assigned")
+          }
         }
-    )
+    ) 
     
+      this.setState({
+        redirectToBaseView: true
+      });
+  }
+  else{
+    alert("Select atleast one question");
+  }
 } 
 
-  render() {
+assignQuestion(data){
+  QuestionService.assignObjQuestion(data)
+  .then(response => {
+        console.log("UserResponse : ",response.status)
+        
+      })
+    }
 
+render() {
+
+    const buttonContainer = {
+      marginTop: '20px',
+      backgroundColor :'#1dafe2',
+      color:'white',
+    };
+    const marginRight ={
+      marginBottom: '10px',
+      marginRight: '0.5%'
+    };
+
+    const marginLeft ={
+      marginBottom: '5px',
+      marginLeft: '0.5%'
+    };
+
+    const redirectToBaseView = this.state.redirectToBaseView;
+    if (redirectToBaseView === true) {
+        return (<Redirect to = "/dashboard"/>);
+    }
     // const userList = usersData.filter((user) => user.id < 10)
-    const questionsList = this.state.questions
-    let type=this.props.values.type
-// let buttonSelect
-     if(type === "SUBJECTIVE"){return (
+    let questionsList = this.state.questions;
+    let type=this.state.type;
+  // let buttonSelect
+    console.log("Selected Q Type", type)
+    //console.log("Selected flag", this.state.flag)
+     if(type === "SUBJECTIVE"){
+       return (
       <div className="animated fadeIn">
+        <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
+            <h4>Question-Type</h4>
+          </div>
+          
+         <Row style={marginLeft}>
+            <abbr className="no-border" style={marginRight} >
+            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE">Subjective</Button>
+            </abbr>
+           
+          
+            <abbr className="no-border" style={marginRight} >
+            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE">Objective</Button>
+            </abbr>
+            </Row>
+
        <Row>
           <Col xl={12}>
-            <Card>
+            {/* <Card>
               <CardHeader className="bg-success mb-12">
                 <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
               </CardHeader>
-              <CardBody>
+              <CardBody> */}
               <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)} >
-                <Table responsive hover>
+                <Table responsive hover striped>
                   <thead>
                     <tr>
                       {/* <th scope="col">id</th>
@@ -156,9 +190,12 @@ console.log("Question Detials:",data)
                       <th scope="col">registered</th>
                       <th scope="col">role</th>
                       <th scope="col">status</th> */}
-                                <th scope="col">#</th>
-                                <th scope="col">Statement</th>
-                                <th scope="col">Type</th>
+                                <th scope="col" className="headingPrimary">#</th>
+                                <th scope="col" className="headingPrimary">TITLE</th>
+                                <th scope="col" className="headingPrimary">STATEMENT</th>
+                                <th scope="col" className="headingPrimary">TYPE</th>
+                                <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                                <th scope="col" className="headingPrimary">EXPECTED TIME</th>
                                 
                     </tr>
                   </thead>
@@ -171,16 +208,16 @@ console.log("Question Detials:",data)
                   </tbody>
                 </Table>
               
-              <CardFooter>
+              {/* <CardFooter> */}
               
-                <Button size="sm" color="primary"><i className="fa fa-dot-circle-o" ></i> Assign Questions</Button>
+                <Button size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Assign Questions</Button>
                 <span> </span>
                 <Button  primary = "false" size="sm" color="danger" onClick={this.back}><i className="fa fa-ban"></i> Previous</Button>
                 {/* <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link> */}
-              </CardFooter>
+              {/* </CardFooter> */}
               </Form>
-              </CardBody>
-            </Card>
+              {/* </CardBody>
+            </Card> */}
           </Col>
         </Row>
             
@@ -188,18 +225,33 @@ console.log("Question Detials:",data)
           
       </div>
     )}
-     else{
+     else if(type === "OBJECTIVE"){
     return (
       <div className="animated fadeIn">
+        
+        <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
+            <h4>Question-Type</h4>
+          </div>
+          
+         <Row style={marginLeft}>
+            <abbr className="no-border" style={marginRight} >
+            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE">Subjective</Button>
+            </abbr>
+           
+          
+            <abbr className="no-border" style={marginRight} >
+            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE">Objective</Button>
+            </abbr>
+            </Row>
        <Row>
           <Col xl={12}>
-            <Card>
+            {/* <Card>
               <CardHeader className="bg-success mb-12">
                 <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
               </CardHeader>
-              <CardBody>
+              <CardBody> */}
               <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)} >
-                <Table responsive hover>
+                <Table responsive hover striped>
                   <thead>
                     <tr>
                       {/* <th scope="col">id</th>
@@ -207,9 +259,12 @@ console.log("Question Detials:",data)
                       <th scope="col">registered</th>
                       <th scope="col">role</th>
                       <th scope="col">status</th> */}
-                                <th scope="col">#</th>
-                                <th scope="col">Statement</th>
-                                <th scope="col">Type</th>
+                                <th scope="col" className="headingPrimary">#</th>
+                                <th scope="col" className="headingPrimary">TITLE</th>
+                                <th scope="col" className="headingPrimary">STATEMENT</th>
+                                <th scope="col" className="headingPrimary">TYPE</th>
+                                <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                                
                                 
                     </tr>
                   </thead>
@@ -221,16 +276,16 @@ console.log("Question Detials:",data)
                   </tbody>
                 </Table>
               
-              <CardFooter>
+              {/* <CardFooter> */}
               
                 <Button size="sm" color="primary"><i className="fa fa-dot-circle-o" ></i> Assign Questions</Button>
                 <span> </span>
                 <Button  primary = "false" size="sm" color="danger" onClick={this.back}><i className="fa fa-ban"></i> Previous</Button>
                 {/* <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link> */}
-              </CardFooter>
+              {/* </CardFooter> */}
               </Form>
-              </CardBody>
-            </Card>
+              {/* </CardBody>
+            </Card> */}
           </Col>
         </Row>
             

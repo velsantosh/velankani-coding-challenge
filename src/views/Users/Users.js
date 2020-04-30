@@ -7,7 +7,7 @@ import UsersDataService from '../../service/UsersDataService'
 function UserRow(props) {
   const user = props.user
   const userLink = `/manageUser/user/${user.id}`
-  const userLink1 = `/manageUser/user/${user.userName}`
+  const userLink1 = `/manageUser/user/${user.userId}`
 
   const getBadge = (status) => {
     return status === 'ADMIN' ? 'success' :
@@ -19,9 +19,9 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <th scope="row"><Link to={userLink1}>{user.id}</Link></th>
-      <td><Link to={userLink1}>{user.name}</Link></td>
-      <td>{user.userName}</td>
+      {/* <th scope="row"><Link to={userLink1}>{user.id}</Link></th> */}
+      <th scope="row"><Link to={userLink1}>{user.name}</Link></th>
+      <td>{user.userId}</td>
       <td>{user.experience}</td>
       {/* <td>{user.role_id}</td> */}
       <td><Badge color={getBadge(user.roleId)}>{user.roleId}</Badge></td>
@@ -67,7 +67,7 @@ class Users extends Component {
                 <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
               </CardHeader>
               <CardBody>
-                <Table responsive hover>
+                <Table responsive hover striped>
                   <thead>
                     <tr>
                       {/* <th scope="col">id</th>
@@ -75,7 +75,7 @@ class Users extends Component {
                       <th scope="col">registered</th>
                       <th scope="col">role</th>
                       <th scope="col">status</th> */}
-                                <th>Id</th>
+                                
                                 <th>Name</th>
                                 <th>UserName</th>
                                 <th>Experience</th>

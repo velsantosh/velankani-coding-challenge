@@ -7,21 +7,14 @@ var apiBaseUrl = "http://localhost:8765/aaservice";
 class UsersDataService {
     
     
-    validateLogin(email, password){
-        // return axios.get(`${apiBaseUrl}/validateLogin/${email}/${password}`)
-        return axios.get(`http://localhost:8081/validateLogin/${email}/${password}`)
+    validateLogin(userName, password){
+        // return axios.get(`${apiBaseUrl}/validateLogin/${userName}/${password}`)
+        return axios.get(`http://localhost:8081/validateLogin/${userName}/${password}`)
     }
 
     getPermission(userName){
         // return axios.get(`${apiBaseUrl}/permByUserName/ADMIN`)
-        return axios.get(`http://localhost:8081/permByUserId/${userName}`,
-         {headers: {
-             'Content-Type':'application/json','Access-Control-Allow-Origin': '*'
-            },
-        crossdomain: true
-        }
-        );
-       // return axios.get(`http://localhost:8081/permByUserName/${userName}`)
+        return axios.get(`http://localhost:8081/permByUserId/${userName}`)
     }
 
     getAllUser(){
@@ -38,9 +31,9 @@ class UsersDataService {
         return axios.get(`${apiBaseUrl}/user/${id}`);
     }
 
-    retrieveUserByUserName(id) {
+    retrieveUserByUserId(id) {
         //return axios.get(`${apiBaseUrl}/user/uname/${id}`);
-        return axios.get(`http://localhost:8081/user/uname/${id}`);
+        return axios.get(`http://localhost:8081/user/userid/${id}`);
     }
 
     updateUser(id, user) {
@@ -48,9 +41,10 @@ class UsersDataService {
         return axios.put(`${apiBaseUrl}/user/${id}`, user);
     }
 
-    updateUserUsingUserName(id, user) {
+    updateUserUsingUserId(id, user) {
         //console.log('executed service')
-        return axios.put(`${apiBaseUrl}/user/uname/${id}`, user);
+        //return axios.put(`${apiBaseUrl}/user/uname/${id}`, user);
+        return axios.put(`http://localhost:8081/user/userid/${id}`, user);
     }
     createUser(user) {
         console.log('Create User',user);
@@ -62,6 +56,8 @@ class UsersDataService {
         // return axios.get(`${apiBaseUrl}/users/`)
         return axios.get(`http://localhost:8081/usersByRole/${roleId}`)
     }
+
+    
 }
 
 export default new UsersDataService()

@@ -104,7 +104,7 @@ class UserRegistration extends Component {
   registerUser(){
     let data={
       "name":this.state.fields["username"],
-      "userName":this.state.fields["email"],
+      "userId":this.state.fields["email"],
       "password":this.state.fields["password"],
       "roleId":this.state["value"],
       "experience":this.state["value1"],
@@ -131,7 +131,7 @@ console.log("User Detials:",data)
       return (
   // <Redirect from="/login" to="/manageUser/UserList" />
                 <Redirect to={{
-                   pathname: '/manageUser/UserList'
+                   pathname: '/manageUser/users'
                    
                 }}
 />

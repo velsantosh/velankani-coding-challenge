@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, CardGroup, Row, Table, CardFooter, Button, Container } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 // import usersData from './UsersData'
 import UsersDataService from '../../service/UsersDataService'
 
@@ -11,7 +11,8 @@ class User extends Component {
     this.state={
         users: [],
         message: null,
-        flag:false
+        flag:false,
+        response:false
         
     }
     this.retrieveUsers = this.retrieveUsers.bind(this)
@@ -24,7 +25,7 @@ class User extends Component {
     retrieveUsers(){
       
       console.log("#$#$#$",this.props.match.params.id)
-      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserId(this.props.match.params.id)
         .then(
             response => {
               if(response.data === null){
@@ -40,8 +41,9 @@ class User extends Component {
     }
 
     handleDelete(){
+      debugger
       console.log("handleDelete",this.props.match.params.id)
-      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserId(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)
@@ -63,14 +65,29 @@ class User extends Component {
         .then(
             response => {
                 console.log(response)
-                alert("No record available for ID:",this.props.match.params.id);
-            }
+                if(response.status === 200){
+              
+                  this.setState({response:true})
+               }else{
+                 console.log("UserResponse : ",response.data)
+               this.props.history.push(`/404`)}
+             }
+            
         )
     }
   render() {
     // const user = users.find( user => user.id.toString() === this.props.match.params.id)
     const userDetails = this.state.users ? Object.entries(this.state.users) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
-
+    if(this.state.response){
+      return (
+  // <Redirect from="/login" to="/manageUser/UserList" />
+                <Redirect to={{
+                   pathname: '/manageUser/users'
+                   
+                }}
+/>
+);
+}else{
     return (
       <div className="animated fadeIn">
         <Container>
@@ -85,13 +102,13 @@ class User extends Component {
                       {/* <Link to="/Register">
                         <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
                       </Link> */} 
-                      <img src={`https://api.adorable.io/avatars/250/abc@abc8.com`} width="350" height="200" className="img-brand" alt="User" />
+                      <img src={`https://api.adorable.io/avatars/250/abc@abc25.com`} width="350" height="300" className="img-brand" alt="User" />
                     </div>
                   </CardBody>
                 </Card>
             <Card>
               <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User Name: {this.props.match.params.id}</strong>
+                <strong><i className="icon-info pr-1"></i></strong>
               </CardHeader>
               <CardBody>
                   <Table responsive striped hover>
@@ -124,6 +141,7 @@ class User extends Component {
       
     )
   }
+}
 }
 
 export default User;

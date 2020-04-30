@@ -10,7 +10,7 @@ import Questions from '../../ManageQuestion/QuestionsList/Questions';
 import SelectQuestions from './SelectQuestions';
 
 import { connect } from "react-redux";
-//import * as actionTypes from "../../../store/Actions";
+import * as actionTypes from "../../../store/Actions";
 
 
 class AssignQuestion extends Component {
@@ -19,6 +19,7 @@ class AssignQuestion extends Component {
         step: 1,
         type:'CA',
         users:'A',
+        technology:'B'
         
     }
 
@@ -47,7 +48,8 @@ class AssignQuestion extends Component {
     const { step } = this.state;
     const { type } = this.state;
     const { users } = this.state;
-    const values = {type,users}
+    const { technology } = this.state;
+    const values = {type,users,technology}
 
     switch(step) {
       case 1:
@@ -73,7 +75,7 @@ class AssignQuestion extends Component {
 
 //export default Question
 const mapStateToProps = state => {
-  // console.log(state.userName);
+   console.log("#@#@",state.userName);
   return {
     userName : state.userName
   };

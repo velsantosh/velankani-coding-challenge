@@ -19,3 +19,7 @@
 .app-header .nav-item .nav-link.active {
    border-top: 4px solid black;
 }
+
+.headingPrimary {
+    color: rgb(71, 191, 247);
+  } 

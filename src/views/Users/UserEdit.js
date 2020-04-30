@@ -22,7 +22,7 @@ class UserEdit extends Component {
     }
     refreshCourses(){
       console.log("Mitendra",this.props.match.params.id)
-      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserId(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)
@@ -54,18 +54,18 @@ class UserEdit extends Component {
       }
       
       //Email
-      if(!users["userName"]){
+      if(!users["userId"]){
         formIsValid = false;
-        errors["userName"] = "Field cannot be empty";
+        errors["userId"] = "Field cannot be empty";
       }
   
-      if(typeof users["userName"] !== "undefined"){
-        let lastAtPos = users["userName"].lastIndexOf('@');
-        let lastDotPos = users["userName"].lastIndexOf('.');
+      if(typeof users["userId"] !== "undefined"){
+        let lastAtPos = users["userId"].lastIndexOf('@');
+        let lastDotPos = users["userId"].lastIndexOf('.');
   
-        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && users["userName"].indexOf('@@') === -1 && lastDotPos > 2 && (users["userName"].length - lastDotPos) > 2)) {
+        if (!(lastAtPos < lastDotPos && lastAtPos > 0 && users["userId"].indexOf('@@') === -1 && lastDotPos > 2 && (users["userId"].length - lastDotPos) > 2)) {
           formIsValid = false;
-          errors["userName"] = "Email is not valid";
+          errors["userId"] = "Email is not valid";
         }
       }
   
@@ -137,7 +137,7 @@ class UserEdit extends Component {
 
     retrieveUsers(){
       console.log("#$#$#$",this.props.match.params.id)
-      UsersDataService.retrieveUserByUserName(this.props.match.params.id)
+      UsersDataService.retrieveUserByUserId(this.props.match.params.id)
         .then(
             response => {
                 console.log(response)
@@ -156,7 +156,7 @@ class UserEdit extends Component {
     registerUser(){
       let data={
         "name":this.state.users["name"],
-        "userName":this.state.users["userName"],
+        "userId":this.state.users["userId"],
         "password":this.state.users["password"],
         "role_id":this.state.users["role_id"],
         "experience":this.state.users["experience"],
@@ -190,7 +190,7 @@ class UserEdit extends Component {
 // console.log("User Detials:",data)
 console.log("User Detials:",this.state.users)
     //let permissionFlag= false;
-    UsersDataService.updateUserUsingUserName(this.props.match.params.id, this.state.users)
+    UsersDataService.updateUserUsingUserId(this.props.match.params.id, this.state.users)
     .then(
         response => {
           console.log("UserResponse : ",response.status)
@@ -248,12 +248,12 @@ console.log("User Detials:",this.state.users)
                       <Input ref="name"type="text" placeholder="Name" autoComplete="name" onChange={this.handleChange.bind(this, "name")} value={this.state.users["name"]}/>
                     </InputGroup>
 
-                    <span style={{color: "red"}} className="error">{this.state.errors["userName"]}</span>
+                    <span style={{color: "red"}} className="error">{this.state.errors["userId"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                       </InputGroupAddon>
-                      <Input ref="userName" type="text" placeholder="Email" autoComplete="userName" onChange={this.handleChange.bind(this, "userName")} value={this.state.users["userName"]}/>
+                      <Input ref="userName" type="text" placeholder="Email" autoComplete="userId" onChange={this.handleChange.bind(this, "userId")} value={this.state.users["userId"]}/>
                        
                     </InputGroup>
 

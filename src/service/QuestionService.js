@@ -31,7 +31,7 @@ class QuestionService {
     }
 
     getQuestionsByType(type) {
-        //console.log('executed service')htt
+        //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
         return axios.get(`http://localhost:8082/questionsByType/${type}`);
     }
@@ -40,6 +40,17 @@ class QuestionService {
         // return axios.get(`${apiBaseUrl}/question`,question);
         return axios.post(`http://localhost:8083/bulkAssignUser`,question);
     }
+
+    retrieveAllTechnology(){
+        // return axios.get(`${apiBaseUrl}/technologies/`)
+        return axios.get(`http://localhost:8082/technologies`)
+    }
+
+    // getQuestionsByTecType(type,tname) {
+    //     //console.log('executed service')
+    //     // return axios.get(`${apiBaseUrl}/questions`);
+    //     return axios.get(`http://localhost:8082/questions/type/${type}/tech/${tname}`);
+    // }
 
     getQuestionsByTypeTech(type,tech){
         return axios.get(`http://localhost:8082/questions/type/${type}/tech/${tech}`,
@@ -50,6 +61,13 @@ class QuestionService {
        }
         )
     }
+
+    getAllSchQuestionsByUserId(userId) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.get(`http://localhost:8083/schQuesByUid/${userId}`);
+    }
+
     addSubjectiveQuestion(subjectiveQuestionData){
         return axios.post('http://localhost:8082/add/sub/question',subjectiveQuestionData);
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup,Input } from 'reactstrap';
-
+import Counter from './Counter'
 
 class AssignSubjective extends Component {
 
@@ -26,18 +26,26 @@ class AssignSubjective extends Component {
                                     }
     }
   render() {
-
+    let addModal=()=> this.setState({addModelShow:false});
     // const userList = usersData.filter((user) => user.id < 10)
     //const questionsList = this.state.questions
     const question = this.props.question;
-
+    var stmt = question.statement;
+    if(stmt) stmt=stmt.substr(0,50);
+    var newStmt = `${stmt}...`
    
+    
     return (
                 
                     <tr key={question.id}>
                       <td><input type="radio" name="optradio" onClick={this.handleChange}/></td>
-                    <td>{question.statement}</td>
+                      <td>{question.title}</td>
+                    <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{newStmt}</Link></td>
+                    <Counter show={this.state.addModelShow}
+                            onHide={addModal} statement={question.statement}></Counter>
                     <td>{question.type}</td>
+                    <td>{question.difficulty}</td>
+                    <td>{question.expectedTime}</td>
                     </tr>
     )
   }

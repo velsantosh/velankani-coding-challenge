@@ -3,6 +3,7 @@ import {Button, Card, CardBody, Col, CardHeader, Form, Row, CardFooter} from 're
 import { Link, NavLink as RRNavLink } from "react-router-dom";
 //import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
 import UsersDataService from '../../../service/UsersDataService'
+import QuestionService from '../../../service/QuestionService'
 
 
 class QuestionType extends Component {
@@ -10,13 +11,15 @@ class QuestionType extends Component {
         super(props);
         this.state = {
           isChallengeFetched : false,
-          users:[]
+          users:[],
+          technology:[]
         }
         this.retrieveUsers = this.retrieveUsers.bind(this)
     }
 
     componentDidMount(){
       this.retrieveUsers();
+      this.retrieveAllTechnology();
   }
   retrieveUsers(){
     UsersDataService.retrieveUsersByRole("CANDIDATE")
@@ -28,49 +31,71 @@ class QuestionType extends Component {
       )
   }
 
+  retrieveAllTechnology(){
+    QuestionService.retrieveAllTechnology()
+      .then(
+          response => {
+              console.log("technology:",response.data)
+              this.setState({technology:response.data})
+          }
+      )
+  }
+
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
     
   }
     render(){
+
+      const marginTop ={
+        marginTop: '100px'
+      };
+
+
       const userList = this.state.users;
       const { handleChange, values } = this.props; 
       let usersList = userList.length > 0
     	&& userList.map((user, index) => {
       return (
-        <option key={index} value={user.userName}>{user.userName}</option>
+        <option key={index} value={user.userId}>{user.userId}</option>
+      )
+    }, this);
+
+    const technologyList = this.state.technology;
+      let technologyLists = technologyList.length > 0
+    	&& technologyList.map((technology, index) => {
+      return (
+        <option key={index} value={technology.technology}>{technology.technology}</option>
       )
     }, this);
       //console.log("state data ", this.state.responsedata);
         return (
-            <div className="animated fadeIn">
-            <Row xs="6" className="justify-content-center">
-              <Col xs="6">
-              <Card>
-              <CardHeader className="bg-primary mb-12">
-                <strong><i className="icon-info pr-1"></i>Assign Questions</strong>
+            <div className="animated fadeIn align-items-center">
+            <Row xl="12" className="justify-content-center" style={marginTop}>
+              <Col xl="12">
+              <Card className="shadow-lg mx-10">
+              <CardHeader className=" mb-12">
+                <strong><i className="icon-info pr-1 headingPrimary"></i>Assign Questions</strong>
                 </CardHeader>
                 <CardBody>
             
                 <Form name="registerform" className="registerform" >
                 {/* <p>Select Subject challenge  - This type of test consists of one coding test. To solve the challenge click on below link.</p> */}
                  
-                    <select  className="form-control" id="exampleFormControlSelect1" value={values.type} onChange={handleChange('type')}>
+                    {/* <select  className="form-control" id="exampleFormControlSelect1" value={values.type} onChange={handleChange('type')}>
                       <option value="CA" disabled>Question Type</option>
                         <option key={2} value={"OBJECTIVE"}>{"Objective"}</option>
                         <option key={3} value={"SUBJECTIVE"}>{"Subjective"}</option>
-                    </select> 
+                    </select>  */}
                     <br></br> 
-                    {/* <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('users')}>
-                      <option value="C" disabled>Select Candidate</option>
-                        <option key={2} value={"Java"}>{"Java"}</option>
-                        <option key={3} value={".Net"}>{".Net"}</option>
-                        <option key={4} value={"C"}>{"C"}</option>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')}>
+                      <option value="B" disabled>Technology</option>
+                        {technologyLists}
                     </select> 
-                    <br></br>        */}
+                    <br></br>       
                     <select  className="form-control" id="exampleFormControlSelect1" value={values.users} onChange={handleChange('users')}>
-                    <option value="A" disabled>Users List</option>
+                    <option value="A" disabled>Candidate List</option>
                     {usersList}
                     </select>
                     <br></br> 
