@@ -5,6 +5,8 @@ import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, Form, C
 import QuestionService from '../../../service/QuestionService'
 import PopulateQid from './PopulateQid';
 import AssignSubjective from './AssignSubjective';
+import classes from "./SelectQuestions.module.css";
+import cx from "classnames";
 // import usersData from './UsersData'
 
 class SelectQuestions extends Component {
@@ -131,7 +133,12 @@ assignQuestion(data){
 
 render() {
 
+    const marginTop ={
+      marginTop:'20px'
+    }
+    
     const buttonContainer = {
+      marginRight:'0.5%',
       marginTop: '20px',
       backgroundColor :'#1dafe2',
       color:'white',
@@ -158,66 +165,50 @@ render() {
     //console.log("Selected flag", this.state.flag)
      if(type === "SUBJECTIVE"){
        return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn" style={marginTop}>
         <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
-            <h4>Question-Type</h4>
+            <h4>Type</h4>
           </div>
           
          <Row style={marginLeft}>
             <abbr className="no-border" style={marginRight} >
-            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE">Subjective</Button>
+            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE" 
+            className={this.state.type === "SUBJECTIVE" ? classes.showActive : ""
+                  }
+            >Subjective</Button>
             </abbr>
            
           
             <abbr className="no-border" style={marginRight} >
-            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE">Objective</Button>
+            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE"
+            className={this.state.type === "OBJECTIVE" ? classes.showActive : ""
+          }>Objective</Button>
             </abbr>
             </Row>
 
        <Row>
           <Col xl={12}>
-            {/* <Card>
-              <CardHeader className="bg-success mb-12">
-                <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
-              </CardHeader>
-              <CardBody> */}
               <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)} >
                 <Table responsive hover striped>
                   <thead>
                     <tr>
-                      {/* <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th> */}
-                                <th scope="col" className="headingPrimary">#</th>
-                                <th scope="col" className="headingPrimary">TITLE</th>
-                                <th scope="col" className="headingPrimary">STATEMENT</th>
-                                <th scope="col" className="headingPrimary">TYPE</th>
-                                <th scope="col" className="headingPrimary">DIFFICULTY</th>
-                                <th scope="col" className="headingPrimary">EXPECTED TIME</th>
-                                
+                        <th scope="col" className="headingPrimary"></th>
+                        <th scope="col" className="headingPrimary">TITLE</th>
+                        <th scope="col" className="headingPrimary">STATEMENT</th>
+                        <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                        <th scope="col" className="headingPrimary">EXPECTED TIME</th>
                     </tr>
                   </thead>
                   <tbody>
                    {questionsList.map((question, index) =>
-                      //<QuestionRow key={index} question={question} />
-                      //<PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect = {this.removePeople} buttonSelect={"radio"}/>
                     <AssignSubjective key={index} question={question} onSelectChange={this.handleSubjectiveChange}/>
                     )}
                   </tbody>
-                </Table>
-              
-              {/* <CardFooter> */}
-              
-                <Button size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Assign Questions</Button>
-                <span> </span>
-                <Button  primary = "false" size="sm" color="danger" onClick={this.back}><i className="fa fa-ban"></i> Previous</Button>
-                {/* <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link> */}
-              {/* </CardFooter> */}
+                </Table> 
+              <Button className="btn btn-primary mb-1" style={buttonContainer}> Assign Questions</Button>
+              <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.back}>Previous</Button>
+                
               </Form>
-              {/* </CardBody>
-            </Card> */}
           </Col>
         </Row>
             
@@ -227,20 +218,24 @@ render() {
     )}
      else if(type === "OBJECTIVE"){
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn" style={marginTop}>
         
         <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
-            <h4>Question-Type</h4>
+            <h4>Type</h4>
           </div>
           
          <Row style={marginLeft}>
             <abbr className="no-border" style={marginRight} >
-            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE">Subjective</Button>
+            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE" 
+              className={this.state.type === "SUBJECTIVE" ? classes.showActive : ""}>
+              Subjective</Button>
             </abbr>
            
           
             <abbr className="no-border" style={marginRight} >
-            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE">Objective</Button>
+            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE"
+             className={this.state.type === "OBJECTIVE" ? classes.showActive : ""}>
+              Objective</Button>
             </abbr>
             </Row>
        <Row>
@@ -254,18 +249,10 @@ render() {
                 <Table responsive hover striped>
                   <thead>
                     <tr>
-                      {/* <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th> */}
-                                <th scope="col" className="headingPrimary">#</th>
-                                <th scope="col" className="headingPrimary">TITLE</th>
-                                <th scope="col" className="headingPrimary">STATEMENT</th>
-                                <th scope="col" className="headingPrimary">TYPE</th>
-                                <th scope="col" className="headingPrimary">DIFFICULTY</th>
-                                
-                                
+                      <th scope="col" className="headingPrimary"></th>
+                      <th scope="col" className="headingPrimary">TITLE</th>
+                      <th scope="col" className="headingPrimary">STATEMENT</th>
+                      <th scope="col" className="headingPrimary">DIFFICULTY</th>          
                     </tr>
                   </thead>
                   <tbody>
@@ -276,17 +263,12 @@ render() {
                   </tbody>
                 </Table>
               
-              {/* <CardFooter> */}
-              
-                <Button size="sm" color="primary"><i className="fa fa-dot-circle-o" ></i> Assign Questions</Button>
-                <span> </span>
-                <Button  primary = "false" size="sm" color="danger" onClick={this.back}><i className="fa fa-ban"></i> Previous</Button>
-                {/* <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link> */}
-              {/* </CardFooter> */}
-              </Form>
-              {/* </CardBody>
-            </Card> */}
-          </Col>
+                {/* <i className="fa fa-dot-circle-o" ></i> */}
+                {/* <i className="fa fa-ban"></i>  */}
+              <Button className="btn btn-primary mb-1" style={buttonContainer}> Assign Questions</Button>
+              <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.back}>Previous</Button>
+             </Form>
+           </Col>
         </Row>
             
                     

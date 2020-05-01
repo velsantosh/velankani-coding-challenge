@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'react-bootstrap';
+import Parser from 'html-react-parser'
+
  export default class Counter extends Component {
 
     constructor(props) {
@@ -23,7 +25,7 @@ import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'react-bootst
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="container">{this.props.statement}</div>
+              <div className="container">{Parser(this.props.statement)}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.props.onHide}>Close</Button>

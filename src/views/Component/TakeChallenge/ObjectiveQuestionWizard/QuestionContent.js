@@ -4,14 +4,14 @@ import {
   Button, Card, CardGroup, Container, CardBody, CardHeader,
   CardText, CardTitle, CardSubtitle, Col, Row, CardColumns
 } from 'reactstrap';
+import Parser from 'html-react-parser';
 
 function QuestionContent(props) {
 
   const titleStyle = {
     marginLeft: '10px',
     alignText: 'right',
-    padding: '1px 2px 1px 2px',
-    backgroundColor: '#80808014',
+    padding: '1px 2px 1px 2px'
   }
 
   return (
@@ -20,7 +20,7 @@ function QuestionContent(props) {
     {/* <img width="100%" src="./public/assets/img/avatars/318x180.svg" alt="Card image cap" /> */}
       <CardBody>
         { /* <CardText>{this.state.questions[idx].statement}</CardText> */}
-        <CardText style={titleStyle}>{props.content}</CardText>
+        <CardText style={titleStyle}>{Parser(props.content)}</CardText>
       </CardBody>
     </Card>
   </Row>

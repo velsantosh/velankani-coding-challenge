@@ -3,6 +3,8 @@ import { Button, Card, CardBody, CardHeader } from 'reactstrap';
 import AnswerOption from './AnswerOption';
 import QuestionCount from './QuestionCount';
 import { Container, Row, Col } from 'reactstrap';
+import classes from "./AnswerOption.module.css";
+import cx from "classnames";
 
 import QuestionContent from '../ObjectiveQuestionWizard/QuestionContent';
 
@@ -43,6 +45,14 @@ class ObjectiveQuestion extends Component {
   }
 
   render() {
+    const cardStyle = {
+      //backgroundColor: 'rgba(128, 128, 128, 0.08)',
+      marginLeft: '3%',
+      marginRight: '3%',
+      marginTop:'7%',
+      border: '7px solid #767f7e'
+  };
+
     let backButtonConstruct;
     if (this.props.id != 0) {
       backButtonConstruct = (<Col sm={{ size: '9', offset: 1 }}>
@@ -55,14 +65,14 @@ class ObjectiveQuestion extends Component {
     }
     return (
       <div key={this.props.id} className="animated fadeIn">
-        <Card>
+        <Card style={cardStyle}>
           <CardHeader>
             <i className="fa fa-align-justify"></i><strong>Objective Test</strong>
           </CardHeader>
           <CardBody>
             <QuestionCount counter={this.props.id + 1} total={this.props.count} />
             <QuestionContent key={this.props.id} content={this.props.content} />
-            <ul className="answerOptions">
+            <ul className={classes.answerOptions}>
               {this.props.answerOptions.map(this.renderAnswerOptions)}
             </ul>
             <div>

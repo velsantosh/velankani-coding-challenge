@@ -35,10 +35,10 @@ class RecruitDefaultHeader extends Component {
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <Link to="/users" className="nav-link">Users</Link>
+            <NavLink to="/users" className="nav-link">Users</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="#" className="nav-link">Settings</NavLink>
+            <NavLink to="/settings" className="nav-link">Settings</NavLink>
           </NavItem>
         </Nav>
         <Nav className="ml-auto" navbar>

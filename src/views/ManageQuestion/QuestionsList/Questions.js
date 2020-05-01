@@ -7,6 +7,7 @@ import cx from "classnames";
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 import parse from 'html-react-parser';
+import Parser from 'html-react-parser';
 // import usersData from './UsersData'
 
 function QuestionRow(props) {
@@ -26,8 +27,7 @@ function QuestionRow(props) {
     <tr key={question.id}>
       <th scope="row" onClick ={props.clickEvent}>
         <Link to={questionLink}>{question.title}</Link></th>
-      {/* <td>{dangerouslySetInnerHTML={ __html: question.statement}}</td> */}
-      <td>{question.statement}</td>
+      <td>{Parser(question.statement)}</td>
       <td>{question.type}</td>
       <td>{question.difficulty}</td>
       <td>{question.experience}</td>

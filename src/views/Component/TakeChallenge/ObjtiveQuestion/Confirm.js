@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import {
   PopupboxManager, PopupboxContainer
 } from 'react-popupbox';
+import Parser from 'html-react-parser';
 
 export class Confirm extends Component {
 
@@ -53,7 +54,7 @@ export class Confirm extends Component {
     let listSelected = this.props.result.map((item) => {
       return (
         <ListGroupItem active>
-          <ListGroupItemHeading>{item.questionContent}</ListGroupItemHeading>
+          <ListGroupItemHeading>{Parser(item.questionContent)}</ListGroupItemHeading>
           <ListGroupItemText>
             {item.selectedAnswer}
           </ListGroupItemText>

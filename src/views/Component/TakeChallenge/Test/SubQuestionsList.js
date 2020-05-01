@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGr
 import QuestionService from '../../../../service/QuestionService';
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
 import { connect } from "react-redux";
+import Parser from "html-react-parser"
 
 // import usersData from './UsersData'
 
@@ -19,10 +20,9 @@ function QuestionRow(props) {
 
   return (
     <tr key={question.id}>
-      <th scope="row"><Link to={questionLink}>{question.technology}</Link></th>
-      {/*<th scope="row"><Link to={questionLink}>{question.title}</Link></th> */}
-      <td>{question.statement}</td>
-      <td>{question.type}</td>
+      <th scope="row"><Link to={questionLink}>{question.title}</Link></th>
+      <td>{question.technology}</td>
+      <td>{Parser(question.statement)}</td>
       <td>{question.difficulty}</td>
       <td>{question.expectedTime}</td>
     </tr>
@@ -92,15 +92,15 @@ class SubQuestionsList extends Component {
   }
 
   render() {
-    const buttonContainer = {
-      marginTop: '20px',
-      backgroundColor: '#1dafe2',
-      color: 'white'
+    const marginTop ={
+      marginTop:'20px'
+    };
+    const tableMargin ={
+      marginTop :'5%'
     };
     const marginRight = {
       marginRight: '0.5%'
     };
-    // const userList = usersData.filter((user) => user.id < 10)
     const questionsList = this.state.questions
 
     let filterByTypeComponent = (
@@ -116,21 +116,21 @@ class SubQuestionsList extends Component {
 
 
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn" style={marginTop}>
 
         <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
-          <h4>Technology</h4>
+          <h4>Subjective Test</h4>
         </div>
         <Container>         
         {!this.state.scheduledQuestionsOrNot ? filterByTypeComponent : null}
 
           <Row xs="12" className="justify-content-center">
             <Col xl={10}>
-              <Table responsive hover striped>
+              <Table responsive hover striped style={tableMargin}>
                 <thead>
                   <th scope="col" className="headingPrimary">TITLE</th>
+                  <th scope="col" className="headingPrimary">TECHNOLOGY</th>
                   <th scope="col" className="headingPrimary">STATEMENT</th>
-                  <th scope="col" className="headingPrimary">TYPE</th>
                   <th scope="col" className="headingPrimary">DIFFICULTY</th>
                   <th scope="col" className="headingPrimary">EXPECTED TIME</th>
                 </thead>

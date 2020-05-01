@@ -16,6 +16,7 @@ import QuestionService from '../../../../service/QuestionService'
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
+import Parser from 'html-react-parser';
 
 class SolveQuestion extends Component {
 
@@ -148,36 +149,24 @@ class SolveQuestion extends Component {
 
     render() {
 
-        const headingStyle = {
-            backgroundColor: '#80808014',
-            font: 'inherit',
-            // border : '1px solid blue',
-           // padding: '8px 10px',
+        const titleStyle = {
             marginLeft: '10px',
-            "width": "auto",
-        }
-
+            alignText: 'right',
+            padding: '1px 2px 1px 2px'
+        };
         const buttonContainer = {
-            marginBottom: '20px !important',
+            marginBottom :'3%',
+            //marginBottom: '20px !important',
             backgroundColor: '#1dafe2',
             color: 'white',
 
         };
         const cardStyle = {
-            backgroundColor: '#80808014',
-            marginLeft: '20px'
+            //backgroundColor: '#80808014',
+            marginLeft: '3%'
             // border: '2px solid grey'
         };
 
-        const titleStyle = {
-            alignText: 'right',
-            marginLeft: '50px',
-            padding: '1px 2px 1px 2px',
-            // fontWeight: 'bold'
-        }
-        const marginRight = {
-            marginRight: '0.5%'
-        };
         let idx = this.state.step;
         console.log("index :", idx);
 
@@ -201,10 +190,10 @@ class SolveQuestion extends Component {
         let runAndSubmitBtns = (
             <Row>
             <Col md="3">
-                <Button disabled={this.state.submitted} active block color="primary" aria-pressed="true" style={buttonContainer} onClick={this.handleSubmit}>Submit</Button>
+                <Button disabled={this.state.submitted} block outline color="primary"  style={buttonContainer} onClick={this.handleSubmit}>Submit</Button>
             </Col>
             <Col md="3" className="card-header-actions mb-3 mb-xl-0">
-                <Button disabled={this.state.submitted} active block color="primary" aria-pressed="true" style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
+                <Button disabled={this.state.submitted} block outline color="primary"  style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
             </Col>
         </Row>
         );
@@ -219,12 +208,10 @@ class SolveQuestion extends Component {
                         <Col className="mb-6" sm={9}>
                             <CardGroup>
                                 <Col >
-                                    <Card>
+                                    <Card style={cardStyle}>
                                         <CardBody>
-                                            {/* <CardTitle style={headingStyle}>Java programming</CardTitle> */}
-                                            <CardSubtitle></CardSubtitle>
                                             { /* <CardText>{this.state.questions[idx].statement}</CardText> */}
-                                            <CardText style={headingStyle}>{this.state.questionContent}</CardText>
+                                            <CardText style={titleStyle}>{Parser(this.state.questionContent)}</CardText>
                                         </CardBody>
                                     </Card>
                                     <Row>
@@ -247,14 +234,12 @@ class SolveQuestion extends Component {
                                         <Tab eventKey="home" title="OutPut">
                                             <Card>
                                                 <CardBody>
-                                                    {/* <CardTitle style={headingStyle}>OutPut</CardTitle> */}
                                                     <CardText>{this.state.testCaseResults}</CardText>
                                                 </CardBody>
                                             </Card>                                            </Tab>
                                         <Tab eventKey="profile" title="Test: 0 pass/ 3 fail">
                                             <Card>
                                                 <CardBody>
-                                                    {/* <CardTitle style={headingStyle}>JUnit teat case Report</CardTitle> */}
                                                     <CardText>{this.state.testCaseResults}</CardText>
                                                 </CardBody>
                                             </Card>
@@ -268,14 +253,12 @@ class SolveQuestion extends Component {
                             <Card>
                                 <CardBody>
                                     <CardTitle>other components</CardTitle>
-                                    {/* <CardSubtitle>Card subtitle</CardSubtitle> */}
                                     <CardText>This i additional content. This content is a little bit longer.</CardText>
                                 </CardBody>
                             </Card>
                             <Card>
                                 <CardBody>
                                     <CardTitle>other components </CardTitle>
-                                    {/* <CardSubtitle>Card subtitle</CardSubtitle> */}
                                     <CardText>This is a wider card to additional content. This content is a little bit longer.</CardText>
                                 </CardBody>
                             </Card>

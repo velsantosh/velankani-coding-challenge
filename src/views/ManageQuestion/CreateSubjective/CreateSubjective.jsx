@@ -304,7 +304,6 @@ class CreateSubjective extends Component {
                                 </FormGroup>
                                 </Col> 
                                 </Row>*/}
-                                {/* <Button color="success">Save</Button> */}
                                 <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.addSubjectiveQuestion} >Save</Button>
                                 <Button className="btn btn-primary mb-1" style={buttonContainer}>Close</Button>
                             </Form>

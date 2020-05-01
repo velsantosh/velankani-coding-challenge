@@ -51,7 +51,11 @@ class QuestionType extends Component {
       const marginTop ={
         marginTop: '100px'
       };
-
+      
+      const buttonContainer = {
+        backgroundColor :'#1dafe2',
+        color:'white',
+      };
 
       const userList = this.state.users;
       const { handleChange, values } = this.props; 
@@ -105,7 +109,7 @@ class QuestionType extends Component {
           <CardFooter>
                     <Row className="justify-content-left">
                         <Col xs="12" sm="6">
-                        <Button className="btn-success mb-1" onClick={this.continue}>Next</Button>
+                        <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.continue}>Next</Button>
                           
                           {/* <span> </span>
                           <Link to="/manageQuestion/questionList">

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup,Input } from 'reactstrap';
-import Counter from './Counter'
+import Counter from './Counter';
+import Parser from 'html-react-parser';
+
 
 class AssignSubjective extends Component {
 
@@ -31,7 +33,7 @@ class AssignSubjective extends Component {
     //const questionsList = this.state.questions
     const question = this.props.question;
     var stmt = question.statement;
-    if(stmt) stmt=stmt.substr(0,50);
+    if(stmt) stmt=stmt.substr(0,30);
     var newStmt = `${stmt}...`
    
     
@@ -40,10 +42,9 @@ class AssignSubjective extends Component {
                     <tr key={question.id}>
                       <td><input type="radio" name="optradio" onClick={this.handleChange}/></td>
                       <td>{question.title}</td>
-                    <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{newStmt}</Link></td>
+                    <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
                     <Counter show={this.state.addModelShow}
-                            onHide={addModal} statement={question.statement}></Counter>
-                    <td>{question.type}</td>
+                    onHide={addModal} statement={question.statement}></Counter>
                     <td>{question.difficulty}</td>
                     <td>{question.expectedTime}</td>
                     </tr>

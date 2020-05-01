@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classes from "./AnswerOption.module.css";
+import cx from "classnames";
+
 
 function AnswerOption(props) {
 console.log("answeroption the props: ",props);
@@ -55,13 +58,12 @@ if(selected){
   return (
     <li className="answerOption">
      {inputOption}
-      <label className="radioCustomLabel" htmlFor={props.answerType}>
+      <label className={classes.radioCustomLabel} htmlFor={props.answerType}>
         {props.answerContent}
       </label>
     </li>
   );
 }
-
 
 
 export default AnswerOption;

@@ -28,16 +28,22 @@ class TakeChallenge extends Component {
       color: 'white'
     };
     const cardStyle = {
-      backgroundColor: '#80808014',
-      marginLeft: '20px',
-      border: '2px solid grey'
-    };
+      backgroundColor: 'rgba(128, 128, 128, 0.08)',
+      marginLeft: '3%',
+      marginRight: '3%',
+      border: '7px solid #767f7e'
+  };
 
-    const titleStyle = {
+  const textCard = {
+    height:'150px'
+  };
+
+  const titleStyle = {
       alignText: 'center',
       marginLeft: '50px',
       fontWeight: 'bold'
-    }
+  }
+
     console.log("state data ", this.state.responsedata);
     return (
       <>
@@ -49,10 +55,12 @@ class TakeChallenge extends Component {
             <Col md="12">
               <CardGroup>
                 <Card style={cardStyle}>
-                  <CardBody>
+                  <CardBody style={textCard}>
                     <CardTitle style={titleStyle}>Programming Question</CardTitle>
                     <CardText>Take a coding challenge in various programming languages and run all test cases to validate candidate solutions.</CardText>
-                    <Link
+                  </CardBody>
+                  <CardBody>
+                  <Link
                       to={{
                         pathname: '/subQuestionsList',
                         state: {
@@ -64,10 +72,13 @@ class TakeChallenge extends Component {
                   </CardBody>
                 </Card>
                 <Card style={cardStyle}>
-                  <CardBody>
+                  <CardBody style={textCard}>
                     <CardTitle style={titleStyle}>Mutilpe Choice Question</CardTitle>
                     <CardText>Multiple answer options with only one correct answer.</CardText>
-                    <Link to="/takeobjectivetest">
+                    
+                  </CardBody>
+                  <CardBody>
+                  <Link to="/takeobjectivetest">
                       <Button className="btn btn-primary mb-1" style={buttonContainer}>Objective Question Challenge</Button>
                     </Link>
                   </CardBody>

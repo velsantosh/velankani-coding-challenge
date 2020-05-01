@@ -158,7 +158,7 @@ class UserEdit extends Component {
         "name":this.state.users["name"],
         "userId":this.state.users["userId"],
         "password":this.state.users["password"],
-        "role_id":this.state.users["role_id"],
+        "roleId":this.state.users["roleId"],
         "experience":this.state.users["experience"],
         }
   console.log("User Detials:",data)
@@ -184,7 +184,7 @@ class UserEdit extends Component {
 //       "name":this.state.users["username"],
 //       "userName":this.state.users["email"],
 //       "password":this.state.users["password"],
-//       "role_id":this.state["value"],
+//       "roleId":this.state["value"],
 //       "experience":this.state["value1"],
 //       }
 // console.log("User Detials:",data)
@@ -287,7 +287,7 @@ console.log("User Detials:",this.state.users)
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.users["role"]}/> */}
-                      <select  className="form-control" id="exampleFormControlSelect2" value={this.state.users["role_id"]} onChange={this.handleChange.bind(this, "role_id")}>
+                      <select  className="form-control" id="exampleFormControlSelect2" value={this.state.users["roleId"]} onChange={this.handleChange.bind(this, "roleId")}>
                         <option value="C" disabled>Role</option>
                         <option key={2} value={"ADMIN"}>{"ADMIN"}</option>
                         <option key={3} value={"RECRUITMENT"}>{"RECRUITMENT"}</option>

@@ -2,24 +2,22 @@
 .app-header .nav-item .nav-link {
     color: grey;
     font-weight:bold;
+    border-top: 4px solid #e7e7e7 !important;
 }
 .app-header .nav-item .nav-link :focus {
-    border-top: 4px solid transparent;
     color: black;
-    font-weight:bold;
 }
-/* .app-header .nav-item .nav-link:focus.active {
-    color: blue;
-    font-weight:bold;
-} 
 .app-header .nav-item .nav-link.active {
-    color: blue;
-    font-weight:bold;
-} */
-.app-header .nav-item .nav-link.active {
-   border-top: 4px solid black;
+   border-top: 4px solid black !important;
 }
 
 .headingPrimary {
     color: rgb(71, 191, 247);
-  } 
+} 
+ul{
+    list-style-type:none !important;
+}
+h1{
+    margin-top: 2% !important;
+    margin-bottom: 2% !important;
+}
