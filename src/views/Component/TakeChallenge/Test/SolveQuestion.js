@@ -250,18 +250,18 @@ class SolveQuestion extends Component {
                             </CardGroup>
                         </Col>
                         <Col className="mb-1" sm={3}>
-                            <Card>
+                            {/* <Card >
                                 <CardBody>
                                     <CardTitle>other components</CardTitle>
                                     <CardText>This i additional content. This content is a little bit longer.</CardText>
                                 </CardBody>
                             </Card>
-                            <Card>
+                            <Card >
                                 <CardBody>
                                     <CardTitle>other components </CardTitle>
                                     <CardText>This is a wider card to additional content. This content is a little bit longer.</CardText>
                                 </CardBody>
-                            </Card>
+                            </Card> */}
                         </Col>
                     </Row>
                 </Container>
