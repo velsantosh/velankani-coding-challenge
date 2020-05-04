@@ -3,7 +3,9 @@ import { Card, CardBody, CardHeader, Col, CardGroup, Row, Table, CardFooter, But
 import { Link, Redirect } from 'react-router-dom';
 // import usersData from './UsersData'
 import UsersDataService from '../../service/UsersDataService'
-
+import Modals from '../Notifications/Modals/Modals'
+import classes from "./Users.module.css";
+import cx from "classnames";
 
 class User extends Component {
   constructor(props) {
@@ -76,25 +78,25 @@ class User extends Component {
         )
     }
   render() {
+
+    const margin = {
+      marginTop: '60px'
+    };
     // const user = users.find( user => user.id.toString() === this.props.match.params.id)
     const userDetails = this.state.users ? Object.entries(this.state.users) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
     if(this.state.response){
       return (
   // <Redirect from="/login" to="/manageUser/UserList" />
-                <Redirect to={{
-                   pathname: '/manageUser/users'
-                   
-                }}
-/>
+  <Modals message={`User deleted successfully`} linkValue={"/manageUser/users"} header={"DELETE:"}></Modals>
 );
 }else{
     return (
       <div className="animated fadeIn">
-        <Container>
+        <Container style={margin} xl="12">
         <Row className="justify-content-center">
-          <Col lg={9}>
+          <Col lg={12}>
           <CardGroup>
-          <Card className="text-white bg-secondary py-5 d-md-down-none" style={{ width: '44%' }}>
+          <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
                       {/* <h2>Sign up</h2>
@@ -113,7 +115,7 @@ class User extends Component {
               <CardBody>
                   <Table responsive striped hover>
                     <tbody>
-                      {
+                    {
                         userDetails.map(([key, value]) => {
                           return (
                             <tr key={key}>
@@ -122,14 +124,14 @@ class User extends Component {
                             </tr>
                           )
                         })
-                      }
+                    }
                     </tbody>
                   </Table>
               </CardBody>
               <CardFooter>
               <Link to={`/manageUser/user/${this.props.match.params.id}/edit`}>
-                <Button type="submit" size="sm" color="primary" hidden={this.state.flag}><i className="fa fa-dot-circle-o"></i> Update</Button></Link>
-                <Link to="/manageUser/UserList"><Button type="reset" size="sm" color="danger" hidden={this.state.flag} onClick={this.handleDelete}><i className="fa fa-ban"></i> Delete</Button></Link>
+                <Button type="submit" size="sm" className={cx(classes.createBtn)} hidden={this.state.flag}><i className="fa fa-dot-circle-o"></i> Update</Button></Link>
+                <Button type="reset" size="sm" className={cx(classes.createBtn)} hidden={this.state.flag} onClick={this.handleDelete}><i className="fa fa-ban"></i> Delete</Button>
                 <Link to="/manageUser/UserList"><Button type="reset" size="sm" color="danger" hidden={!this.state.flag}><i className="fa fa-ban"></i> Cancel</Button></Link>
               </CardFooter>
             </Card>

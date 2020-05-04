@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, CardFooter } from 'reactstrap';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import UsersDataService from '../../service/UsersDataService'
+import Modals from '../Notifications/Modals/Modals';
+import cx from "classnames";
+import classes from "./Users.module.css";
 //import logo from '../../assets/img/brand/cil-building.png'
 
 //const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
@@ -22,7 +25,8 @@ class UserRegistration extends Component {
       errors: {},
       value: "C",
       value1: "CA",
-      response:false
+      response:false,
+      redirectFlag:false
     }
   }
 
@@ -89,7 +93,7 @@ class UserRegistration extends Component {
     e.preventDefault();
     if(this.handleValidation()){
       this.registerUser();
-      alert("Form submitted");
+     
     }else{
       alert("Form has errors.")
     }
@@ -127,29 +131,42 @@ console.log("User Detials:",data)
 } 
   
   render() {
+
+    const buttonContainer = {
+      marginRight:'0.5%',
+      marginTop: '5px',
+      backgroundColor :'#1dafe2',
+      color:'white',
+    };
+
+    const iconContainer = {
+      backgroundColor :'#1dafe2',
+    };
+
     if(this.state.response){
       return (
   // <Redirect from="/login" to="/manageUser/UserList" />
-                <Redirect to={{
-                   pathname: '/manageUser/users'
+//                 <Redirect to={{
+//                    pathname: '/manageUser/users'
                    
-                }}
-/>
+//                 }}
+// />
+<Modals message={`User: ${this.state.fields["username"]} with UserId: ${this.state.fields["email"]} is registered successfully`} linkValue={"/manageUser/users"}></Modals>
 );
     }else{
     return (
       <div className="app flex-row align-items-center">
-        <Container>
+        <Container xl="12">
           <Row className="justify-content-center">
-            <Col md="9" lg="7" xl="6">
-              <Card className="mx-4">
+            <Col md="10" lg="10" xl="12">
+              <Card className="mx-4 shadow-lg mx-10">
                 <CardBody className="p-4">
                   <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)}>
                     <h1>Register</h1>
-                    <p className="text-muted">Create user account</p>
+                    <p className="text-muted">User account</p>
                     <span style={{color: "red"}} className="error">{this.state.errors["username"]}</span>
                     <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
+                      <InputGroupAddon addonType="prepend" >
                         <InputGroupText>
                           <i className="icon-user"></i>
                         </InputGroupText>
@@ -227,17 +244,32 @@ console.log("User Detials:",data)
                     </InputGroup>
                     {/* <Button color="success" block>Create Account</Button> */}
                     <Row>
-                    <Col xs="12" sm="6">
+                      
+                    {/* <Col xs="12" sm="6">
                       <Button className="btn-success mb-1" block><span>Submit</span></Button>
                     </Col>
                     <Col xs="12" sm="6">
                     <Link to="/manageUser/UserList">
                       <Button className="btn-danger mb-1" block><span>Cancel</span></Button>
                       </Link>
-                    </Col>
+                    </Col> */}
+
+                  
                   </Row>
+                  <CardFooter>
+                    <Row className="justify-content-left">
+                        <Col xs="12" sm="6">
+                        {/* <Button className="btn-success mb-1" onClick={this.continue}>Next</Button> */}
+                        <Button className={cx(classes.createBtn)}><span>Submit</span></Button>
+                        <Link to="/manageUser/users">
+                          <Button className={cx(classes.createBtn)}><span>Cancel</span></Button>
+                          </Link>
+                    </Col>
+                    </Row>
+                    </CardFooter>
                   </Form>
                 </CardBody>
+                
               </Card>
             </Col>
           </Row>

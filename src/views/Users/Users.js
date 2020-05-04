@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, Badge } from 'reactstrap';
 import UsersDataService from '../../service/UsersDataService'
 // import usersData from './UsersData'
-
+import classes from "./Users.module.css";
+import cx from "classnames";
 function UserRow(props) {
   const user = props.user
   const userLink = `/manageUser/user/${user.id}`
@@ -20,7 +21,7 @@ function UserRow(props) {
   return (
     <tr key={user.id}>
       {/* <th scope="row"><Link to={userLink1}>{user.id}</Link></th> */}
-      <th scope="row"><Link to={userLink1}>{user.name}</Link></th>
+      <td scope="row"><Link to={userLink1}>{user.name}</Link></td>
       <td>{user.userId}</td>
       <td>{user.experience}</td>
       {/* <td>{user.role_id}</td> */}
@@ -60,13 +61,20 @@ class Users extends Component {
 
     return (
       <div className="animated fadeIn">
+        <Row xs={2} md={4} lg={6}>
+            <Col md={{ span: 6, offset: 11 }}>
+              <Link to="/manageUser/createUser">
+                <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Add User</Button>
+              </Link>
+            </Col>
+          </Row>
         <Row>
           <Col xl={12}>
-            <Card>
+            {/* <Card>
               <CardHeader className="bg-success mb-12">
                 <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
               </CardHeader>
-              <CardBody>
+              <CardBody> */}
                 <Table responsive hover striped>
                   <thead>
                     <tr>
@@ -76,10 +84,10 @@ class Users extends Component {
                       <th scope="col">role</th>
                       <th scope="col">status</th> */}
                                 
-                                <th>Name</th>
-                                <th>UserName</th>
-                                <th>Experience</th>
-                                <th>Role</th>
+                                <th scope="col" className="headingPrimary">NAME</th>
+                                <th scope="col" className="headingPrimary">USERNAME</th>
+                                <th scope="col" className="headingPrimary">EXPERIENCE</th>
+                                <th scope="col" className="headingPrimary">ROLE</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,13 +96,13 @@ class Users extends Component {
                     )}
                   </tbody>
                 </Table>
-              </CardBody>
+              {/* </CardBody>
               <CardFooter>
               <Link to="/manageUser/createUser">
                 <Button size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Add User</Button></Link>
-                {/* <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link> */}
+                <Link to="/manageUser/createUser"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Delete</Button></Link>
               </CardFooter>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
       </div>

@@ -3,6 +3,9 @@ import { Card, CardBody, CardHeader, Col, Row, CardFooter, Button, Form, Input, 
 import { Link } from 'react-router-dom';
 // import usersData from './UsersData'
 import UsersDataService from '../../service/UsersDataService'
+import classes from "./Users.module.css";
+import cx from "classnames";
+import Modals from '../Notifications/Modals/Modals';
 class UserEdit extends Component {
   constructor(props) {
     super(props)
@@ -12,7 +15,8 @@ class UserEdit extends Component {
         errors: {},
         value: "C",
         value1: "CA",
-        message: null
+        message: null,
+        response:false
     }
     this.refreshCourses = this.refreshCourses.bind(this)
 }
@@ -25,7 +29,7 @@ class UserEdit extends Component {
       UsersDataService.retrieveUserByUserId(this.props.match.params.id)
         .then(
             response => {
-                console.log(response)
+                console.log("Edit User::",response.data)
                 this.setState({users:response.data})
                 this.setState({feilds:response.data})
             }
@@ -111,7 +115,6 @@ class UserEdit extends Component {
       e.preventDefault();
       if(this.handleValidation()){
         this.retrieveUsers();
-        alert("Form submitted");
       }else{
         alert("Form has errors.")
       }
@@ -169,8 +172,7 @@ class UserEdit extends Component {
           response => {
             console.log("UserResponse : ",response.status)
               if(response.status === 200){
-                
-                window.location.href = "/manageUser/UserList";
+                this.setState({response:true})
             }else{
               console.log("UserResponse : ",response.data)
             this.props.history.push(`/404`)}
@@ -184,7 +186,7 @@ class UserEdit extends Component {
 //       "name":this.state.users["username"],
 //       "userName":this.state.users["email"],
 //       "password":this.state.users["password"],
-//       "roleId":this.state["value"],
+//       "role_id":this.state["value"],
 //       "experience":this.state["value1"],
 //       }
 // console.log("User Detials:",data)
@@ -195,7 +197,7 @@ console.log("User Detials:",this.state.users)
         response => {
           console.log("UserResponse : ",response.status)
             if(response.status === 200){
-              this.props.history.push(`/manageUser/UserList`)
+              this.setState({response:true})
               // window.location.href = "/manageUser/UserList";
           }else{
             console.log("UserResponse : ",response.data)
@@ -207,18 +209,30 @@ console.log("User Detials:",this.state.users)
 
   render() {
 
+    const margin = {
+      marginTop: '40px'
+    };
+
+    const iconContainer = {
+      backgroundColor :'#1dafe2',
+    };
     // const user = usersData.find( user => user.id.toString() === this.props.match.params.id)
 
     // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
     // const userDetails = this.state.users ? Object.entries(this.state.users) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
 
+    if(this.state.response){
+      return (
+        <Modals message={`Details updated successfully for UserId: ${this.state.users["userId"]}`} linkValue={"/manageUser/users"}></Modals>
+      );
+    }else{
     return (
       <div className="animated fadeIn">
-        <Row className="justify-content-center">
-          <Col lg={6}>
-            <Card>
-              <CardHeader className="bg-success mb-12">
-                <strong><i className="icon-info pr-1"></i>{this.props.match.params.id}</strong>
+        <Row className="justify-content-center" style={margin}>
+          <Col md="10" lg="12" xl="11">
+            <Card classNmae="mx-4 shadow-lg mx-10">
+              <CardHeader className="mb-12 bg-primary">
+                <strong><i className="icon-user pr-1"></i>{this.props.match.params.id}</strong>
               </CardHeader>
               <CardBody>
                   {/* <Table responsive striped hover>
@@ -319,8 +333,8 @@ console.log("User Detials:",this.state.users)
                     {/* <Button color="success" block>Create Account</Button> */}
                     <CardFooter>
              
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Update</Button>
-                <Link to="/manageUser/UserList"><Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Cancel</Button></Link>
+                <Button type="submit" size="sm" className={cx(classes.createBtn)}><i className="fa fa-dot-circle-o"></i> Update</Button>
+                <Link to="/manageUser/users"><Button type="reset" size="sm" className={cx(classes.createBtn)}><i className="fa fa-ban"></i> Cancel</Button></Link>
               </CardFooter>
                   </Form>
               </CardBody>
@@ -331,6 +345,7 @@ console.log("User Detials:",this.state.users)
       </div>
     )
   }
+}
 }
 
 export default UserEdit;

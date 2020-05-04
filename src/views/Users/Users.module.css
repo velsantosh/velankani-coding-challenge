@@ -1,0 +1,19 @@
+.filterContainer{
+    margin-top:20px;
+
+}
+.filterBtn{
+    margin-left:10px;
+    margin-right:5px;
+}
+
+.createBtn{
+    margin-top: 10px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:5px;
+}
+.showActive{
+    background-color: #20a8d8;
+    color: white;
+}
