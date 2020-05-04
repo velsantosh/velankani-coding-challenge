@@ -7,8 +7,9 @@ import PopulateQid from './PopulateQid';
 import AssignSubjective from './AssignSubjective';
 import classes from "./SelectQuestions.module.css";
 import cx from "classnames";
+import Modals from '../../Notifications/Modals/Modals';
 // import usersData from './UsersData'
-
+import PopulateAll from './PopulateAll';
 class SelectQuestions extends Component {
 
   constructor(props) {
@@ -18,19 +19,24 @@ class SelectQuestions extends Component {
                qidList:[],
                message: null,
                userList:[this.props.values.users],
-               type:'SUBJECTIVE',
+               type:'ALL',
                flag:true,
                redirectToBaseView :false
               }
-    this.getQuestionsByType = this.getQuestionsByType.bind(this)
+    this.getQuestionsByTech = this.getQuestionsByTech.bind(this)
   }
 
    componentDidMount(){
-     this.getQuestionsByType();
+     this.getQuestionsByTech();
   }
 
    selectedType = (e) =>{
        let type=e.target.value;
+       if(type === "ALL"){
+        this.setState({type:type})
+         this.getQuestionsByTech();
+         
+        }else{
        QuestionService.getQuestionsByTypeTech(e.target.value,this.props.values.technology)
         .then(
           response => {
@@ -38,13 +44,14 @@ class SelectQuestions extends Component {
               this.setState({type:type})
               }
           );
+        }
   }
     
-   getQuestionsByType(){
-       QuestionService.getQuestionsByTypeTech(this.state.type,this.props.values.technology)
+  getQuestionsByTech(){
+       QuestionService.getQuestionsByTech(this.props.values.technology)
         .then(
             response => {
-                this.setState({questions:response.data})
+                this.setState({questions:response.data, qidList:[]}, ()=> console.log("clean list",this.state.qidList))
             }
         )
   }
@@ -101,6 +108,7 @@ class SelectQuestions extends Component {
 
      QuestionService.getAllSchQuestionsByUserId(this.props.values.users).then(response => {
             let assignQidList = response.data;
+            console.log("assign List Data",response.data)
             let assignList = assignQidList.filter((ques) => {
               return this.state.qidList.includes(ques.id);
           });
@@ -113,10 +121,6 @@ class SelectQuestions extends Component {
           }
         }
     ) 
-    
-      this.setState({
-        redirectToBaseView: true
-      });
   }
   else{
     alert("Select atleast one question");
@@ -127,8 +131,15 @@ assignQuestion(data){
   QuestionService.assignObjQuestion(data)
   .then(response => {
         console.log("UserResponse : ",response.status)
-        
-      })
+        if(response.status === 200){
+          this.setState({redirectToBaseView:true})
+          // window.location.href = "/manageUser/UserList";
+        }else{
+          console.log("UserResponse : ",response.data)
+        this.props.history.push(`/404`)
+        }
+      }
+      )
     }
 
 render() {
@@ -155,7 +166,9 @@ render() {
 
     const redirectToBaseView = this.state.redirectToBaseView;
     if (redirectToBaseView === true) {
-        return (<Redirect to = "/dashboard"/>);
+      return (
+        <Modals message={`Question assigned succesfully`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+      );
     }
     // const userList = usersData.filter((user) => user.id < 10)
     let questionsList = this.state.questions;
@@ -171,6 +184,14 @@ render() {
           </div>
           
          <Row style={marginLeft}>
+
+         <abbr className="no-border" style={marginRight} >
+            <Button block outline  color="primary" onClick = {this.selectedType} value="ALL" 
+            className={this.state.type === "ALL" ? classes.showActive : ""
+                  }
+            >ALL</Button>
+            </abbr>
+
             <abbr className="no-border" style={marginRight} >
             <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE" 
             className={this.state.type === "SUBJECTIVE" ? classes.showActive : ""
@@ -186,16 +207,18 @@ render() {
             </abbr>
             </Row>
 
-       <Row>
-          <Col xl={12}>
+            <Row xs="12" className="justify-content-center">
+            <Col xl={10}>
               <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)} >
                 <Table responsive hover striped>
                   <thead>
                     <tr>
                         <th scope="col" className="headingPrimary"></th>
                         <th scope="col" className="headingPrimary">TITLE</th>
+                        <th scope="col" className="headingPrimary">TOPIC</th>
                         <th scope="col" className="headingPrimary">STATEMENT</th>
                         <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                        <th scope="col" className="headingPrimary">EXPERIENCE</th>
                         <th scope="col" className="headingPrimary">EXPECTED TIME</th>
                     </tr>
                   </thead>
@@ -225,6 +248,13 @@ render() {
           </div>
           
          <Row style={marginLeft}>
+         <abbr className="no-border" style={marginRight} >
+            <Button block outline  color="primary" onClick = {this.selectedType} value="ALL" 
+            className={this.state.type === "ALL" ? classes.showActive : ""
+                  }
+            >ALL</Button>
+            </abbr>
+
             <abbr className="no-border" style={marginRight} >
             <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE" 
               className={this.state.type === "SUBJECTIVE" ? classes.showActive : ""}>
@@ -238,8 +268,8 @@ render() {
               Objective</Button>
             </abbr>
             </Row>
-       <Row>
-          <Col xl={12}>
+            <Row xs="12" className="justify-content-center">
+            <Col xl={10}>
             {/* <Card>
               <CardHeader className="bg-success mb-12">
                 <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
@@ -251,8 +281,10 @@ render() {
                     <tr>
                       <th scope="col" className="headingPrimary"></th>
                       <th scope="col" className="headingPrimary">TITLE</th>
+                      <th scope="col" className="headingPrimary">TOPIC</th>
                       <th scope="col" className="headingPrimary">STATEMENT</th>
-                      <th scope="col" className="headingPrimary">DIFFICULTY</th>          
+                      <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                      <th scope="col" className="headingPrimary">EXPERIENCE</th>          
                     </tr>
                   </thead>
                   <tbody>
@@ -275,7 +307,77 @@ render() {
           
       </div>
     )
-                   }
+    }else if(type === "ALL"){
+      console.log("Inside ALL")
+                    return (
+                      <div className="animated fadeIn" style={marginTop}>
+                        
+                        <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
+                            <h4>Type</h4>
+                          </div>
+                          
+                         <Row style={marginLeft}>
+                         <abbr className="no-border" style={marginRight} >
+                            <Button block outline  color="primary" onClick = {this.selectedType} value="ALL" 
+                            className={this.state.type === "ALL" ? classes.showActive : ""
+                                  }
+                            >ALL</Button>
+                            </abbr>
+                            
+                            <abbr className="no-border" style={marginRight} >
+                            <Button block outline  color="primary" onClick = {this.selectedType} value="SUBJECTIVE" 
+                              className={this.state.type === "SUBJECTIVE" ? classes.showActive : ""}>
+                              Subjective</Button>
+                            </abbr>
+                           
+                          
+                            <abbr className="no-border" style={marginRight} >
+                            <Button block outline color="primary" onClick = {this.selectedType} value="OBJECTIVE"
+                             className={this.state.type === "OBJECTIVE" ? classes.showActive : ""}>
+                              Objective</Button>
+                            </abbr>
+                            </Row>
+                            <Row xs="12" className="justify-content-center">
+                            <Col xl={10}>
+                            {/* <Card>
+                              <CardHeader className="bg-success mb-12">
+                                <i className="fa fa-align-justify"></i> Users <small className="text-white">Details</small>
+                              </CardHeader>
+                              <CardBody> */}
+                              <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)} >
+                                <Table responsive hover striped>
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" className="headingPrimary"></th>
+                                      <th scope="col" className="headingPrimary">TITLE</th>
+                                      <th scope="col" className="headingPrimary">TOPIC</th>
+                                      <th scope="col" className="headingPrimary">STATEMENT</th>
+                                      <th scope="col" className="headingPrimary">TYPE</th>
+                                      <th scope="col" className="headingPrimary">DIFFICULTY</th>
+                                      <th scope="col" className="headingPrimary">EXPERIENCE</th>          
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                   {questionsList.map((question, index) =>
+                                      //<QuestionRow key={index} question={question} />
+                                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect = {this.removeQuestion} buttonSelect={"checkbox"} type={type}/>
+                                    )}
+                                  </tbody>
+                                </Table>
+                              
+                                {/* <i className="fa fa-dot-circle-o" ></i> */}
+                                {/* <i className="fa fa-ban"></i>  */}
+                              <Button className="btn btn-primary mb-1" style={buttonContainer}> Assign Questions</Button>
+                              <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.back}>Previous</Button>
+                             </Form>
+                           </Col>
+                        </Row>
+                            
+                                    
+                          
+                      </div>
+                    )
+                                   }               
   }
 }
 

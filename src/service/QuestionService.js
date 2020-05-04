@@ -81,15 +81,21 @@ class QuestionService {
         console.log("jst before calling api",questionData);
         return axios.put(`http://localhost:8082/update/obj/question/${qId}`,questionData);
     }
-    getQuestionsByTech(type) {
+    getQuestionsByTech(tech) {
         //console.log('getQuestionsByTech');      
-        return axios.get(`http://localhost:8082/questions/tech/${type}`);
+        return axios.get(`http://localhost:8082/questions/tech/${tech}`);
     }
 
     getQuestionsById(id) {
         //console.log('getQuestionsById')
 
         return axios.get(`http://localhost:8082/question/${id}`);
+    }
+
+    getSchQuestionsByAssignerId(assignerId) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.get(`http://localhost:8083/schQuesByassignerId/${assignerId}`);
     }
 }
 

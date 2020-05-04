@@ -4,7 +4,7 @@ import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGro
 import Counter from './Counter';
 import Parser from 'html-react-parser';
 
-class PopulateQid extends Component {
+class PopulateAll extends Component {
 
     constructor(props) {
         super(props)
@@ -40,22 +40,21 @@ class PopulateQid extends Component {
     var stmt = question.statement;
     if(stmt) stmt=stmt.substr(0,30);
     var newStmt = `${stmt}...`
-    
     return (
-                    <tr key={question.id}>
-                      <td><input type={this.props.buttonSelect} onChange={this.handleChange}/></td>
-                      <td>{question.title}</td>
-                      <td>{question.topic}</td>
-                    <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
-                    <Counter show={this.state.addModelShow}
-                            onHide={addModal} statement={question.statement}></Counter>
-                    <td>{question.difficulty}</td>
-                    <td>{question.experience}</td>
-                    </tr>
-    )
+        <tr key={question.id}>
+          <td><input type={this.props.buttonSelect} onChange={this.handleChange}/></td>
+          <td>{question.title}</td>
+          <td>{question.topic}</td>
+        <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
+        <Counter show={this.state.addModelShow}
+                onHide={addModal} statement={question.statement}></Counter>
+        <td>{question.type}</td>
+        <td>{question.difficulty}</td>
+        <td>{question.experience}</td>
+        </tr>
+)
     
-      
   }
 }
 
-export default PopulateQid;
+export default PopulateAll;

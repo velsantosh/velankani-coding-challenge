@@ -1,6 +1,6 @@
 {
-  "name": "AssignQuestion",
+  "name": "AssignedQuestion",
   "version": "0.0.0",
   "private": true,
-  "main": "./AssignQuestion.js"
+  "main": "./AssignedQuestion.js"
 }

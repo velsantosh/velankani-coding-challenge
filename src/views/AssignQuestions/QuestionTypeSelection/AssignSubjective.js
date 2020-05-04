@@ -42,10 +42,12 @@ class AssignSubjective extends Component {
                     <tr key={question.id}>
                       <td><input type="radio" name="optradio" onClick={this.handleChange}/></td>
                       <td>{question.title}</td>
+                      <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
                     <Counter show={this.state.addModelShow}
                     onHide={addModal} statement={question.statement}></Counter>
                     <td>{question.difficulty}</td>
+                    <td>{question.experience}</td>
                     <td>{question.expectedTime}</td>
                     </tr>
     )
