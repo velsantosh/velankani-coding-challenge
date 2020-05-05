@@ -6,34 +6,7 @@ import classes from "./Questions.module.css";
 import cx from "classnames";
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
-import parse from 'html-react-parser';
-import Parser from 'html-react-parser';
-// import usersData from './UsersData'
-
-function QuestionRow(props) {
-  const question = props.question
-  const questiontype = question.type.toLowerCase();
-  console.log(question.type);
-  let questionLink ;
-  if(questiontype =="subjective"){
-  questionLink= `/manageQuestion/modifySubjectiveQuestion`;
-  }
-  if(questiontype =="objective"){
-    questionLink= `/manageQuestion/modifyObjectiveQuestion`;
-    }
-  // const userLink1 = `/manageUser/user/${user.userName}`
-
-  return (
-    <tr key={question.id}>
-      <th scope="row" onClick ={props.clickEvent}>
-        <Link to={questionLink}>{question.title}</Link></th>
-      <td>{Parser(question.statement)}</td>
-      <td>{question.type}</td>
-      <td>{question.difficulty}</td>
-      <td>{question.experience}</td>
-    </tr>
-  )
-}
+import QuestionRow from "./QuestionRow";
 
 class Questions extends Component {
 
@@ -45,7 +18,8 @@ class Questions extends Component {
       selectedType :'',
       selectedTechnology :'',
       activeType :'subjective',
-      activeTechnology :'java'
+      activeTechnology :'java',
+      showModal :false,
     }
   }
 
@@ -83,7 +57,6 @@ class Questions extends Component {
       marginRight: '3%'
     }
    
-    // const userList = usersData.filter((user) => user.id < 10)
     const questionsList = this.state.questions
 
     return (
@@ -145,7 +118,9 @@ class Questions extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {questionsList.map((question, index) =>
+                  
+                  { this.state.questions.length>0 &&
+                  questionsList.map((question, index) =>
                     <QuestionRow key={index} question={question} clickEvent={this.setQuestionInfo.bind(this,{question})} />
                   )}
                 </tbody>

@@ -142,10 +142,14 @@ class ModifyObjectiveQuestion extends Component {
                 break;
             }
         }
-        
-    
     }
-
+    
+    close=()=>{
+        this.setState({
+            redirectToBaseView: true
+          });
+     }
+     
     render() {
         const buttonContainer = {
             width: '200px',
@@ -270,7 +274,7 @@ class ModifyObjectiveQuestion extends Component {
                                     </Col>
                                 </Row>
                                 <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={(e) => this.modifyQuestion(e)} >Save</Button>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer}>Close</Button>
+                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close}>Close</Button>
                             </Form>
                         </Col>
                     </Row>

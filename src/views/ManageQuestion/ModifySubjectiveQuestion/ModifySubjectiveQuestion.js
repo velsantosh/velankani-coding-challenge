@@ -179,7 +179,11 @@ class ModifySubjectiveQuestion extends Component {
             this.modifySubjectiveQuestion(this.state.qId,this.modifyQuestionData);   
         })
         }
-     
+         close=()=>{
+            this.setState({
+                redirectToBaseView: true
+              });
+         }
         // QuestionService.modifySubjectiveQuestion(this.subQuestionData.qId,this.modifyQuestionData)
         // .then(response => {
         //   this.setState({
@@ -334,7 +338,7 @@ class ModifySubjectiveQuestion extends Component {
                                 </Col>
                                 </Row>
                                 <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.modifyQuestion} >Save</Button>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer}>Close</Button>
+                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close} >Close</Button>
                             </Form>
 
                 </Container>
