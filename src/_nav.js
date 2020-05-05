@@ -18,7 +18,7 @@ export default {
     {
       name :'Assign Question',
       actual_name: 'ASSIGN_QUESTION',
-      url: '/assignQuestion/AssignQuestion',
+      url: '/assignQuestion/AssignedQuestion',
       icon: 'icon-pencil'
     },
     {
