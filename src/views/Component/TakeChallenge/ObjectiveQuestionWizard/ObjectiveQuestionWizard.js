@@ -32,7 +32,7 @@ class ObjectiveQuestionWizard extends Component {
     console.log("componentDidMount props : ", this.props);
     if (this.props.location.state != null ) {
       this.setState({
-        isScheduledPage : true
+        isScheduledPage : this.props.location.state.scheduledQuestions
       })
     }
 
@@ -157,7 +157,7 @@ class ObjectiveQuestionWizard extends Component {
     if (idx > (this.state.objQuestions.length - 1)) {
       nextPage = (
         <Confirm result={this.state.result} prevstep={this.prevStep}
-          nextstep={this.nextStep} isScheduledPage={this.state.isScheduledPage}/>
+          nextstep={this.nextStep} isScheduledPage={this.state.isScheduledPage}/> 
       );
     }
     else {
