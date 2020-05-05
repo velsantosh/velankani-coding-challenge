@@ -170,6 +170,11 @@ class SolveQuestion extends Component {
             // border: '2px solid grey'
         };
 
+
+        const testCaseStyle = {
+            marginBottom: '0.25%'
+        }
+
         let idx = this.state.step;
         console.log("index :", idx);
 
@@ -241,7 +246,7 @@ class SolveQuestion extends Component {
                                     {this.state.submitted ? backToQuestList : null}
                                     <Row></Row>
 
-                                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example"  >
                                         {/* <Tab eventKey="home" title="OutPut">
                                             <Card>
                                                 <CardBody>
@@ -250,7 +255,7 @@ class SolveQuestion extends Component {
                                             </Card> 
                                          </Tab> */}
                                         <Tab eventKey="profile" title="JUnit Test Result" >
-                                            <Card>
+                                            <Card style={testCaseStyle}>
                                                 <CardBody>
                                                     <CardText>{this.state.testCaseResults}</CardText>
                                                 </CardBody>

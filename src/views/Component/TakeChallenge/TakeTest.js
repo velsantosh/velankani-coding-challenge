@@ -212,6 +212,11 @@ class TakeTest extends Component {
       marginRight: '0.5%'
     };
 
+    
+    const testCaseStyle = {
+      marginBottom: '0.25%'
+
+  }
     return (
       <div className="animated fadeIn">
         if (this.state.showPopup) {
@@ -268,8 +273,8 @@ class TakeTest extends Component {
                   </CardBody> style={buttonContainer}
                 </Card> 
                  </Tab> */}
-              <Tab eventKey="profile" title="JUnit Test Result" >
-                <Card>
+              <Tab eventKey="profile" title="JUnit Test Result"  >
+                <Card style={testCaseStyle} >
                   <CardBody>
                     <CardTitle style={headingStyle}>JUnit test case result 2</CardTitle>
                     <CardText>{this.state.testCaseResults}</CardText>
