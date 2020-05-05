@@ -32,6 +32,7 @@ const QuestionList = React.lazy(() => import('./views/ManageQuestion/QuestionsLi
 
 const QuestionType = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/QuestionType'));
 const AssignQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignQuestion'));
+const AssignedQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignedQuestion'));
 const SelectQuestions = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/SelectQuestions'));
 //const ObjectiveQues = React.lazy(() => import('./views/ManageQuestion/ObjectiveQues'));
 //const SubjectiveQues = React.lazy(() => import('./views/ManageQuestion/SubjectiveQues'));
@@ -132,6 +133,7 @@ const routes = [
   
   { path: '/assignQuestion/AssignQuestion', name: 'Assign_Questions', component: AssignQuestion },
   { path: '/assignQuestion/QuestionType', name: 'Assign_Questions', component: QuestionType },
+  { path: '/assignQuestion/AssignedQuestion', name: 'Assign_Questions', component: AssignedQuestion },
 
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },
