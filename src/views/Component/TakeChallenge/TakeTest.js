@@ -75,19 +75,15 @@ class TakeTest extends Component {
         }
         else {
           response.data.map((question) => {
-            console.log("question :", question)
+            console.log("question 123:", question)
             if (question.type === 'SUBJECTIVE') {
               this.setState({ questionContent: question.statement });
               this.setState({ qId: question.id });
+              this.setState({
+                editorContent: question.methodName
+              });
             }
-
           });
-
-          this.setState({
-            editorContent: `public class ExampleClass{
-                  public static void main(String[] str){
-                    System.out.println("Start the take test");
-                  }}`});
         }
       }
     )
@@ -145,7 +141,7 @@ class TakeTest extends Component {
 
     let key = {
       qid: this.state.qId,
-      userId: this.props.userName           
+      userId: this.props.userName
     }
 
     let resultValue = {
@@ -156,18 +152,18 @@ class TakeTest extends Component {
     };
 
 
-    console.log("clicked on submit new values here : ", this.state.editorContent);
+    console.log("clicked on submit new values here takeTest: ", this.state.editorContent);
     ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
       .then(
         response => {
           console.log("submitScheduledSubQuestionResultsByUserId questions testCaseResults: ", response.data)
 
           if (response.data) {
-            this.setState({ testCaseResults: "Test result submitted successfully"});
-            }
-            else{
-                this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully"});
-            }
+            this.setState({ testCaseResults: "Test result submitted successfully" });
+          }
+          else {
+            this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully" });
+          }
           //hardcoded for now
           this.setState({
             showPopup: !this.state.showPopup
@@ -214,7 +210,7 @@ class TakeTest extends Component {
     }
     const marginRight = {
       marginRight: '0.5%'
-  };
+    };
 
     return (
       <div className="animated fadeIn">

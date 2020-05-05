@@ -52,7 +52,7 @@ class ObjectiveQuestionWizard extends Component {
     QuestionService.getQuestionsById(qId)
       .then(
         response => {      
-          console.log("subjective questions list: newObj", response.data)
+          console.log("subjective questions list: ObjectiveQuestionWizard", response.data)
           this.setState({
             objQuestions: [...this.state.objQuestions, response.data]
           });        
@@ -89,8 +89,7 @@ class ObjectiveQuestionWizard extends Component {
 
         let key ={
           qid :this.state.objQuestions[this.state.step].id,
-          userId :"test_user" 
-          //userId : this.props.userId
+          userId : this.props.userName
         }
 
         let resultValue = {         

@@ -35,7 +35,10 @@ class SolveQuestion extends Component {
             questions: [],
             step: 0,
             testCaseResults: '',
-            submitted: false
+            submitted: false,
+           isScheduledQuestion : this.props.location.state != null ? this.props.location.state.scheduledQuestions : false
+
+
         };
         this.getQuestionsByType = this.getQuestionsByType.bind(this);
         this.updatedEditorContent = this.updatedEditorContent.bind(this);
@@ -46,8 +49,8 @@ class SolveQuestion extends Component {
             console.log("after updating editorContent solveQuestin:", this.state.editorContent);
         });
     };
-    handleRunTest = (e) => {
 
+    handleRunTest = (e) => {
         console.log("handleRunTest for question id ", this.props);
         let quesResponseObj = {
             qId: this.state.qId,
@@ -70,9 +73,10 @@ class SolveQuestion extends Component {
 
     handleSubmit = (event) => {
 
+        console.log("this.props.userName handleSubmit", this.props.userName);
         let key = {
             qid: this.state.qId,
-            userId: this.props.userName            
+            userId: this.props.userName
         }
 
         let resultValue = {
@@ -82,16 +86,16 @@ class SolveQuestion extends Component {
             key: key
         };
 
-        console.log("clicked on submit new values here : ", this.state.editorContent);
+        console.log("clicked on submit new values here solveQuestion: ", this.state.editorContent);
         ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
             .then(
                 response => {
-                    console.log("submitScheduledSubQuestionResultsByUserId testCaseResults: ", response.data)
+                    console.log("submitScheduledSubQuestionResultsByUserId testCaseResults: ", response)
                     if (response.data) {
-                    this.setState({ testCaseResults: "Test result submitted successfully"});
+                        this.setState({ testCaseResults: "Test result submitted successfully" });
                     }
-                    else{
-                        this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully"});
+                    else {
+                        this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully" });
                     }
                     this.setState({
                         submitted: true
@@ -107,22 +111,16 @@ class SolveQuestion extends Component {
 
     getQuestionsByType() {
         console.log("this.props", this.props);
-        QuestionService.getQuestionsById(this.state.qId)//"SubX98154X1587617024133")
+        QuestionService.getQuestionsById(this.state.qId)
             .then(
                 response => {
-                    console.log("subjective questions list: ", response.data)
-                    const { question } = response.data;
+                    console.log("subjective questions list: SolveQuestion", response.data)
                     this.setState({ questionContent: response.data.statement });
-                    // this.setState({ qId: response.data.id });
+                    this.setState({ editorContent: response.data.methodName });
 
                 }
             );
 
-        this.setState({
-            editorContent: `public class ExampleClass{
-                  public static void main(String[] str){
-                    System.out.println("Start the take test");
-                  }}`});
     }
     // Proceed to next step
     nextStep = () => {
@@ -160,7 +158,7 @@ class SolveQuestion extends Component {
             padding: '1px 2px 1px 2px'
         };
         const buttonContainer = {
-            marginBottom :'3%',
+            marginBottom: '3%',
             //marginBottom: '20px !important',
             backgroundColor: '#1dafe2',
             color: 'white',
@@ -177,30 +175,37 @@ class SolveQuestion extends Component {
 
         let nextPage;
 
+        if (this.state.isScheduledQuestion){
+
+            var scheduledQuestionList=  "/takechallenge";
+        }else {
+            var scheduledQuestionList=  "/subQuestionsList";
+
+        }
+
         let backToQuestList = (
             <Row>
-            <Col md="5">
-
-                <p style={{
-                    backgroundColor: "lightblue", marginLeft: '2%',
-                    fontSize: '18px', bottomRight: "40"
-                }}>result submitted successfully..</p>
-                    <Link to="/subQuestionsList">
-                        <Button  style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
+                <Col md="5">
+                    <p style={{
+                        backgroundColor: "lightblue", marginLeft: '2%',
+                        fontSize: '18px', bottomRight: "40"
+                    }}>result submitted successfully..</p>
+                    <Link to={scheduledQuestionList}>
+                        <Button style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
                     </Link>
-                    </Col>
+                </Col>
             </Row>
         );
 
         let runAndSubmitBtns = (
             <Row>
-            <Col md="3">
-                <Button disabled={this.state.submitted} block outline color="primary"  style={buttonContainer} onClick={this.handleSubmit}>Submit</Button>
-            </Col>
-            <Col md="3" className="card-header-actions mb-3 mb-xl-0">
-                <Button disabled={this.state.submitted} block outline color="primary"  style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
-            </Col>
-        </Row>
+                <Col md="3">
+                    <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleSubmit}>Submit</Button>
+                </Col>
+                <Col md="3" className="card-header-actions mb-3 mb-xl-0">
+                    <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
+                </Col>
+            </Row>
         );
         nextPage = (
             <div>
@@ -221,17 +226,18 @@ class SolveQuestion extends Component {
                                     </Card>
                                     <Row>
                                         <CopyToClipboard text={this.state.editorContent} >
-                                        <button style={{ backgroundColor: "lightblue", marginLeft: '2%'}}>
-                                            CopyToClipboard</button>
-                                    </CopyToClipboard>
+                                            <button style={{ backgroundColor: "lightblue", marginLeft: '2%' }}>
+                                                CopyToClipboard</button>
+                                        </CopyToClipboard>
                                     </Row>
                                     <Card>
                                         <CardBody>
                                             <EditorJava content={this.state.editorContent} showGutter="true" updatedContent={this.updatedEditorContent} ></EditorJava>
                                         </CardBody>
                                     </Card>
-                                      
+
                                     {!this.state.submitted ? runAndSubmitBtns : null}
+                                    {console.log("you are called from solveQuestion")}
                                     {this.state.submitted ? backToQuestList : null}
                                     <Row></Row>
 
@@ -283,8 +289,8 @@ class SolveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-      userName: state.userName
+        userName: state.userName
     };
-  };
-  
-  export default connect(mapStateToProps)(SolveQuestion)
+};
+
+export default connect(mapStateToProps)(SolveQuestion)

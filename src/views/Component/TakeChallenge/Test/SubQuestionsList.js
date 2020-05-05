@@ -15,12 +15,18 @@ function QuestionRow(props) {
   if (question.type === 'OBJECTIVE') {
     questionLink = `/takeobjectivetest/${question.id}`
   }
-  console.log("question  QuestionRow: ", question);
-  console.log("question  QuestionRow: .technology ", question.technology);
-
+  console.log("scheduledQuestionsOrNot props ", props.isScheduled);
+  console.log("question  QuestionRow:  ", question);
+  console.log("question.technology ", question.technology);
+  
   return (
     <tr key={question.id}>
-      <th scope="row"><Link to={questionLink}>{question.title}</Link></th>
+      <th scope="row"><Link to={{
+        pathname: questionLink.toString(),
+        state: {
+          scheduledQuestions: props.isScheduled != null ? props.isScheduled : null
+        }
+      }}>{question.title}</Link></th>
       <td>{question.technology}</td>
       <td>{Parser(question.statement)}</td>
       <td>{question.difficulty}</td>
@@ -36,26 +42,26 @@ class SubQuestionsList extends Component {
     super(props)
     this.state = {
       questions: [],
-      type: '', 
-      index :0, 
-      scheduledQuestionsOrNot : this.props.location.state != null ? this.props.location.state.scheduledQuestions : null
+      type: '',
+      index: 0,
+      scheduledQuestionsOrNot: this.props.location.state != null ? this.props.location.state.scheduledQuestions : null
     }
-    console.log("scheduledQuestionsOrNot : ",this.state.scheduledQuestionsOrNot);
-    
+    console.log("scheduledQuestionsOrNot : ", this.state.scheduledQuestionsOrNot);
+
     this.getQuestionsByTech = this.getQuestionsByTech.bind(this);
     this.getQuestionsByType = this.getQuestionsByType.bind(this);
   }
 
   componentDidMount() {
 
-     if (this.state.scheduledQuestionsOrNot != null && this.state.scheduledQuestionsOrNot) {
+    if (this.state.scheduledQuestionsOrNot != null && this.state.scheduledQuestionsOrNot) {
 
-      console.log("getScheduledQuestionsByUserId: ",this.state.scheduledQuestionsOrNot);
-       this.getScheduledQuestionsByUserId();
-     } else {
-      console.log("getQuestionsByTech ",this.state.scheduledQuestionsOrNot);
-       this.getQuestionsByTech();
-     }
+      console.log("getScheduledQuestionsByUserId: ", this.state.scheduledQuestionsOrNot);
+      this.getScheduledQuestionsByUserId();
+    } else {
+      console.log("getQuestionsByTech ", this.state.scheduledQuestionsOrNot);
+      this.getQuestionsByTech();
+    }
   }
 
   getScheduledQuestionsByUserId() {
@@ -65,10 +71,10 @@ class SubQuestionsList extends Component {
         console.log("getScheduledQuestionsByUserId :", response.data.length)
         response.data.map((question) => {
           console.log("question :", question)
-          if (question.type === 'SUBJECTIVE') {            
+          if (question.type === 'SUBJECTIVE') {
             questions.push(question);
           }
-          this.setState({ questions: questions});
+          this.setState({ questions: questions });
         });
       }
     )
@@ -92,11 +98,11 @@ class SubQuestionsList extends Component {
   }
 
   render() {
-    const marginTop ={
-      marginTop:'20px'
+    const marginTop = {
+      marginTop: '20px'
     };
-    const tableMargin ={
-      marginTop :'5%'
+    const tableMargin = {
+      marginTop: '5%'
     };
     const marginRight = {
       marginRight: '0.5%'
@@ -105,13 +111,13 @@ class SubQuestionsList extends Component {
 
     let filterByTypeComponent = (
       <Row>
-      <abbr class="no-border" style={marginRight} >
-        <Button block outline color="primary" onClick={this.getQuestionsByType} value="SUBJECTIVE">Subjective</Button>
-      </abbr>
-      <abbr class="no-border" style={marginRight} >
-        <Button block outline color="primary" onClick={this.getQuestionsByType} value="OBJECTIVE">Objective</Button>
-      </abbr>
-    </Row>
+        <abbr class="no-border" style={marginRight} >
+          <Button block outline color="primary" onClick={this.getQuestionsByType} value="SUBJECTIVE">Subjective</Button>
+        </abbr>
+        <abbr class="no-border" style={marginRight} >
+          <Button block outline color="primary" onClick={this.getQuestionsByType} value="OBJECTIVE">Objective</Button>
+        </abbr>
+      </Row>
     );
 
 
@@ -121,8 +127,8 @@ class SubQuestionsList extends Component {
         <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
           <h4>Subjective Test</h4>
         </div>
-        <Container>         
-        {!this.state.scheduledQuestionsOrNot ? filterByTypeComponent : null}
+        <Container>
+          {!this.state.scheduledQuestionsOrNot ? filterByTypeComponent : null}
 
           <Row xs="12" className="justify-content-center">
             <Col xl={10}>
@@ -136,7 +142,7 @@ class SubQuestionsList extends Component {
                 </thead>
                 <tbody>
                   {questionsList.map((question, index) =>
-                    <QuestionRow key={index} question={question} />
+                    <QuestionRow key={index} question={question} isScheduled={this.state.scheduledQuestionsOrNot} />
                   )}
                 </tbody>
               </Table>
@@ -154,7 +160,7 @@ class SubQuestionsList extends Component {
 //export default Question
 const mapStateToProps = state => {
   return {
-    userName : state.userName
+    userName: state.userName
   };
 };
 
