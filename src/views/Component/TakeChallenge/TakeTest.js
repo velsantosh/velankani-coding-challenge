@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
 import TestResult from '../TakeChallenge/Test/TestResult';
 import { connect } from "react-redux";
-//import * as actionTypes from "../../../store/Actions";
+import * as actionTypes from "../../../store/Actions";
 import { Tabs, Tab } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import { Link, NavLink as RRNavLink } from "react-router-dom";
@@ -160,8 +160,14 @@ class TakeTest extends Component {
     ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
       .then(
         response => {
-          console.log("subjective questions testCaseResultss: ", response.data)
-          this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
+          console.log("submitScheduledSubQuestionResultsByUserId questions testCaseResults: ", response.data)
+
+          if (response.data) {
+            this.setState({ testCaseResults: "Test result submitted successfully"});
+            }
+            else{
+                this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully"});
+            }
           //hardcoded for now
           this.setState({
             showPopup: !this.state.showPopup
@@ -189,7 +195,7 @@ class TakeTest extends Component {
     ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent)
       .then(
         response => {
-          console.log("subjective questions testCaseResultss: ", response.data)
+          console.log(" runScheduledQuestionTestCases subjective questions testCaseResults: ", response.data)
           this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
         }
       );
@@ -258,17 +264,18 @@ class TakeTest extends Component {
           <Col xs="12" md="12" className="mb-4">
 
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="OutPut">
+              {/* <Tab eventKey="home" title="OutPut">
                 <Card>
                   <CardBody>
                     <CardTitle style={headingStyle}>OutPut</CardTitle>
                     <CardText>{this.state.testCaseResults}</CardText>
-                  </CardBody>
-                </Card>                                            </Tab>
-              <Tab eventKey="profile" title="Test: 0 pass/ 3 fail">
+                  </CardBody> style={buttonContainer}
+                </Card> 
+                 </Tab> */}
+              <Tab eventKey="profile" title="JUnit Test Result" >
                 <Card>
                   <CardBody>
-                    <CardTitle style={headingStyle}>JUnit teat case Report</CardTitle>
+                    <CardTitle style={headingStyle}>JUnit test case result 2</CardTitle>
                     <CardText>{this.state.testCaseResults}</CardText>
                   </CardBody>
                 </Card>

@@ -62,7 +62,7 @@ class SolveQuestion extends Component {
         ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent)
             .then(
                 response => {
-                    console.log("subjective questions testCaseResultss: ", response.data)
+                    console.log("runScheduledQuestionTestCases testCaseResults: ", response.data)
                     this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
                 }
             );
@@ -86,8 +86,13 @@ class SolveQuestion extends Component {
         ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
             .then(
                 response => {
-                    console.log("subjective questions testCaseResultss: ", response.data)
-                   // this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
+                    console.log("submitScheduledSubQuestionResultsByUserId testCaseResults: ", response.data)
+                    if (response.data) {
+                    this.setState({ testCaseResults: "Test result submitted successfully"});
+                    }
+                    else{
+                        this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully"});
+                    }
                     this.setState({
                         submitted: true
                     });
@@ -231,13 +236,14 @@ class SolveQuestion extends Component {
                                     <Row></Row>
 
                                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                                        <Tab eventKey="home" title="OutPut">
+                                        {/* <Tab eventKey="home" title="OutPut">
                                             <Card>
                                                 <CardBody>
                                                     <CardText>{this.state.testCaseResults}</CardText>
                                                 </CardBody>
-                                            </Card>                                            </Tab>
-                                        <Tab eventKey="profile" title="Test: 0 pass/ 3 fail">
+                                            </Card> 
+                                         </Tab> */}
+                                        <Tab eventKey="profile" title="JUnit Test Result" >
                                             <Card>
                                                 <CardBody>
                                                     <CardText>{this.state.testCaseResults}</CardText>

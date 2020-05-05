@@ -46,7 +46,7 @@ class ScheduledChallengeDataService {
     
     submitScheduledSubQuestionResultsListByUserId(subQuesResultSet) {
 
-        console.log("submitScheduledSubQuestionResultsByUserId submitted : ", subQuesResultSet);
+        console.log("submitScheduledSubQuestionResultsListByUserId submitted : ", subQuesResultSet);
         return axios.post(`http://localhost:8083/addSubQResList`, subQuesResultSet,{
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
