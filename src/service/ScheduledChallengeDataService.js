@@ -22,7 +22,12 @@ class ScheduledChallengeDataService {
 
         console.log("submitScheduledQuestionResultsByUserId submitted : ", objQuesResultSet);
         //return axios.post(`http://localhost:8083/addObjRes`, objQuesResultSet);
-        return axios.post(`http://localhost:8083/addObjResList`, objQuesResultSet);
+        return axios.post(`http://localhost:8083/addObjResList`, objQuesResultSet ,{
+            headers: {
+                'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+            },
+            crossdomain: true
+        });
     }
 
 
@@ -30,7 +35,12 @@ class ScheduledChallengeDataService {
 
         console.log("submitScheduledSubQuestionResultsByUserId submitted : ", subQuesResultSet);
         //return axios.post(`http://localhost:8083/addObjRes`, objQuesResultSet);
-        return axios.post(`http://localhost:8083/addSubjRes`, subQuesResultSet);
+        return axios.post(`http://localhost:8083/addSubjRes`, subQuesResultSet, {
+            headers: {
+                'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+            },
+            crossdomain: true
+        });
     }
 
     
