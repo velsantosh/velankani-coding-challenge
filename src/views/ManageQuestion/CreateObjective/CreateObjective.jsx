@@ -21,17 +21,17 @@ class CreateObjective extends Component {
         "correct_option": '',
         "difficulty": ''
     }
-    option1="";
-    option2="";
-    option3="";
-    option4="";
+    option1 = "";
+    option2 = "";
+    option3 = "";
+    option4 = "";
 
     constructor(props) {
         super(props);
         this.state = {
             editorContent: '',
             qId: '',
-            selectedOption :'',
+            selectedOption: '',
             redirectToBaseView: false
         };
     }
@@ -60,42 +60,47 @@ class CreateObjective extends Component {
     handleStatement = (event) => {
         this.objQuestionData.statement = event.editor.getData().replace(/\n|\r\n|\r/g, '');
     }
-    handleOption1 =(event) =>{
+    handleOption1 = (event) => {
         this.option1 = event.target.value;
     }
-    handleOption2 =(event) =>{
+    handleOption2 = (event) => {
         this.option2 = event.target.value;
     }
-    handleOption3 =(event) =>{
+    handleOption3 = (event) => {
         this.option3 = event.target.value;
     }
-    handleOption4 =(event) =>{
+    handleOption4 = (event) => {
         this.option4 = event.target.value;
     }
-    handleCorrectOption= (changeEvent)=> {
+    handleCorrectOption = (changeEvent) => {
         this.setState({
-          selectedOption: changeEvent.target.value
+            selectedOption: changeEvent.target.value
         });
-      }
+    }
 
     addObjectiveQuestion = () => {
         let optionsArray = new Array(4);
-        optionsArray[0]=this.option1;
-        optionsArray[1]=this.option2;
-        optionsArray[2]=this.option3;
-        optionsArray[3]=this.option4;
-        for(let i=0; i<optionsArray.length;i++){
-            this.objQuestionData.options[i]= optionsArray[i];
+        optionsArray[0] = this.option1;
+        optionsArray[1] = this.option2;
+        optionsArray[2] = this.option3;
+        optionsArray[3] = this.option4;
+        for (let i = 0; i < optionsArray.length; i++) {
+            this.objQuestionData.options[i] = optionsArray[i];
         }
         let selectedRadioBtn = this.state.selectedOption;
-        this.objQuestionData.correct_option = this.objQuestionData.options[selectedRadioBtn-1];
-        console.log("question data obj",this.objQuestionData)
-        QuestionService.addObjectiveQuestion(this.objQuestionData)
+        this.objQuestionData.correct_option = this.objQuestionData.options[selectedRadioBtn - 1];
+         QuestionService.addObjectiveQuestion(this.objQuestionData)
             .then(response => {
                 this.setState({
                     redirectToBaseView: true
                 });
             })
+    }
+
+    close = () => {
+        this.setState({
+            redirectToBaseView: true
+        });
     }
 
     render() {
@@ -149,8 +154,8 @@ class CreateObjective extends Component {
                                         <FormGroup>
                                             <Label for="technology" style={lableStyle}>Technology</Label>
                                             <Input type="select" name="technology" id="technology" onChange={(e) => this.handleTechnology(e)}>
-                                            <option disabled selected>Select Technology</option>
-                                        <option>Java</option>
+                                                <option disabled selected>Select Technology</option>
+                                                <option>Java</option>
                                             </Input>
                                         </FormGroup>
                                     </Col>
@@ -158,8 +163,8 @@ class CreateObjective extends Component {
                                         <FormGroup>
                                             <Label for="topic" style={lableStyle}>Topic</Label>
                                             <Input type="select" name="topic" id="topic" onChange={(e) => this.handleTopic(e)}>
-                                            <option disabled selected>Select Topic</option>
-                                        <option>J2EE</option>
+                                                <option disabled selected>Select Topic</option>
+                                                <option>J2EE</option>
                                                 <option>Core Java</option>
                                                 <option>OOPS</option>
                                                 <option>Data Structures</option>
@@ -178,26 +183,26 @@ class CreateObjective extends Component {
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="1" 
-                                                checked={this.state.selectedOption === '1'}  onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="1"
+                                                    checked={this.state.selectedOption === '1'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="" name="option1" onChange={(e) => this.handleOption1(e)}/>
+                                        <Input placeholder="" name="option1" onChange={(e) => this.handleOption1(e)} />
                                     </InputGroup>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="2" 
-                                                checked={this.state.selectedOption === '2'}  onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="2"
+                                                    checked={this.state.selectedOption === '2'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="" name="option2" onChange={(e) => this.handleOption2(e)}/>
+                                        <Input placeholder="" name="option2" onChange={(e) => this.handleOption2(e)} />
                                     </InputGroup>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="3" 
-                                                checked={this.state.selectedOption === '3'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="3"
+                                                    checked={this.state.selectedOption === '3'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
                                         <Input placeholder="" name="option3" onChange={(e) => this.handleOption3(e)} />
@@ -205,11 +210,11 @@ class CreateObjective extends Component {
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="4" 
-                                                checked={this.state.selectedOption === '4'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="4"
+                                                    checked={this.state.selectedOption === '4'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="" name="option4" onChange={(e) => this.handleOption4(e)}/>
+                                        <Input placeholder="" name="option4" onChange={(e) => this.handleOption4(e)} />
                                     </InputGroup>
                                 </FormGroup>
                                 <Row form>
@@ -224,7 +229,7 @@ class CreateObjective extends Component {
                                     </Col>
                                 </Row>
                                 <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={(e) => this.addObjectiveQuestion(e)} >Save</Button>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer}>Close</Button>
+                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close}>Close</Button>
                             </Form>
                         </Col>
                     </Row>

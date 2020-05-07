@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import UsersDataService from '../../velankani-coding-challenge/src/service/UsersDataService'
 import NavItems from './NavItems';
 // import AdminDefaultLayout from './containers/AdminDefaultLayout/AdminDefaultLayout';
+import { Redirect } from 'react-router-dom';
 
 class NavConfig extends Component {
   constructor(props) {
@@ -12,16 +13,27 @@ class NavConfig extends Component {
       permissionList:[],
       permissionFlag:false,
       navMenu:[],
+      redirectToLogin :false
     }
      
     //this.handleAddNavitem = this.handleAddNavitem.bind(this)
   }
   
   componentDidMount(){
-    
-    console.log("ComponentMount");
-    this.getPermission();
+    if (window.performance) {
+      if (performance.navigation.type == 1) {
+        this.setState({
+          redirectToLogin :true
+        })  
+    }
+
+    else{
+      this.getPermission();
+    }
   }
+   
+  }
+
   
 getPermission(){
    let userName = this.props.userName;
@@ -36,23 +48,16 @@ getPermission(){
         }
   
    render() {
+    if (this.state.redirectToLogin === true) {
+      return (<Redirect to="/" />);
+  }
             console.log("(NavConfig:)=>",this.props);
             console.log("(11)=>"+this.state.permissionList);
             const itemnav = this.props.items.filter((item) =>   {
-            //  if(this.state.permissionList.includes(item.name)){
-            //    if(item.url === ''){
-            //    item.url=`${item.name}/${this.props.userName}`
                return this.state.permissionList.includes(item.actual_name);
-              //  }
-               
-           //return this.state.permissionList.includes(item.name);
-              //}
           });
   console.log("Component based on User Permission",itemnav);
-  // const items = itemnav.map((item) => {
-  // return item.url = `${item.url}/${this.props.userName}`
-  // });
-  // console.log("Component based on User ",items);
+
   return(
         <div>
         <NavItems items={itemnav}/>

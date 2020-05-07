@@ -24,7 +24,6 @@ class QuestionRow extends Component{
             if(questiontype =="objective"){
               questionLink= `/manageQuestion/modifyObjectiveQuestion`;
             }
-            console.log("question",question);
             if(question.statement !=null){
                 stmt = question.statement.substr(0,30);
             }

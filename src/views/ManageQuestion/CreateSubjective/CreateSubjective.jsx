@@ -59,7 +59,6 @@ class CreateSubjective extends Component {
        
         this.subQuestionData.methodName = newValue;
         this.setState({ editorContent: newValue }, () => {
-            console.log("change onChangeEditor  after updating state :", this.state.editorContent);
         });
     };
 
@@ -89,8 +88,7 @@ class CreateSubjective extends Component {
       }
     
     enableTestCaseEdit = () =>{
-        console.log(this.state.disabled);
-        this.setState({disabled : !this.state.disabled});
+      this.setState({disabled : !this.state.disabled});
     }
 
     handleTitle = (event) => { 
@@ -107,10 +105,7 @@ class CreateSubjective extends Component {
         this.subQuestionData.difficulty= event.target.value;
       }
       handleStatement =(event) =>{
-         // console.log(this.preveditor);
-        //   console.log(event.editor);
-         this.subQuestionData.statement =event.editor.getData();
-         //.replace(/\n|\r\n|\r/g, '');
+        this.subQuestionData.statement =event.editor.getData();  
       }
       
     addSubjectiveQuestion =() =>{
@@ -121,7 +116,13 @@ class CreateSubjective extends Component {
           });
         })
     }
-    
+
+    close=()=>{
+        this.setState({
+            redirectToBaseView: true
+          });
+     }
+
     render() {
         this.subQuestionData.expectedTime = Slider.defaultValue;
         const buttonContainer = {
@@ -232,7 +233,6 @@ class CreateSubjective extends Component {
                                     <div className={classes.root}>
                                         <Slider
                                             defaultValue={10}
-                                            // valueLabelFormat={valueLabelFormat}
                                             getAriaValueText={this.valuetext}
                                             aria-labelledby="discrete-slider-restrict"
                                             step={null}
@@ -263,49 +263,12 @@ class CreateSubjective extends Component {
                                         
                                         </InputGroupAddon>
                                     </InputGroup>
-                                    <EditorJava content={this.state.testCaseContent} showGutter="true" updatedContent={this.updatedTestCaseContent} readOnly = {(this.state.disabled)? true : false}></EditorJava>
-                                    {/* <InputGroup>
-                                        <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <Input addon type="checkbox" name="radio1" aria-label="Enable to edit the test case" onClick ={this.enableTestCaseEdit.bind(this)} />
-                                        </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input type="textarea" name="text" id="editTestCase" disabled = {(this.state.disabled)? true : false} value={this.state.fileContent} />
-                                    
-                                    </InputGroup> */}
-                                    
+                                    <EditorJava content={this.state.testCaseContent} showGutter="true" updatedContent={this.updatedTestCaseContent} readOnly = {(this.state.disabled)? true : false}></EditorJava>     
                                 </FormGroup>
                                 </Col>
                                 </Row>
-                                {/*<Row>
-                                 <Col md="6">
-                                <FormGroup>
-                                    <Label for="expectedTime" style ={lableStyle}>Expected Time</Label>
-                                    <div className={classes.root}>
-                                        <Slider
-                                            defaultValue={10}
-                                            // valueLabelFormat={valueLabelFormat}
-                                            getAriaValueText={this.valuetext}
-                                            aria-labelledby="discrete-slider-restrict"
-                                            step={null}
-                                            valueLabelDisplay="auto"
-                                            marks={marks}
-                                        />
-                                    </div>
-                                </FormGroup>
-                                </Col>
-                                <Col>
-                                <FormGroup>
-                                    <Label for="difficulty" style ={lableStyle}>Difficulty</Label>
-                                    <Input type="select" name="-" id="difficulty">
-                                        <option>Easy</option>
-                                        <option>Hard</option>
-                                    </Input>
-                                </FormGroup>
-                                </Col> 
-                                </Row>*/}
                                 <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.addSubjectiveQuestion} >Save</Button>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer}>Close</Button>
+                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close}>Close</Button>
                             </Form>
 
                 </Container>

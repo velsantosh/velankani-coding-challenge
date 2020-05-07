@@ -47,7 +47,6 @@ class ModifySubjectiveQuestion extends Component {
             difficulty:this.props.questionData.difficulty,
             junitText:this.props.questionData.junitText,
             technologyId :this.props.questionData.technologyId
-            //subQuestionData : this.props.questionData
         };
          
         
@@ -58,9 +57,6 @@ class ModifySubjectiveQuestion extends Component {
     
     componentDidMount() {
         
-        // this.setState({
-        //     subQuestionData: this.props.questionData
-        // });
     }
 
     updatedTemplateContent(newValue) {
@@ -75,10 +71,6 @@ class ModifySubjectiveQuestion extends Component {
             ...this.state,
             junitText :newValue
         });
-        // this.setState({
-        //     testCaseContent :newValue
-        //     },() =>{ this.modifyQuestionData.junitText = Array.from(this.state.testCaseContent)
-        //     });
     };
 
     handleExpectedTime=(value) => {
@@ -93,19 +85,13 @@ class ModifySubjectiveQuestion extends Component {
           const text = (e.target.result);
           this.setState({
             ...this.state,
-             junitText : text
-            
-        });
-        //   this.setState({
-        //     testCaseContent :text
-        //     },() =>{
-        //         this.modifyQuestionData.junitText = this.state.testCaseContent});
+             junitText : text  
+          });
         };
         reader.readAsText(e.target.files[0])
       }
     
     enableTestCaseEdit = () =>{
-        console.log(this.state.disabled);
         this.setState({
             ...this.state,
             disabled : !this.state.disabled});
@@ -144,12 +130,9 @@ class ModifySubjectiveQuestion extends Component {
       }
 
       handleStatement =(event) =>{
-         // console.log(this.preveditor);
-        //   console.log(event.editor);
-        this.setState({
+         this.setState({
             ...this.state,
-            statement :event.editor.getData()
-            
+            statement :event.editor.getData()   
         })
       }
 
@@ -184,17 +167,10 @@ class ModifySubjectiveQuestion extends Component {
                 redirectToBaseView: true
               });
          }
-        // QuestionService.modifySubjectiveQuestion(this.subQuestionData.qId,this.modifyQuestionData)
-        // .then(response => {
-        //   this.setState({
-        //     redirectToBaseView: true
-        //   });
-        // })
     
     
     render() {
-        //let subQuestionData = this.props.questionData.question;
-        const buttonContainer = {
+         const buttonContainer = {
             width: '200px',
             marginRight:'10px',
             marginTop:'20px',
@@ -284,7 +260,6 @@ class ModifySubjectiveQuestion extends Component {
                                     <CKEditor data={this.state.statement} type="classic" onChange={(e) => this.handleStatement(e)} />
                                 </FormGroup>
                                 <FormGroup>
-                                {/* className={cx(classes.whiteSpace)} */}
                                     <Label for="template" style ={lableStyle}>Template</Label>
                                     <EditorJava  style={{ whiteSpace: 'nowrap' }} content={this.state.methodName} showGutter="true" updatedContent={this.updatedTemplateContent} ></EditorJava>
                                 </FormGroup>
@@ -301,9 +276,7 @@ class ModifySubjectiveQuestion extends Component {
                                     <div className={classes.root}>
                                         <Slider
                                             defaultValue={this.state.expectedTime}
-                                            // valueLabelFormat={valueLabelFormat}
                                             getAriaValueText={(value)=>this.handleExpectedTime(value)}
-                                            //valuetext
                                             aria-labelledby="discrete-slider-restrict"
                                             step={null}
                                             valueLabelDisplay="auto"

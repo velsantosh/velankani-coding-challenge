@@ -35,7 +35,6 @@ class ModifyObjectiveQuestion extends Component {
             technology:this.props.questionData.technology,
             topic:this.props.questionData.topic,
             statement:this.props.questionData.statement,
-            //options: this.props.questionData.options,
             option0: this.props.questionData.options[0],
             option1: this.props.questionData.options[1],
             option2: this.props.questionData.options[2],
@@ -112,8 +111,6 @@ class ModifyObjectiveQuestion extends Component {
     }
         
     modifyQuestion = () => {
-        console.log(this.state);
-        
         this.modifyQuestionData.options[0]=this.state.option0;
         this.modifyQuestionData.options[1]=this.state.option1;
         this.modifyQuestionData.options[2]=this.state.option2;
@@ -126,7 +123,6 @@ class ModifyObjectiveQuestion extends Component {
         this.modifyQuestionData.difficulty =this.state.difficulty; 
         this.modifyQuestionData.technologyId = this.state.technologyId;
         this.modifyObjectiveQuestion(this.state.qId,this.modifyQuestionData);  
-        console.log("question data obj",this.modifyQuestionData)
     }
 
     getSelectedOption(){
@@ -159,22 +155,10 @@ class ModifyObjectiveQuestion extends Component {
             backgroundColor: '#1dafe2',
             color: 'white'
         };
-        const titleStyle = {
-            alignText: 'center',
-            marginLeft: '50px',
-            fontWeight: 'bold'
-        };
+        
         const lableStyle = {
             fontWeight: 'bold'
         };
-        const marginTop = {
-            marginTop: '10px'
-        };
-        const useStyles = makeStyles({
-            root: {
-                width: 300,
-            },
-        });
 
         const redirectToBaseView = this.state.redirectToBaseView;
         if (redirectToBaseView === true) {
