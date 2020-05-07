@@ -51,6 +51,8 @@ const TestAccordion =React.lazy(() => import('./views/Component/TakeChallenge/Te
 const SolveQuestion =React.lazy(() => import('./views/Component/TakeChallenge/Test/SolveQuestion'));
 const SubQuestionsList =React.lazy(() => import('./views/Component/TakeChallenge/Test/SubQuestionsList'));
 
+const AssignedQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignedQuestion'));
+
 const ScheduleTest = React.lazy(() => import('./views/Component/ScheduleTest/ScheduleTest'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -116,6 +118,7 @@ const routes = [
   
   { path: '/assignQuestion/AssignQuestion', name: 'Assign_Questions', component: AssignQuestion },
   { path: '/assignQuestion/QuestionType', name: 'Assign_Questions', component: QuestionType },
+  { path: '/assignQuestion/AssignedQuestion', name: 'Assign_Questions', component: AssignedQuestion },
 
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },

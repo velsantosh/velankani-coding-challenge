@@ -28,9 +28,11 @@ class SelectQuestions extends Component {
 
   componentDidMount() {
     if (Object.keys(this.props.scheduledRequestData).length >0 && this.props.values == null) {
+      let UserList =[]
+      UserList.push(this.props.scheduledRequestData.candidateEmailId)
       this.setState({
         selectedTechnology: this.props.scheduledRequestData.technology,
-        userList: this.props.scheduledRequestData.candidateEmailId
+        userList: UserList
       }, () => {
         this.getQuestionsByTech()
       });
@@ -124,10 +126,10 @@ class SelectQuestions extends Component {
       let data = {
         "qidList": this.state.qidList,
         "assigneduidList": this.state.userList,
-        "assigneruid": this.props.userName.length > 0 && this.props.userName,
+        "assigneruid":  this.props.userName,
       }
 
-      QuestionService.getAllSchQuestionsByUserId(this.props.values.users).then(response => {
+      QuestionService.getAllSchQuestionsByUserId(this.state.userList).then(response => {
         let assignQidList = response.data;
         console.log("assign List Data", response.data)
         let assignList = assignQidList.filter((ques) => {
@@ -398,7 +400,8 @@ class SelectQuestions extends Component {
 
 const mapStateToProps = state => {
   return {
-    scheduledRequestData: state.scheduledRequestData
+    scheduledRequestData: state.scheduledRequestData,
+    userName : state.userName
   };
 };
 
