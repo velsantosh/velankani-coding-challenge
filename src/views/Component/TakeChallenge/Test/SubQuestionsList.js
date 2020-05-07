@@ -131,7 +131,7 @@ class SubQuestionsList extends Component {
           {!this.state.scheduledQuestionsOrNot ? filterByTypeComponent : null}
 
           <Row xs="12" className="justify-content-center">
-            <Col xl={10}>
+            <Col xl={12}>
               <Table responsive hover striped style={tableMargin}>
                 <thead>
                   <th scope="col" className="headingPrimary">TITLE</th>

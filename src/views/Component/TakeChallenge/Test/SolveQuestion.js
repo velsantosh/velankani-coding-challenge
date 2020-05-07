@@ -166,7 +166,7 @@ class SolveQuestion extends Component {
         };
         const cardStyle = {
             //backgroundColor: '#80808014',
-            marginLeft: '3%'
+            marginLeft: '0.10%'
             // border: '2px solid grey'
         };
 
@@ -220,7 +220,7 @@ class SolveQuestion extends Component {
                 <Container>
 
                     <Row>
-                        <Col className="mb-6" sm={9}>
+                        <Col sm={12}>
                             <CardGroup>
                                 <Col >
                                     <Card style={cardStyle}>
@@ -255,8 +255,9 @@ class SolveQuestion extends Component {
                                             </Card> 
                                          </Tab> */}
                                         <Tab eventKey="profile" title="JUnit Test Result" >
+                                 
                                             <Card style={testCaseStyle}>
-                                                <CardBody>
+                                                <CardBody class="card h-700">
                                                     <CardText>{this.state.testCaseResults}</CardText>
                                                 </CardBody>
                                             </Card>
@@ -266,8 +267,8 @@ class SolveQuestion extends Component {
                                 </Col>
                             </CardGroup>
                         </Col>
-                        <Col className="mb-1" sm={3}>
-                            {/* <Card >
+                       {/*  <Col className="mb-1" sm={3}>
+                            <Card >
                                 <CardBody>
                                     <CardTitle>other components</CardTitle>
                                     <CardText>This i additional content. This content is a little bit longer.</CardText>
@@ -278,8 +279,8 @@ class SolveQuestion extends Component {
                                     <CardTitle>other components </CardTitle>
                                     <CardText>This is a wider card to additional content. This content is a little bit longer.</CardText>
                                 </CardBody>
-                            </Card> */}
-                        </Col>
+                            </Card>
+                        </Col> */}
                     </Row>
                 </Container>
             </div>

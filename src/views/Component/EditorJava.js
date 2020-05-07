@@ -57,6 +57,7 @@ class EditorJava extends Component {
             enableLiveAutocompletion: true,
             enableSnippets: true,
             showLineNumbers: true,
+            showPrintMargin: false,
             tabSize: 2,
           }} />
       </div>);
