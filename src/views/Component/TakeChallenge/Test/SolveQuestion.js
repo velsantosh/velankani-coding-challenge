@@ -17,6 +17,7 @@ import ScheduledChallengeDataService from '../../../../service/ScheduledChalleng
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
 import Parser from 'html-react-parser';
+import AceEditor from "react-ace";
 
 class SolveQuestion extends Component {
 
@@ -36,7 +37,10 @@ class SolveQuestion extends Component {
             step: 0,
             testCaseResults: '',
             submitted: false,
-           isScheduledQuestion : this.props.location.state != null ? this.props.location.state.scheduledQuestions : false
+            isScheduledQuestion: this.props.location.state != null ? this.props.location.state.scheduledQuestions : false,
+            editorHeight: '200px',
+            editorWidth: "1000px",
+            resultTabLabel: "JUnit Test Result"
 
 
         };
@@ -99,6 +103,10 @@ class SolveQuestion extends Component {
                     }
                     this.setState({
                         submitted: true
+                    });
+
+                    this.setState({
+                        resultTabLabel: "Submitted Status"
                     });
 
                 }
@@ -180,11 +188,11 @@ class SolveQuestion extends Component {
 
         let nextPage;
 
-        if (this.state.isScheduledQuestion){
+        if (this.state.isScheduledQuestion) {
 
-            var scheduledQuestionList=  "/takechallenge";
-        }else {
-            var scheduledQuestionList=  "/subQuestionsList";
+            var scheduledQuestionList = "/takechallenge";
+        } else {
+            var scheduledQuestionList = "/subQuestionsList";
 
         }
 
@@ -254,11 +262,29 @@ class SolveQuestion extends Component {
                                                 </CardBody>
                                             </Card> 
                                          </Tab> */}
-                                        <Tab eventKey="profile" title="JUnit Test Result" >
-                                 
+                                        <Tab eventKey="profile" title={this.state.resultTabLabel} >
                                             <Card style={testCaseStyle}>
-                                                <CardBody class="card h-700">
-                                                    <CardText>{this.state.testCaseResults}</CardText>
+                                                <CardBody class="card h-300">
+                                                    <AceEditor
+                                                        mode="java"
+                                                        theme="eclipse"
+                                                        name="junitcontent"
+                                                        height={this.state.editorHeight}
+                                                        width={this.state.editorWidth}
+
+                                                        fontSize={14}
+                                                        readOnly={this.props.readOnly}
+                                                        showGutter={this.props.showGutter == 'true' ? true : false}
+                                                        highlightActiveLine={true}
+                                                        value={this.state.testCaseResults}
+
+                                                        setOptions={{
+                                                            enableBasicAutocompletion: true,
+                                                            enableLiveAutocompletion: true,
+                                                            enableSnippets: true,
+                                                            showPrintMargin: false,
+                                                            tabSize: 2,
+                                                        }} />
                                                 </CardBody>
                                             </Card>
                                         </Tab>
@@ -267,7 +293,7 @@ class SolveQuestion extends Component {
                                 </Col>
                             </CardGroup>
                         </Col>
-                       {/*  <Col className="mb-1" sm={3}>
+                        {/*  <Col className="mb-1" sm={3}>
                             <Card >
                                 <CardBody>
                                     <CardTitle>other components</CardTitle>
