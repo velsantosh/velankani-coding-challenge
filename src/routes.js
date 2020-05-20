@@ -37,6 +37,8 @@ const RecruitDefault = React.lazy(() => import('./containers/RecruitDefaultLayou
 const UserEdit = React.lazy(() => import('./views/Users/UserEdit'));
 
 const TakeTest = React.lazy(() => import('./views/Component/TakeChallenge/TakeTest'));
+const CandidatesReport=React.lazy(()=>import('./views/Component/Report/CandidatesReport'))
+const ScheduleRequestReport=React.lazy(()=>import('./views/Component/Report/ScheduleRequestReport'))
 const TakeChallenge = React.lazy(() => import('./views/Component/TakeChallenge/TakeChallenge'));
 const ObjectiveQuestionWizard = React.lazy(()=> import('./views/Component/TakeChallenge/ObjectiveQuestionWizard/ObjectiveQuestionWizard'));
 
@@ -114,8 +116,8 @@ const routes = [
   { path: '/manage/CREATE_USER', name: 'Add_User', component: Users },
   { path: '/manage/SCHEDULE_TEST', name: 'Schedule_Test', component: BrandButtons },
   { path: '/manage/TAKE_TEST', name: 'Take_Test', component: BrandButtons },
-  
-  
+  { path: '/candidatesReport', name: 'Candidates_Report', component: CandidatesReport },
+  { path: '/scheduleRequestReport', name: 'SHEDULE_REQUEST_REPORT', component: ScheduleRequestReport },
   { path: '/assignQuestion/AssignQuestion', name: 'Assign_Questions', component: AssignQuestion },
   { path: '/assignQuestion/QuestionType', name: 'Assign_Questions', component: QuestionType },
   { path: '/assignQuestion/AssignedQuestion', name: 'Assign_Questions', component: AssignedQuestion },
