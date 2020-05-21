@@ -21,7 +21,21 @@ class UsersDataService {
         // return axios.get(`${apiBaseUrl}/users/`)
         return axios.get(`http://localhost:8081/users`)
     }
-
+    getAllCandidates(userName){
+       return axios.get(`http://localhost:8083/candidateReport/${userName}`,{headers: {
+            'Access-Control-Allow-Origin': '*',
+          },})
+    }
+    download(userId){
+        return axios.get(`http://localhost:8083/subjResReport/${userId}`,{headers: {
+            'Access-Control-Allow-Origin': '*',
+          },responseType: 'blob',})
+    }
+    getAllRequests(){
+        return axios.get(`http://localhost:8083/schedule/request`,{headers: {
+             'Access-Control-Allow-Origin': '*',
+           },})
+     }
     deleteUser(id) {
         //return axios.delete(`${apiBaseUrl}/user/${id}`);
         return axios.delete(`http://localhost:8081/user/${id}`);
@@ -56,8 +70,17 @@ class UsersDataService {
         // return axios.get(`${apiBaseUrl}/users/`)
         return axios.get(`http://localhost:8081/usersByRole/${roleId}`)
     }
+    getInterviewer(){
+            return axios.get(`http://localhost:8081/usersByRole/INTERVIEWER`,{headers: {
+                 'Access-Control-Allow-Origin': '*',
+               },})
+    }
+    sendToInterviewers(user) {
+        console.log('Create User');
+        // return axios.post(`${apiBaseUrl}/user`, user);
+        return axios.post(`http://localhost:8083/send/candidate/report`, user);
+    }
 
-    
 }
 
 export default new UsersDataService()

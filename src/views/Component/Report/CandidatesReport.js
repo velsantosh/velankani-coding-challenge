@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Charts from '../../Charts/Charts';
 import { Jumbotron,Modal, Button,ListGroup,Container,Row, ListGroupItem,Breadcrumb,BreadcrumbItem,Table,CardText,CardTitle,Card,CardHeader,ModalBody,ModalFooter,ModalHeader,Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
-import { CandidateReportRow } from './CandidateReportRow';
+import { CandidateReportRow}  from './CandidateReportRow';
 import UsersDataService from '../../../service/UsersDataService'
 import { connect } from "react-redux";
 import { Menu_items } from './Menu_items';
