@@ -54,6 +54,8 @@ const SolveQuestion =React.lazy(() => import('./views/Component/TakeChallenge/Te
 const SubQuestionsList =React.lazy(() => import('./views/Component/TakeChallenge/Test/SubQuestionsList'));
 
 const AssignedQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignedQuestion'));
+const ReAssignChallenge = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/ReAssignChallenge'));
+const RescheduleChallenge = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/RescheduleChallenge'));
 
 const ScheduleTest = React.lazy(() => import('./views/Component/ScheduleTest/ScheduleTest'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -116,11 +118,16 @@ const routes = [
   { path: '/manage/CREATE_USER', name: 'Add_User', component: Users },
   { path: '/manage/SCHEDULE_TEST', name: 'Schedule_Test', component: BrandButtons },
   { path: '/manage/TAKE_TEST', name: 'Take_Test', component: BrandButtons },
+  
   { path: '/candidatesReport', name: 'Candidates_Report', component: CandidatesReport },
   { path: '/scheduleRequestReport', name: 'SHEDULE_REQUEST_REPORT', component: ScheduleRequestReport },
+  
+  
   { path: '/assignQuestion/AssignQuestion', name: 'Assign_Questions', component: AssignQuestion },
   { path: '/assignQuestion/QuestionType', name: 'Assign_Questions', component: QuestionType },
   { path: '/assignQuestion/AssignedQuestion', name: 'Assign_Questions', component: AssignedQuestion },
+  { path: '/assignQuestion/ReAssignChallenge', name: 'Assign_Questions', component: ReAssignChallenge },
+  { path: '/assignQuestion/RescheduleChallenge', name: 'Assign_Questions', component: RescheduleChallenge },
 
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },

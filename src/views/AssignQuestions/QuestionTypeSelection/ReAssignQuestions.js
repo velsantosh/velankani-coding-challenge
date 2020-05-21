@@ -10,7 +10,7 @@ import PopulateAll from './PopulateAll';
 import { connect } from "react-redux";
 
 
-class SelectQuestions extends Component {
+class ReAssignQuestions extends Component {
 
   constructor(props) {
     super(props)
@@ -36,8 +36,7 @@ class SelectQuestions extends Component {
       UserList.push(this.props.scheduledRequestData.candidateEmailId)
       this.setState({
         selectedTechnology: this.props.scheduledRequestData.technology,
-        userList: UserList,
-        scheduleDate: this.props.scheduledRequestData.interviewDate
+        userList: UserList
       }, () => {
         this.getQuestionsByTech()
       });
@@ -48,7 +47,8 @@ class SelectQuestions extends Component {
         selectedTechnology: this.props.values.technology,
         userList: [this.props.values.users],
         scheduleDate:this.props.values.scheduleDate,
-        
+        status: this.props.values.status,
+        challengeid:this.props.values.challengeid
       }, () => { this.getQuestionsByTech();
                 console.log("Assigned Date to Test",this.state.scheduleDate) });
 
@@ -183,10 +183,12 @@ class SelectQuestions extends Component {
     const marginTop = {
       marginTop: '20px'
     }
+
     const text = {
       textAlign: 'right',
       marginRight: '7%'
     }
+
     const buttonContainer = {
       marginRight: '0.5%',
       marginTop: '20px',
@@ -279,10 +281,11 @@ class SelectQuestions extends Component {
     else if (type === "OBJECTIVE") {
       return (
         <div className="animated fadeIn" style={marginTop}>
-            <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
+
+          <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
           
           <Row style={marginLeft}>
-            <h4 style={marginRight}>Type</h4>
+           <h4 style={marginRight}>Type</h4>
             <abbr className="no-border" style={marginRight} >
               <Button block outline color="primary" onClick={this.selectedType} value="ALL"
                 className={this.state.type === "ALL" ? classes.showActive : ""
@@ -345,11 +348,11 @@ class SelectQuestions extends Component {
       console.log("Inside ALL")
       return (
         <div className="animated fadeIn" style={marginTop}>
+
+          <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
           
-            <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
- 
           <Row style={marginLeft}>
-          <h4 style={marginRight}>Type</h4>
+           <h4 style={marginRight}>Type</h4>
             <abbr className="no-border" style={marginRight} >
               <Button block outline color="primary" onClick={this.selectedType} value="ALL"
                 className={this.state.type === "ALL" ? classes.showActive : ""
@@ -417,4 +420,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(SelectQuestions)
+export default connect(mapStateToProps)(ReAssignQuestions)

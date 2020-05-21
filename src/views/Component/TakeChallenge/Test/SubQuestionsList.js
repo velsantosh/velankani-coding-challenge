@@ -66,7 +66,7 @@ class SubQuestionsList extends Component {
 
   getScheduledQuestionsByUserId() {
     const questions = [];
-    ScheduledChallengeDataService.getScheduledQuestionByUserId(this.props.userName).then(
+    ScheduledChallengeDataService.getScheduledQuestionByCandidateId(this.props.userName).then(
       response => {
         console.log("getScheduledQuestionsByUserId :", response.data.length)
         response.data.map((question) => {

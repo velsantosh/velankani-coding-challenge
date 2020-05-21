@@ -18,3 +18,18 @@
     color:white;
     margin-bottom:20px;
 }
+
+.createNxtBtn{
+    margin-top: 5px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:5px;
+}
+
+.createTableBtn{
+    margin-top: 5px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:5px;
+    width: 50%;
+}

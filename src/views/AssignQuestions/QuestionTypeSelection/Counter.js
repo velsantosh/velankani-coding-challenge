@@ -25,7 +25,7 @@ import Parser from 'html-react-parser'
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="container">{Parser(this.props.statement)}</div>
+              <div className="container">{(this.props.statement)}</div>
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.props.onHide}>Close</Button>

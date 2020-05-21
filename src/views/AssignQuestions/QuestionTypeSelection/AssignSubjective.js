@@ -22,10 +22,13 @@ class AssignSubjective extends Component {
         let value = event.target.checked;
         console.log("valueONChange", value);
         console.log("valueONChange", event.target);
-                                    if(value){
-                                      //qids.push(question.id,question.id);
-                                      this.props.onSelectChange(this.state.question.id);
-                                    }
+        if(value){
+          //qids.push(question.id,question.id);
+          this.props.onSelectChange(this.state.question.id);
+        }
+        else{
+            this.props.onDeselect(this.state.question.id);
+        }
     }
   render() {
     let addModal=()=> this.setState({addModelShow:false});
@@ -40,7 +43,7 @@ class AssignSubjective extends Component {
     return (
                 
                     <tr key={question.id}>
-                      <td><input type="radio" name="optradio" onClick={this.handleChange}/></td>
+                      <td><input type="checkbox" onClick={this.handleChange}/></td>
                       <td>{question.title}</td>
                       <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>

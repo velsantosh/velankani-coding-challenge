@@ -4,12 +4,11 @@ import {Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGro
 import Counter from './Counter';
 import Parser from 'html-react-parser';
 
-class PopulateQid extends Component {
+class QuestionModel extends Component {
 
     constructor(props) {
         super(props)
         this.state={
-            question: this.props.question,
             qidList:[],
             message: null,
             addModelShow:false
@@ -17,23 +16,7 @@ class PopulateQid extends Component {
     }
 
     
-     handleChange = (event) =>
-    {
-        //let selectedValue = event.target.value;
-        let value = event.target.checked;
-        console.log("valueONChange", value);
-        console.log("valueONChange", event.target);
-                                    if(value){
-                                      //qids.push(question.id,question.id);
-                                      this.props.onSelectChange(this.state.question.id);
-                                    }
-                                    else{
-                                        this.props.onDeselect(this.state.question.id);
-                                    }
-        
-    }
-
-  render() {
+    render() {
     let addModal=()=> this.setState({addModelShow:false});
     const question = this.props.question;
     console.log("Question ID in type:",question.id)
@@ -43,14 +26,13 @@ class PopulateQid extends Component {
     
     return (
                     <tr key={question.id}>
-                      <td><input type="checkbox" onChange={this.handleChange}/></td>
                       <td>{question.title}</td>
-                      <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
                     <Counter show={this.state.addModelShow}
                             onHide={addModal} statement={question.statement}></Counter>
-                    <td>{question.difficulty}</td>
-                    <td>{question.experience}</td>
+                    <td>{question.technology}</td>
+                    <td>{question.type}</td>
+                    
                     </tr>
     )
     
@@ -58,4 +40,4 @@ class PopulateQid extends Component {
   }
 }
 
-export default PopulateQid;
+export default QuestionModel;

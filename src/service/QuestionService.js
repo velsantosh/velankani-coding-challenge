@@ -92,10 +92,33 @@ class QuestionService {
         return axios.get(`http://localhost:8082/question/${id}`);
     }
 
-    getSchQuestionsByAssignerId(assignerId) {
+    getChlngRecByAssignerId(assignerId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/schQuesByassignerId/${assignerId}`);
+        return axios.get(`http://localhost:8083/chlngRecByassignerId/${assignerId}`);
+    }
+
+    deleteChallenge(challengeId) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.delete(`http://localhost:8083/challenge/${challengeId}`);
+    }
+
+    getQuestionsByChallengeId(challengeId) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.get(`http://localhost:8083/schQuesBychallengeId/${challengeId}`);
+    }
+
+    getQuestionsNotByChallengeId(assigneduid,challengeId) {
+        //console.log('executed service')
+        // return axios.get(`${apiBaseUrl}/questions`);
+        return axios.get(`http://localhost:8083/schQuesNotBychallengeId/${assigneduid}/${challengeId}`);
+    }
+
+    assignUpdateQuestion(question) {
+        // return axios.get(`${apiBaseUrl}/question`,question);
+        return axios.put(`http://localhost:8083/updateChallenge`,question);
     }
 }
 

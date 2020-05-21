@@ -10,7 +10,7 @@ import PopulateAll from './PopulateAll';
 import { connect } from "react-redux";
 
 
-class SelectQuestions extends Component {
+class RescheduleQuestions extends Component {
 
   constructor(props) {
     super(props)
@@ -24,8 +24,7 @@ class SelectQuestions extends Component {
       redirectToBaseView: false,
       selectedTechnology: "",
       scheduleDate:"",
-      status:"Scheduled",
-      challengeid:""
+      assignedQuesList: []
     }
     this.getQuestionsByTech = this.getQuestionsByTech.bind(this)
   }
@@ -36,21 +35,25 @@ class SelectQuestions extends Component {
       UserList.push(this.props.scheduledRequestData.candidateEmailId)
       this.setState({
         selectedTechnology: this.props.scheduledRequestData.technology,
-        userList: UserList,
-        scheduleDate: this.props.scheduledRequestData.interviewDate
+        userList: UserList
       }, () => {
         this.getQuestionsByTech()
       });
 
     }
     else {
+        let qList = this.props.values.questions.map((question, index) =>
+          qList=question.id)
+
+          console.log("Ques ID List",qList)
       this.setState({
         selectedTechnology: this.props.values.technology,
         userList: [this.props.values.users],
         scheduleDate:this.props.values.scheduleDate,
-        
+        assignedQuesList:this.props.values.questions,
+        qidList:qList
       }, () => { this.getQuestionsByTech();
-                console.log("Assigned Date to Test",this.state.scheduleDate) });
+        console.log("Assigned Date to Test",this.state.scheduleDate) });
 
     }
 
@@ -78,7 +81,7 @@ class SelectQuestions extends Component {
     QuestionService.getQuestionsByTech(this.state.selectedTechnology)
       .then(
         response => {
-          this.setState({ questions: response.data, qidList: [] }, () => console.log("clean list", this.state.qidList))
+          this.setState({ questions: response.data }, () => console.log("clean list", this.state.qidList))
         }
       )
   }
@@ -139,11 +142,11 @@ class SelectQuestions extends Component {
         "assigneduidList": this.state.userList,
         "assigneruid":  this.props.userName,
         "scheduleTime": this.state.scheduleDate,
-        "status":this.state.status,
-        "challengeid":this.state.challengeid
+        "status":this.props.values.status,
+        "challengeid":this.props.values.challengeid
       }
 
-      QuestionService.getAllSchQuestionsByUserId(this.state.userList).then(response => {
+      QuestionService.getQuestionsNotByChallengeId(this.state.userList,this.props.values.challengeid).then(response => {
         let assignQidList = response.data;
         console.log("assign List Data", response.data)
         let assignList = assignQidList.filter((ques) => {
@@ -165,7 +168,7 @@ class SelectQuestions extends Component {
   }
 
   assignQuestion(data) {
-    QuestionService.assignObjQuestion(data)
+    QuestionService.assignUpdateQuestion(data)
       .then(response => {
         console.log("UserResponse : ", response.status)
         if (response.status === 200) {
@@ -183,10 +186,12 @@ class SelectQuestions extends Component {
     const marginTop = {
       marginTop: '20px'
     }
+
     const text = {
       textAlign: 'right',
       marginRight: '7%'
     }
+
     const buttonContainer = {
       marginRight: '0.5%',
       marginTop: '20px',
@@ -213,7 +218,15 @@ class SelectQuestions extends Component {
     let questionsList = this.state.questions;
     let type = this.state.type;
     console.log("Selected Q Type", type)
+    let assignedQues = this.state.assignedQuesList;
+    console.log("AssignedQuestionList",assignedQues);
+    console.log("questionsList",questionsList);
+
+    const itemnav = questionsList.filter((item) =>   {
+        return !assignedQues.some((ques) =>{return item.id === ques.id;});
+   });
     
+   console.log("Final AssignedQuestionList",itemnav);
     if (type === "SUBJECTIVE") {
       return (
         <div className="animated fadeIn" style={marginTop}>
@@ -221,6 +234,7 @@ class SelectQuestions extends Component {
           
           <Row style={marginLeft}>
            <h4 style={marginRight}>Type</h4>
+
             <abbr className="no-border" style={marginRight} >
               <Button block outline color="primary" onClick={this.selectedType} value="ALL"
                 className={this.state.type === "ALL" ? classes.showActive : ""
@@ -279,10 +293,11 @@ class SelectQuestions extends Component {
     else if (type === "OBJECTIVE") {
       return (
         <div className="animated fadeIn" style={marginTop}>
-            <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
+
+          <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
           
           <Row style={marginLeft}>
-            <h4 style={marginRight}>Type</h4>
+           <h4 style={marginRight}>Type</h4>
             <abbr className="no-border" style={marginRight} >
               <Button block outline color="primary" onClick={this.selectedType} value="ALL"
                 className={this.state.type === "ALL" ? classes.showActive : ""
@@ -345,11 +360,10 @@ class SelectQuestions extends Component {
       console.log("Inside ALL")
       return (
         <div className="animated fadeIn" style={marginTop}>
-          
             <h4 style={text} className = "headingPrimary"><i>Candidate-Id : <strong><u>{this.state.userList}</u></strong></i></h4> 
- 
+          
           <Row style={marginLeft}>
-          <h4 style={marginRight}>Type</h4>
+           <h4 style={marginRight}>Type</h4>
             <abbr className="no-border" style={marginRight} >
               <Button block outline color="primary" onClick={this.selectedType} value="ALL"
                 className={this.state.type === "ALL" ? classes.showActive : ""
@@ -391,8 +405,11 @@ class SelectQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false} />
+                  {assignedQues.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={true}/>
+                    )}
+                    {itemnav.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -417,4 +434,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(SelectQuestions)
+export default connect(mapStateToProps)(RescheduleQuestions)
