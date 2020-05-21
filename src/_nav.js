@@ -33,13 +33,17 @@ export default {
       url: '/testAccordion',
       icon: 'icon-puzzle',
     },
-    { name:'CANDIDATES_REPORT',
+    { 
+      name:'Candidate Report',
+      actual_name: 'CANDIDATES_REPORT',
       url: '/candidatesReport',
-      icon:'icon-puzzlec',
+      icon:'icon-puzzle',
     },
-    { name:'SHEDULE_REQUEST_REPORT',
-    url: '/scheduleRequestReport',
-    icon:'icon-puzzlec',
+    {
+       name:'Shedule Request Report',
+       actual_name: 'SHEDULE_REQUEST_REPORT',
+       url: '/scheduleRequestReport',
+       icon:'icon-puzzle',
     },
     {
       name :'Manage User',
