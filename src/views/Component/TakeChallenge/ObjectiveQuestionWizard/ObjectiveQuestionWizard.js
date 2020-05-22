@@ -63,7 +63,7 @@ class ObjectiveQuestionWizard extends Component {
 
   getScheduledQuestionsFromDB() {
 
-    ScheduledChallengeDataService.getScheduledQuestionByUserId(this.props.userName.length > 0 && this.props.userName).then(
+    ScheduledChallengeDataService.getScheduledQuestionByCandidateId(this.props.userName.length > 0 && this.props.userName).then(
       questionBank => {
         console.log("objective questionBank data : ", questionBank.data)
 

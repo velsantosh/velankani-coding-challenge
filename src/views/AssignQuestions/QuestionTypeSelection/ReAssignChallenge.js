@@ -5,16 +5,14 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 //import Paginations from './Paginations';
 //import Typography from './Typography';
-import QuestionType from './QuestionType';
+import RescheduleQuesType from './RescheduleQuesType';
 import Questions from '../../ManageQuestion/QuestionsList/Questions';
-import SelectQuestions from './SelectQuestions';
+import ReAssignQuestions from './ReAssignQuestions';
 
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 
-
-class AssignQuestion extends Component {
-      
+export class ReAssignChallenge extends Component {
     state = {
         step: 1,
         type:'CA',
@@ -22,11 +20,14 @@ class AssignQuestion extends Component {
         technology:'B',
         scheduleDate:'c',
         date: new Date(),
-        status:'Scheduled'
+        status:'',
+        dropDown:false,
+        challengeid:''
     }
 
     nextStep = () => {
-      if(this.state.users ==='A' || this.state.technology ==='B' || this.state.scheduleDate ==='c'){
+      if(this.state.technology ==='B' || this.state.scheduleDate ==='c'){
+          console.log("DropDown user",this.state.users);
         alert("Select Proper Details")
       }else{
       const{ step } = this.state;
@@ -50,28 +51,41 @@ class AssignQuestion extends Component {
       console.log("UsersList::::",e.target.value);
   };
 
+  componentDidMount() {
+         
+      this.setState({
+        users: this.props.location.state.challenge.assigneduid,
+        status: this.props.location.state.challenge.status,
+        dropDown:true,
+        challengeid:this.props.location.state.challenge.challengeid
+      });
+}
+
   render() {
     //console.log("UserName in URL:",this.state.assigneruid)
     const { step } = this.state;
     const { type } = this.state;
-    const { users } = this.state;
     const { technology } = this.state;
     const { scheduleDate } = this.state;
-    const { status } = this.state;
-    const {challenge} = this.props.location.state;
-    const values = {type,users,technology,scheduleDate,status,challenge}
+    const status  = this.props.location.state.challenge.status;
+    const dropDown = true;
+    const techdropDown = false;
+    const challengeid = this.props.location.state.challenge.challengeid;
+    const users = this.props.location.state.challenge.assigneduid;
+
+    const values = {type,users,technology,scheduleDate,status,dropDown,challengeid,techdropDown}
 
     switch(step) {
       case 1:
         return (
-          <QuestionType nextStep={this.nextStep}
+          <RescheduleQuesType nextStep={this.nextStep}
                        handleChange={this.handleChange}
                        values={values}
           />
         )
         case 2:
         return (
-          <SelectQuestions nextStep={this.nextStep}
+          <ReAssignQuestions nextStep={this.nextStep}
           prevStep={this.prevStep}
            handleChange={this.handleChange}
            values={values}
@@ -91,4 +105,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(AssignQuestion)
+export default ReAssignChallenge

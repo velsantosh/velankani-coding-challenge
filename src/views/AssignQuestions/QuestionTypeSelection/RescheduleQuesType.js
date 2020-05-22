@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import classes from "./SelectQuestions.module.css";
 import cx from "classnames";
 
-class QuestionType extends Component {
+export class RescheduleQuesType extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -72,17 +72,8 @@ class QuestionType extends Component {
       const userList = this.state.users;
       const { handleChange, values } = this.props; 
       
-      const itemnav = values.challenge.filter((user) =>   user.status === "Scheduled" || user.status === "Completed");
-   
-
-      const unAssignedUser = userList.filter((user) =>   {
-        return !itemnav.some((challengeRec) =>{return user.userId === challengeRec.assigneduid;});
-   });
-    
-   console.log("Final AssignedQuestionList",unAssignedUser);
-      
-      let usersList = unAssignedUser.length > 0
-    	&& unAssignedUser.map((user, index) => {
+      let usersList = userList.length > 0
+    	&& userList.map((user, index) => {
       return (
         <option key={index} value={user.userId}>{user.userId}</option>
       )
@@ -115,7 +106,7 @@ class QuestionType extends Component {
                         <option key={3} value={"SUBJECTIVE"}>{"Subjective"}</option>
                     </select>  */}
                     <br></br> 
-                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')}>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')} disabled={values.techdropDown}>
                       <option value="B" disabled>Technology</option>
                         {technologyLists}
                     </select> 
@@ -166,4 +157,4 @@ class QuestionType extends Component {
     }
 }
 
-export default QuestionType;
+export default RescheduleQuesType

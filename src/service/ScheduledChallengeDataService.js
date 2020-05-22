@@ -65,6 +65,19 @@ class ScheduledChallengeDataService {
         });
     }
 
+    getScheduledQuestionByCandidateId(candidateId) {
+
+        // return axios.get(`${apiBaseUrl}/schQuesByUid/${userId}`,
+        return axios.get(`http://localhost:8083/schQuesByCandidate/${candidateId}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+                },
+                crossdomain: true
+            }
+        );
+    }
+
 }
 
 export default new ScheduledChallengeDataService()
