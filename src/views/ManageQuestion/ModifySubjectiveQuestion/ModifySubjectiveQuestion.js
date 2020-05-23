@@ -322,7 +322,7 @@ class ModifySubjectiveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-      questionData : state.selectedQuestionData.question
+      questionData : state.selectedQuestionData
     };
   };
   
