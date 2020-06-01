@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Container, Col, Row, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import QuestionService from '../../../service/QuestionService';
 import classes from "../CreateSubjective/CreateSubjective.module.css";
 import cx from "classnames";
-import EditorJava from '../../Component/EditorJava';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import CKEditor from 'ckeditor4-react';
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
@@ -22,26 +17,25 @@ class ModifyObjectiveQuestion extends Component {
         "options": new Array(4),
         "correct_option": '',
         "difficulty": '',
-        "technologyId":''
+        "technologyId": ''
     }
 
-     constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             qId: this.props.questionData.id,
-            selectedOption :'',
+            selectedOption: '',
             redirectToBaseView: false,
-            title: this.props.questionData.title ,
-            technology:this.props.questionData.technology,
-            topic:this.props.questionData.topic,
-            statement:this.props.questionData.statement,
+            title: this.props.questionData.title,
+            technology: this.props.questionData.technology,
+            topic: this.props.questionData.topic, statement: this.props.questionData.statement,
             option0: this.props.questionData.options[0],
             option1: this.props.questionData.options[1],
             option2: this.props.questionData.options[2],
             option3: this.props.questionData.options[3],
             correctOption: this.props.questionData.correctOption,
-            difficulty:this.props.questionData.difficulty,
-            technologyId :this.props.questionData.technologyId
+            difficulty: this.props.questionData.difficulty,
+            technologyId: this.props.questionData.technologyId
         };
     }
 
@@ -52,100 +46,100 @@ class ModifyObjectiveQuestion extends Component {
     handleTitle = (event) => {
         this.setState({
             ...this.state,
-            title : event.target.value
-    });   
+            title: event.target.value
+        });
     }
 
     handleTechnology = (event) => {
         this.setState({
             ...this.state,
-            technology : event.target.value
-    });     
+            technology: event.target.value
+        });
     }
 
     handleTopic = (event) => {
         this.setState({
             ...this.state,
-        topic : event.target.value
-    });   
+            topic: event.target.value
+        });
     }
 
     handleDifficulty = (event) => {
         this.setState({
             ...this.state,
-        difficulty : event.target.value
-    });
+            difficulty: event.target.value
+        });
     }
 
     handleStatement = (event) => {
         this.setState({
             ...this.state,
-            statement :event.editor.getData()    
+            statement: event.editor.getData()
         })
     }
 
-    handleOption =(event) =>{
+    handleOption = (event) => {
         var name = event.target.name;
         this.setState({
             ...this.state,
-            [name] : event.target.value
+            [name]: event.target.value
         });
     }
 
-    handleCorrectOption= (changeEvent)=> {
-        let optionNumber ="option"+changeEvent.target.value;
+    handleCorrectOption = (changeEvent) => {
+        let optionNumber = "option" + changeEvent.target.value;
         this.setState({
             ...this.state,
-          selectedOption: changeEvent.target.value,
-          correctOption : this.state[optionNumber]
+            selectedOption: changeEvent.target.value,
+            correctOption: this.state[optionNumber]
         });
-      }
-
-      modifyObjectiveQuestion =(qid,question) =>{
-        QuestionService.modifyObjectiveQuestion(qid,question)
-        .then(response => {
-          this.setState({
-            redirectToBaseView: true
-          });
-      });
     }
-        
+
+    modifyObjectiveQuestion = (qid, question) => {
+        QuestionService.modifyObjectiveQuestion(qid, question)
+            .then(response => {
+                this.setState({
+                    redirectToBaseView: true
+                });
+            });
+    }
+
     modifyQuestion = () => {
-        this.modifyQuestionData.options[0]=this.state.option0;
-        this.modifyQuestionData.options[1]=this.state.option1;
-        this.modifyQuestionData.options[2]=this.state.option2;
-        this.modifyQuestionData.options[3]=this.state.option3;
-        this.modifyQuestionData.correct_option =this.state.correctOption;
+        this.modifyQuestionData.options[0] = this.state.option0;
+        this.modifyQuestionData.options[1] = this.state.option1;
+        this.modifyQuestionData.options[2] = this.state.option2;
+        this.modifyQuestionData.options[3] = this.state.option3;
+        this.modifyQuestionData.correct_option = this.state.correctOption;
         this.modifyQuestionData.title = this.state.title;
-        this.modifyQuestionData.technology =this.state.technology;
-        this.modifyQuestionData.topic =this.state.topic;
-        this.modifyQuestionData.statement =this.state.statement;
-        this.modifyQuestionData.difficulty =this.state.difficulty; 
+        this.modifyQuestionData.technology = this.state.technology;
+        this.modifyQuestionData.topic = this.state.topic;
+        this.modifyQuestionData.statement = this.state.statement;
+        this.modifyQuestionData.difficulty = this.state.difficulty;
         this.modifyQuestionData.technologyId = this.state.technologyId;
-        this.modifyObjectiveQuestion(this.state.qId,this.modifyQuestionData);  
+        this.modifyObjectiveQuestion(this.state.qId, this.modifyQuestionData);
     }
 
-    getSelectedOption(){
+    getSelectedOption() {
         let selectedOptionNo;
-        for(let i=0;i<4;i++){
-            let optionNumber ="option"+i
-            if(this.state.correctOption ==this.state[optionNumber])
-            {   selectedOptionNo =i;
+        for (let i = 0; i < 4; i++) {
+            let optionNumber = "option" + i
+            if (this.state.correctOption == this.state[optionNumber]) {
+                selectedOptionNo = i;
                 this.setState({
                     ...this.state,
-                    selectedOption:selectedOptionNo
+                    selectedOption: selectedOptionNo
                 })
                 break;
             }
         }
     }
-    
-    close=()=>{
+
+    close = () => {
         this.setState({
             redirectToBaseView: true
-          });
-     }
-     
+        });
+    }
+
     render() {
         const buttonContainer = {
             width: '200px',
@@ -155,7 +149,7 @@ class ModifyObjectiveQuestion extends Component {
             backgroundColor: '#1dafe2',
             color: 'white'
         };
-        
+
         const lableStyle = {
             fontWeight: 'bold'
         };
@@ -212,26 +206,26 @@ class ModifyObjectiveQuestion extends Component {
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="0" 
-                                                checked={this.state.selectedOption == '0'}  onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="0"
+                                                    checked={this.state.selectedOption == '0'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input value={this.state.option0} name="option0" onChange={(e) => this.handleOption(e)}/>
+                                        <Input value={this.state.option0} name="option0" onChange={(e) => this.handleOption(e)} />
                                     </InputGroup>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="1" 
-                                                checked={this.state.selectedOption == '1'}  onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="1"
+                                                    checked={this.state.selectedOption == '1'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input value={this.state.option1} name="option1" onChange={(e) => this.handleOption(e)}/>
+                                        <Input value={this.state.option1} name="option1" onChange={(e) => this.handleOption(e)} />
                                     </InputGroup>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="2" 
-                                                checked={this.state.selectedOption == '2'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="2"
+                                                    checked={this.state.selectedOption == '2'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
                                         <Input value={this.state.option2} name="option2" onChange={(e) => this.handleOption(e)} />
@@ -239,11 +233,11 @@ class ModifyObjectiveQuestion extends Component {
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText>
-                                                <Input addon type="radio" name="radio1" value="3" 
-                                                checked={this.state.selectedOption == '3'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
+                                                <Input addon type="radio" name="radio1" value="3"
+                                                    checked={this.state.selectedOption == '3'} onChange={this.handleCorrectOption} aria-label="Checkbox for following text input" />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input value={this.state.option3} name="option3" onChange={(e) => this.handleOption(e)}/>
+                                        <Input value={this.state.option3} name="option3" onChange={(e) => this.handleOption(e)} />
                                     </InputGroup>
                                 </FormGroup>
                                 <Row form>
@@ -270,8 +264,8 @@ class ModifyObjectiveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-      questionData : state.selectedQuestionData
+        questionData: state.selectedQuestionData
     };
-  };
-  
-  export default connect(mapStateToProps)(ModifyObjectiveQuestion) ;
+};
+
+export default connect(mapStateToProps)(ModifyObjectiveQuestion);

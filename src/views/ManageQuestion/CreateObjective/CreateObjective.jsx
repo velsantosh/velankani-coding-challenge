@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Container, Col, Row, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import QuestionService from '../../../service/QuestionService';
 import classes from "../CreateSubjective/CreateSubjective.module.css";
 import cx from "classnames";
-import EditorJava from '../../Component/EditorJava';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import CKEditor from 'ckeditor4-react';
 
 class CreateObjective extends Component {
@@ -47,7 +43,6 @@ class CreateObjective extends Component {
     handleTitle = (event) => {
         this.objQuestionData.title = event.target.value;
     }
-
     handleTechnology = (event) => {
         this.objQuestionData.technology = event.target.value;
     }
@@ -89,7 +84,7 @@ class CreateObjective extends Component {
         }
         let selectedRadioBtn = this.state.selectedOption;
         this.objQuestionData.correct_option = this.objQuestionData.options[selectedRadioBtn - 1];
-         QuestionService.addObjectiveQuestion(this.objQuestionData)
+        QuestionService.addObjectiveQuestion(this.objQuestionData)
             .then(response => {
                 this.setState({
                     redirectToBaseView: true

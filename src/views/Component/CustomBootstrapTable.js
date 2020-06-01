@@ -68,7 +68,8 @@ class CustomBootstrapTable extends Component {
                     keyField="id"
                     data={this.state.tableData}
                     columns={columns}
-                    search={onColumnMatch}
+                    search
+                    //search={onColumnMatch}
                 >
                     {
                         props => (

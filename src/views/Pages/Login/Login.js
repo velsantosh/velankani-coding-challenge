@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link,  withRouter, Redirect } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row} from 'reactstrap';
-//import axios from 'axios';
 import UsersDataService from '../../../service/UsersDataService'
 import { Helmet } from 'react-helmet';
-
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 import {compose} from 'redux';
@@ -31,8 +29,6 @@ class Login extends Component {
     this.submituserRegistrationForm = this.submituserRegistrationForm.bind(this);
 
     this.validateLogin = this.validateLogin.bind(this);
-
-    //this.getPermission = this.getPermission.bind(this);
   }
 
      handleChangeEmail(e) {
@@ -126,7 +122,6 @@ class Login extends Component {
   render() {
     if(this.state.permissionFlag){
       return (
-        // <Redirect from="/login" to="/manageUser/UserList" />
         <Redirect to={{
                          pathname: '/',
                          state: { userName: this.state.email }
@@ -211,19 +206,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-// there might be a issue with the following syntax
-//so try using the second one.
-
-//1st syntax
-// export default connect(
-//   null,
-//   mapDispatchToProps
-// )(withRouter(Login)
-// );
-
-//2nd syntax //for using this, you need to import compose from redux
 export default compose(
   withRouter,
   connect("", mapDispatchToProps)
 )(Login);
-//export default  withRouter(Login);

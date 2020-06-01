@@ -39,7 +39,7 @@ export default {
       icon:'icon-note',
     },
     {
-       name:'Shedule Request Report',
+       name:'Schedule Request Report',
        actual_name: 'SHEDULE_REQUEST_REPORT',
        url: '/scheduleRequestReport',
        icon:'icon-puzzle',

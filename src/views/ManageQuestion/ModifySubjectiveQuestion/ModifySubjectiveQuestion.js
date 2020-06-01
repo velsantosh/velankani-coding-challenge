@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, Container, FormText, Col, Row ,InputGroup,InputLabel,InputGroupAddon,InputGroupText} from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input, Container, FormText, Col, Row, InputGroup, InputLabel, InputGroupAddon, InputGroupText } from 'reactstrap';
 import QuestionService from '../../../service/QuestionService';
 import classes from "../CreateSubjective/CreateSubjective.module.css";
 import cx from "classnames";
 import EditorJava from '../../Component/EditorJava';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import CKEditor from 'ckeditor4-react';
-import { TextareaAutosize } from '@material-ui/core';
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 
 
 class ModifySubjectiveQuestion extends Component {
-     
+
     modifyQuestionData = {
         "title": '',
-        "technology":'',
-        "topic":'',
-        "statement":'',
-        "methodName":'',
+        "technology": '',
+        "topic": '',
+        "statement": '',
+        "methodName": '',
         "expectedTime": '',
-        "difficulty":'',
-        "junitText":'',
-        "technologyId":''
-      }
-      expectedTimeglobal =''
+        "difficulty": '',
+        "junitText": '',
+        "technologyId": ''
+    }
+    expectedTimeglobal = ''
 
     constructor(props) {
         super(props);
@@ -36,144 +33,145 @@ class ModifySubjectiveQuestion extends Component {
             editorContent: '',
             qId: this.props.questionData.id,
             disabled: true,
-            testCaseContent:'',
+            testCaseContent: '',
             redirectToBaseView: false,
-            title: this.props.questionData.title ,
-            technology:this.props.questionData.technology,
-            topic:this.props.questionData.topic,
-            statement:this.props.questionData.statement,
-            methodName:this.props.questionData.methodName,
+            title: this.props.questionData.title,
+            technology: this.props.questionData.technology,
+            topic: this.props.questionData.topic,
+            statement: this.props.questionData.statement,
+            methodName: this.props.questionData.methodName,
             expectedTime: this.props.questionData.expectedTime,
-            difficulty:this.props.questionData.difficulty,
-            junitText:this.props.questionData.junitText,
-            technologyId :this.props.questionData.technologyId
+            difficulty: this.props.questionData.difficulty,
+            junitText: this.props.questionData.junitText,
+            technologyId: this.props.questionData.technologyId
         };
-         
-        
+
+
         this.updatedTemplateContent = this.updatedTemplateContent.bind(this);
         this.updatedTestCaseContent = this.updatedTestCaseContent.bind(this);
     }
 
-    
+
     componentDidMount() {
-        
+
     }
 
     updatedTemplateContent(newValue) {
         this.setState({
             ...this.state,
-             methodName : newValue
-         });  
+            methodName: newValue
+        });
     };
 
     updatedTestCaseContent(newValue) {
         this.setState({
             ...this.state,
-            junitText :newValue
+            junitText: newValue
         });
     };
 
-    handleExpectedTime=(value) => {
-        this.expectedTimeglobal =value.toString()
+    handleExpectedTime = (value) => {
+        this.expectedTimeglobal = value.toString()
         return `${value}`;
     }
 
     showFileContent = async (e) => {
         e.preventDefault()
         const reader = new FileReader()
-        reader.onload = async (e) => { 
-          const text = (e.target.result);
-          this.setState({
-            ...this.state,
-             junitText : text  
-          });
+        reader.onload = async (e) => {
+            const text = (e.target.result);
+            this.setState({
+                ...this.state,
+                junitText: text
+            });
         };
         reader.readAsText(e.target.files[0])
-      }
-    
-    enableTestCaseEdit = () =>{
-        this.setState({
-            ...this.state,
-            disabled : !this.state.disabled});
     }
 
-    handleTitle = (event) => { 
+    enableTestCaseEdit = () => {
         this.setState({
             ...this.state,
-             title : event.target.value
-            
-        })
-      }
-      
-    handleTechnology = (event) => { 
-        this.setState({
-            ...this.state,
-               technology : event.target.value
-          
-        })
-      }
-
-      handleTopic = (event) => { 
-        this.setState({
-            ...this.state,
-               topic : event.target.value
-        
-        })
-      }
-
-      handleDifficulty = (event) => { 
-        this.setState({
-            ...this.state,
-              difficulty : event.target.value
-      
-        })
-      }
-
-      handleStatement =(event) =>{
-         this.setState({
-            ...this.state,
-            statement :event.editor.getData()   
-        })
-      }
-
-      modifySubjectiveQuestion =(qid,question) =>{
-        QuestionService.modifySubjectiveQuestion(qid,question)
-        .then(response => {
-          this.setState({
-            redirectToBaseView: true
-          });
-      });
+            disabled: !this.state.disabled
+        });
     }
 
-    modifyQuestion =() =>{
+    handleTitle = (event) => {
         this.setState({
             ...this.state,
-            expectedTime :this.expectedTimeglobal
-        },()=>{ 
+            title: event.target.value
+
+        })
+    }
+
+    handleTechnology = (event) => {
+        this.setState({
+            ...this.state,
+            technology: event.target.value
+
+        })
+    }
+
+    handleTopic = (event) => {
+        this.setState({
+            ...this.state,
+            topic: event.target.value
+
+        })
+    }
+
+    handleDifficulty = (event) => {
+        this.setState({
+            ...this.state,
+            difficulty: event.target.value
+
+        })
+    }
+
+    handleStatement = (event) => {
+        this.setState({
+            ...this.state,
+            statement: event.editor.getData()
+        })
+    }
+
+    modifySubjectiveQuestion = (qid, question) => {
+        QuestionService.modifySubjectiveQuestion(qid, question)
+            .then(response => {
+                this.setState({
+                    redirectToBaseView: true
+                });
+            });
+    }
+
+    modifyQuestion = () => {
+        this.setState({
+            ...this.state,
+            expectedTime: this.expectedTimeglobal
+        }, () => {
             this.modifyQuestionData.title = this.state.title;
-            this.modifyQuestionData.technology =this.state.technology;
-            this.modifyQuestionData.topic =this.state.topic;
-            this.modifyQuestionData.statement =this.state.statement;
-            this.modifyQuestionData.methodName =this.state.methodName;
-            this.modifyQuestionData.expectedTime =this.state.expectedTime;
-            this.modifyQuestionData.difficulty =this.state.difficulty; 
-            this.modifyQuestionData.junitText =this.state.junitText;
+            this.modifyQuestionData.technology = this.state.technology;
+            this.modifyQuestionData.topic = this.state.topic;
+            this.modifyQuestionData.statement = this.state.statement;
+            this.modifyQuestionData.methodName = this.state.methodName;
+            this.modifyQuestionData.expectedTime = this.state.expectedTime;
+            this.modifyQuestionData.difficulty = this.state.difficulty;
+            this.modifyQuestionData.junitText = this.state.junitText;
             this.modifyQuestionData.technologyId = this.state.technologyId;
-            this.modifySubjectiveQuestion(this.state.qId,this.modifyQuestionData);   
+            this.modifySubjectiveQuestion(this.state.qId, this.modifyQuestionData);
         })
-        }
-         close=()=>{
-            this.setState({
-                redirectToBaseView: true
-              });
-         }
-    
-    
+    }
+    close = () => {
+        this.setState({
+            redirectToBaseView: true
+        });
+    }
+
+
     render() {
-         const buttonContainer = {
+        const buttonContainer = {
             width: '200px',
-            marginRight:'10px',
-            marginTop:'20px',
+            marginRight: '10px',
+            marginTop: '20px',
             marginBottom: '20px !important',
             backgroundColor: '#1dafe2',
             color: 'white'
@@ -183,8 +181,8 @@ class ModifySubjectiveQuestion extends Component {
             marginLeft: '50px',
             fontWeight: 'bold'
         };
-        const lableStyle ={
-            fontWeight:'bold'
+        const lableStyle = {
+            fontWeight: 'bold'
         };
         const marginTop = {
             marginTop: '10px'
@@ -229,23 +227,23 @@ class ModifySubjectiveQuestion extends Component {
                         <Row form>
                             <Col md={4}>
                                 <FormGroup>
-                                    <Label for="qtitle" style ={lableStyle} >Title</Label>
-                                    <Input type="textbox" name="qtitle" id="qtitle" value={this.state.title} onChange= {(e) => this.handleTitle(e)} />
+                                    <Label for="qtitle" style={lableStyle} >Title</Label>
+                                    <Input type="textbox" name="qtitle" id="qtitle" value={this.state.title} onChange={(e) => this.handleTitle(e)} />
                                 </FormGroup>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
-                                    <Label for="technology" style ={lableStyle}>Technology</Label>
-                                    <Input type="select" name="technology" id="technology" defaultValue={this.state.technology} onChange= {(e) => this.handleTechnology(e)}>
+                                    <Label for="technology" style={lableStyle}>Technology</Label>
+                                    <Input type="select" name="technology" id="technology" defaultValue={this.state.technology} onChange={(e) => this.handleTechnology(e)}>
                                         <option>Java</option>
-                                        
+
                                     </Input>
                                 </FormGroup>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
-                                    <Label for="topic" style ={lableStyle}>Topic</Label>
-                                    <Input type="select" name="topic" id="topic" defaultValue={this.state.topic} onChange= {(e) => this.handleTopic(e)}>
+                                    <Label for="topic" style={lableStyle}>Topic</Label>
+                                    <Input type="select" name="topic" id="topic" defaultValue={this.state.topic} onChange={(e) => this.handleTopic(e)}>
                                         <option>J2EE</option>
                                         <option>Core Java</option>
                                         <option>OOPS</option>
@@ -254,65 +252,65 @@ class ModifySubjectiveQuestion extends Component {
                                     </Input>
                                 </FormGroup>
                             </Col>
-                            </Row>
+                        </Row>
+                        <FormGroup>
+                            <Label for="statement" style={lableStyle}>Question Statement</Label>
+                            <CKEditor data={this.state.statement} type="classic" onChange={(e) => this.handleStatement(e)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="template" style={lableStyle}>Template</Label>
+                            <EditorJava style={{ whiteSpace: 'nowrap' }} content={this.state.methodName} showGutter="true" updatedContent={this.updatedTemplateContent} ></EditorJava>
+                        </FormGroup>
+                        <Row form>
+                            <Col md="3">
                                 <FormGroup>
-                                    <Label for="statement" style ={lableStyle}>Question Statement</Label>
-                                    <CKEditor data={this.state.statement} type="classic" onChange={(e) => this.handleStatement(e)} />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="template" style ={lableStyle}>Template</Label>
-                                    <EditorJava  style={{ whiteSpace: 'nowrap' }} content={this.state.methodName} showGutter="true" updatedContent={this.updatedTemplateContent} ></EditorJava>
-                                </FormGroup>
-                                <Row form>
-                                <Col md="3">
-                                <FormGroup>
-                                    <Label for="fileUpload" style ={lableStyle}>Testcase</Label>
+                                    <Label for="fileUpload" style={lableStyle}>Testcase</Label>
                                     <Input type="file" name="file" id="fileUpload" onChange={(e) => this.showFileContent(e)} />
                                 </FormGroup>
-                                </Col>
-                                <Col md="5">
+                            </Col>
+                            <Col md="5">
                                 <FormGroup>
-                                    <Label for="expectedTime" style ={lableStyle}>Expected Time</Label>
+                                    <Label for="expectedTime" style={lableStyle}>Expected Time</Label>
                                     <div className={classes.root}>
                                         <Slider
                                             defaultValue={this.state.expectedTime}
-                                            getAriaValueText={(value)=>this.handleExpectedTime(value)}
+                                            getAriaValueText={(value) => this.handleExpectedTime(value)}
                                             aria-labelledby="discrete-slider-restrict"
                                             step={null}
                                             valueLabelDisplay="auto"
                                             marks={marks}
-                                         />
+                                        />
                                     </div>
                                 </FormGroup>
-                                </Col>
-                                <Col md="4">
+                            </Col>
+                            <Col md="4">
                                 <FormGroup>
-                                    <Label for="difficulty" style ={lableStyle}>Difficulty</Label>
-                                    <Input type="select" id="difficulty" defaultValue={this.state.difficulty} onChange= {(e) => this.handleDifficulty(e)}>
+                                    <Label for="difficulty" style={lableStyle}>Difficulty</Label>
+                                    <Input type="select" id="difficulty" defaultValue={this.state.difficulty} onChange={(e) => this.handleDifficulty(e)}>
                                         <option value="easy">Easy</option>
                                         <option value="hard">Hard</option>
                                     </Input>
                                 </FormGroup>
-                                </Col>
-                                </Row>
-                                <Row>
-                                <Col md="12">
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="12">
                                 <FormGroup>
-                                    <Label for="editTestCase" style ={lableStyle}>Edit Test Case</Label>
+                                    <Label for="editTestCase" style={lableStyle}>Edit Test Case</Label>
                                     <InputGroup className={classes.editCheckbox}>
                                         <InputGroupAddon addonType="prepend">
-                                        
-                                            <Input addon type="checkbox" name="enabletestcase" aria-label="Enable to edit the test case" onClick ={this.enableTestCaseEdit} />
-                                        
+
+                                            <Input addon type="checkbox" name="enabletestcase" aria-label="Enable to edit the test case" onClick={this.enableTestCaseEdit} />
+
                                         </InputGroupAddon>
                                     </InputGroup>
-                                    <EditorJava content={this.state.junitText} showGutter="true" updatedContent={this.updatedTestCaseContent} readOnly = {(this.state.disabled)? true : false}></EditorJava>
+                                    <EditorJava content={this.state.junitText} showGutter="true" updatedContent={this.updatedTestCaseContent} readOnly={(this.state.disabled) ? true : false}></EditorJava>
                                 </FormGroup>
-                                </Col>
-                                </Row>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.modifyQuestion} >Save</Button>
-                                <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close} >Close</Button>
-                            </Form>
+                            </Col>
+                        </Row>
+                        <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.modifyQuestion} >Save</Button>
+                        <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.close} >Close</Button>
+                    </Form>
 
                 </Container>
             </>
@@ -322,8 +320,8 @@ class ModifySubjectiveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-      questionData : state.selectedQuestionData
+        questionData: state.selectedQuestionData
     };
-  };
-  
-  export default connect(mapStateToProps)(ModifySubjectiveQuestion)
+};
+
+export default connect(mapStateToProps)(ModifySubjectiveQuestion)

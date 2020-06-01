@@ -27,7 +27,7 @@ class CreateQuestion extends Component {
         }
 
         const cardTxt = {
-            height:'70px'
+            height: '70px'
         }
 
         return (
@@ -55,13 +55,13 @@ class CreateQuestion extends Component {
                                 </Card>
                                 <Card style={cardStyle}>
                                     <CardBody>
-                                        <CardTitle style={titleStyle}>Mutilpe Choice Question</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/codingQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardTitle style={titleStyle}>Multiple Choice Question</CardTitle>
+                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
                                     </CardBody>
                                     <CardBody style={cardTxt}>
                                         <CardText>For questions with multiple answer options but only one correct answer.</CardText>
                                     </CardBody>
-                                    <CardBody>    
+                                    <CardBody>
                                         <Link to="/manageQuestion/createObjective">
                                             <Button className="btn btn-primary mb-1" style={buttonContainer}>Create Multiple Choice Question</Button>
                                         </Link>

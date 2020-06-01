@@ -35,6 +35,7 @@ class Questions extends Component {
 
   handleType(e) {
     this.setState({
+      ...this.state,
       activeType: e.target.value
     }, () => {
       this.getQuestionsByTypeTech(this.state.activeType, this.state.activeTechnology);
@@ -84,7 +85,7 @@ class Questions extends Component {
       marginRight: '3%'
     }
     //define columns for table
-    let columns = [{ 
+    let columns = [{
       dataField: 'title',
       text: 'Title',
       sort: true,
@@ -159,14 +160,14 @@ class Questions extends Component {
     };
 
     const { SearchBar } = Search;
-  
-    function onColumnMatch({searchText,value,column,row}) {
+
+    function onColumnMatch({ searchText, value, column, row }) {
       if (searchText == row.title || searchText == row.statement) {
         return true;
       }
-      
+
     }
-    
+
     return (
       <div className="animated fadeIn">
         <Container>
@@ -187,7 +188,7 @@ class Questions extends Component {
                 )} color="primary" onClick={this.handleType.bind(this)} value="objective">Objective</Button>
               </abbr>
             </div>
-            <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '18%'}}>
+            <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '18%' }}>
               <h4>Technology</h4>
 
               <abbr class="no-border" style={marginRight}>
@@ -202,6 +203,8 @@ class Questions extends Component {
               </abbr>
             </div>
           </Row>
+
+          {/* uncomment the following code to bring technology tab below the type tab and comment out the technology tab in above Row*/}
           {/* <Row className={cx(classes.filterContainer)}>
             <div className="col-xs-10 big-line btn-group" id="technology" style={{ padding: '.5rem' }}>
               <h4>Technology</h4>
@@ -236,7 +239,8 @@ class Questions extends Component {
                     keyField="id"
                     data={this.state.questions}
                     columns={columns}
-                    search={onColumnMatch}
+                    search
+                    //search={onColumnMatch}
                   >
                     {
                       props => (
@@ -251,8 +255,8 @@ class Questions extends Component {
                             data={this.state.questions}
                             columns={columns}
                             pagination={paginationFactory(options)}
-                            {...props.baseProps} 
-                            bordered={ false }/>
+                            {...props.baseProps}
+                            bordered={false} />
                         </div>
                       )
                     }
@@ -268,6 +272,7 @@ class Questions extends Component {
     )
   }
 }
+
 
 const mapDispatchToProps = dispatch => {
   return {
