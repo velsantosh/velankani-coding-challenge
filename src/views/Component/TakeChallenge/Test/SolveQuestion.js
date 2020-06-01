@@ -106,7 +106,7 @@ class SolveQuestion extends Component {
                     });
 
                     this.setState({
-                        resultTabLabel: "Submitted Status"
+                        resultTabLabel: "Test Status"
                     });
 
                 }
@@ -192,7 +192,7 @@ class SolveQuestion extends Component {
 
             var scheduledQuestionList = "/takechallenge";
         } else {
-            var scheduledQuestionList = "/subQuestionsList";
+            var scheduledQuestionList = "/subQuestionsList"; 
 
         }
 
@@ -203,6 +203,7 @@ class SolveQuestion extends Component {
                         backgroundColor: "lightblue", marginLeft: '2%',
                         fontSize: '18px', bottomRight: "40"
                     }}>result submitted successfully..</p>
+
                     <Link to={scheduledQuestionList}>
                         <Button style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
                     </Link>
@@ -252,16 +253,12 @@ class SolveQuestion extends Component {
                                     {!this.state.submitted ? runAndSubmitBtns : null}
                                     {console.log("you are called from solveQuestion")}
                                     {this.state.submitted ? backToQuestList : null}
-                                    <Row></Row>
+                                    <Row>
+
+                                    </Row>
 
                                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example"  >
-                                        {/* <Tab eventKey="home" title="OutPut">
-                                            <Card>
-                                                <CardBody>
-                                                    <CardText>{this.state.testCaseResults}</CardText>
-                                                </CardBody>
-                                            </Card> 
-                                         </Tab> */}
+                                      
                                         <Tab eventKey="profile" title={this.state.resultTabLabel} >
                                             <Card style={testCaseStyle}>
                                                 <CardBody class="card h-300">
@@ -293,20 +290,6 @@ class SolveQuestion extends Component {
                                 </Col>
                             </CardGroup>
                         </Col>
-                        {/*  <Col className="mb-1" sm={3}>
-                            <Card >
-                                <CardBody>
-                                    <CardTitle>other components</CardTitle>
-                                    <CardText>This i additional content. This content is a little bit longer.</CardText>
-                                </CardBody>
-                            </Card>
-                            <Card >
-                                <CardBody>
-                                    <CardTitle>other components </CardTitle>
-                                    <CardText>This is a wider card to additional content. This content is a little bit longer.</CardText>
-                                </CardBody>
-                            </Card>
-                        </Col> */}
                     </Row>
                 </Container>
             </div>

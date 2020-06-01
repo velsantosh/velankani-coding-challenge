@@ -9,15 +9,23 @@ class TakeChallenge extends Component {
     super(props);
     this.state = {
       isChallengeFetched: false,
-      responsedata: []
+      responsedata: [],
+      noSubScheduledQues : false
     };
 
     console.log("takechallenge -> props:",this.props);
+   
 
   }
 
   async componentDidMount() {
     console.log("takechallenge -> componentDidMount");
+    if (this.props.location.state) {
+      this.setState({
+        noSubScheduledQues: this.props.location.state.noSubScheduledQues
+      }); 
+    }
+   
   }
 
   render() {
@@ -45,12 +53,28 @@ class TakeChallenge extends Component {
   }
 
     console.log("state data ", this.state.responsedata);
+
+    let backToQuestList = (
+      <Row>
+          <Col md="4">
+              <p style={{
+                  backgroundColor: "lightblue", marginLeft: '9%',
+                  fontSize: '18px'
+              }}>No Subjective Question assinged{}</p>
+
+          </Col>
+      </Row>
+  );
+
     return (
       <>
         <div>
           <h1>Complete your scheduled Question</h1>
         </div>
         <Container>
+        {this.state.noSubScheduledQues ? backToQuestList : null}
+
+
           <Row className="">
             <Col md="12">
               <CardGroup>
@@ -62,7 +86,7 @@ class TakeChallenge extends Component {
                   <CardBody>
                   <Link
                       to={{
-                        pathname: '/subQuestionsList',
+                        pathname: '/subSchedQuestionsList',
                         state: {
                           scheduledQuestions: true
                         }

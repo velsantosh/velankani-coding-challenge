@@ -50,7 +50,10 @@ export class RescheduleChallenge extends Component {
   componentDidMount() {
     let sDate;
       let date = this.props.location.state.challenge.scheduleTime;
-      let finalDate=date.substr(0,date.indexOf("T"));
+      let finalDate = date;
+      if (date != null) {
+       finalDate=date.substr(0,date.indexOf("T"));
+      }
     //   console.log("Final Date Format", finalDate);
     //   let dateM = new Date(finalDate);
     // if (!isNaN(dateM.getTime())) {

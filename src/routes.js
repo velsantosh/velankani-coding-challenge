@@ -52,6 +52,7 @@ const ModifyObjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/
 const TestAccordion =React.lazy(() => import('./views/Component/TakeChallenge/Test/TestAccordionLayout'));
 const SolveQuestion =React.lazy(() => import('./views/Component/TakeChallenge/Test/SolveQuestion'));
 const SubQuestionsList =React.lazy(() => import('./views/Component/TakeChallenge/Test/SubQuestionsList'));
+const SubSchedQuestionsList =React.lazy(() => import('./views/Component/TakeChallenge/Test/SubSchedQuestionsList'));
 
 const AssignedQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignedQuestion'));
 const ReAssignChallenge = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/ReAssignChallenge'));
@@ -135,6 +136,7 @@ const routes = [
   {path: '/testAccordion', name: 'ObjectiveQuestionWizard', component: TestAccordion},
   {path: '/solveQuestion', name: 'ObjectiveQuestionWizard', component: SolveQuestion},
   {path: '/subQuestionsList', name: 'SubQuestionsList', component: SubQuestionsList},
+  {path: '/subSchedQuestionsList', name: 'SubQuestionsList', component: SubSchedQuestionsList},
 
   {path: '/selectQuestions', name: 'SelectQuestions', component: SelectQuestions}
 

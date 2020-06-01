@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import ObjectiveQuestion from '../ObjtiveQuestion/ObjectiveQuestion';
 import ObjectiveQuestionStep from '../ObjectiveQuestionStep/ObjectiveQuestionStep';
 import QuestionService from '../../../../service/QuestionService'
@@ -6,7 +6,7 @@ import QuestionService from '../../../../service/QuestionService'
 //import MultiStep from 'react-multistep';
 import Confirm from '../ObjtiveQuestion/Confirm';
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from 'react-router-dom';
 
 import {
   Button, Card, CardGroup, Container, CardBody, CardHeader,
@@ -17,22 +17,22 @@ import { connect } from "react-redux";
 //import * as actionTypes from ".";
 
 class ObjectiveQuestionWizard extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            objQuestions:[],
-            step:0,
-            result:[],
-            isScheduledPage: false
-        };        
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      objQuestions: [],
+      step: 0,
+      result: [],
+      isScheduledPage: false
+    };
+  }
 
   componentDidMount() {
 
     console.log("componentDidMount props : ", this.props);
-    if (this.props.location.state != null ) {
+    if (this.props.location.state != null) {
       this.setState({
-        isScheduledPage : this.props.location.state.scheduledQuestions
+        isScheduledPage: this.props.location.state.scheduledQuestions
       })
     }
 
@@ -51,11 +51,11 @@ class ObjectiveQuestionWizard extends Component {
   getQuestionsById(qId) {
     QuestionService.getQuestionsById(qId)
       .then(
-        response => {      
+        response => {
           console.log("subjective questions list: ObjectiveQuestionWizard", response.data)
           this.setState({
             objQuestions: [...this.state.objQuestions, response.data]
-          });        
+          });
         }
       );
   }
@@ -68,17 +68,36 @@ class ObjectiveQuestionWizard extends Component {
         console.log("objective questionBank data : ", questionBank.data)
 
         if (questionBank.data === null) {
+
+
           console.log("response null")
         }
         else {
+          const filteredObjQuestion = [];
+
           questionBank.data.map((myQuestion) => {
-            console.log("inside questionBank myQuestion: ", myQuestion);
-            var filteredObjQuestion = questionBank.data.filter(ques => {
-              return ques.type === "OBJECTIVE";
-            })
+            if (myQuestion.type === "OBJECTIVE") {
+              console.log("inside questionBank OBJECTIVE: ", myQuestion);
+              filteredObjQuestion.push(myQuestion)
+            }
+
+        
+
             this.setState({
               objQuestions: filteredObjQuestion
-            }, () => { console.log("objQuestions :", this.state.objQuestions) });
+            }, () => { console.log("filteredObjQuestion :", this.state.objQuestions) });
+
+            if (filteredObjQuestion.length == 0) {
+
+              return (<Redirect to={{
+                pathname: '/takechallenge',
+                state: { noSubScheduledQues: true }
+
+              }}
+              />
+              );
+            }
+
           });
         }
       })
@@ -87,17 +106,17 @@ class ObjectiveQuestionWizard extends Component {
   handleOptionSelection = e => {
     console.log(e.currentTarget.value);
 
-        let key ={
-          qid :this.state.objQuestions[this.state.step].id,
-          userId : this.props.userName
-        }
+    let key = {
+      qid: this.state.objQuestions[this.state.step].id,
+      userId: this.props.userName
+    }
 
-        let resultValue = {         
-            questionContent:this.state.objQuestions[this.state.step].statement,
-            selectedoption:e.currentTarget.value,
-            selectedAnswer:e.currentTarget.value,
-            key :key
-        };        
+    let resultValue = {
+      questionContent: this.state.objQuestions[this.state.step].statement,
+      selectedoption: e.currentTarget.value,
+      selectedAnswer: e.currentTarget.value,
+      key: key
+    };
 
     this.setState((prevState) => {
       var existingquestionContents = this.state.result.map((obj) => obj.questionContent);
@@ -138,8 +157,8 @@ class ObjectiveQuestionWizard extends Component {
     });
   };
 
-   // Handle fields change
-   handleChange = input => e => {
+  // Handle fields change
+  handleChange = input => e => {
     this.setState({ [input]: e.target.value });
   };
 
@@ -152,27 +171,31 @@ class ObjectiveQuestionWizard extends Component {
     let idx = this.state.step;
     console.log(idx);
 
-        let nextPage;
+    let nextPage;
 
-    if (idx > (this.state.objQuestions.length - 1)) {
-      nextPage = (
-        <Confirm result={this.state.result} prevstep={this.prevStep}
-          nextstep={this.nextStep} isScheduledPage={this.state.isScheduledPage}/> 
-      );
+    console.log("result object  top:", this.state.objQuestions.length);
+
+    if (idx > (this.state.objQuestions.length - 1 )) {
+        nextPage = (
+          <Confirm result={this.state.result} prevstep={this.prevStep}
+            nextstep={this.nextStep} isScheduledPage={this.state.isScheduledPage} />
+        );
+     
+
     }
     else {
       console.log("result object :", this.state.result);
 
-          nextPage = (
-            <ObjectiveQuestionStep result={this.state.result} handleOptionSelection={this.handleOptionSelection}
-             prevstep={this.prevStep} nextstep={this.nextStep} answerOptions={this.state.objQuestions[idx].options} 
-             count={this.state.objQuestions.length} content={this.state.objQuestions[idx].statement} id={"steps" + idx} indentid={idx}/>
-          );
-        }
+      nextPage = (
+        <ObjectiveQuestionStep result={this.state.result} handleOptionSelection={this.handleOptionSelection}
+          prevstep={this.prevStep} nextstep={this.nextStep} answerOptions={this.state.objQuestions[idx].options}
+          count={this.state.objQuestions.length} content={this.state.objQuestions[idx].statement} id={"steps" + idx} indentid={idx} />
+      );
+    }
 
     return (
       <div className="animated fadeIn">
-      
+
         {nextPage}
       </div>
     );
@@ -183,10 +206,9 @@ class ObjectiveQuestionWizard extends Component {
 const mapStateToProps = state => {
   console.log(state.userName);
   return {
-    userName : state.userName
+    userName: state.userName
   };
 };
 
 export default connect(mapStateToProps)(ObjectiveQuestionWizard)
 
-//export default ObjectiveQuestionWizard;

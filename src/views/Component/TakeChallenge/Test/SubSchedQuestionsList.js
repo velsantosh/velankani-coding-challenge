@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , Redirect} from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup, Input, Container } from 'reactstrap';
 import QuestionService from '../../../../service/QuestionService';
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
@@ -13,7 +13,7 @@ import * as actionTypes from "../../../../store/Actions";
 import Counter from '../../../AssignQuestions/QuestionTypeSelection/Counter';
 
 
-class SubQuestionsList extends Component {
+class SubSchedQuestionsList extends Component {
 
   constructor(props) {
 
@@ -22,52 +22,54 @@ class SubQuestionsList extends Component {
       questions: [],
       type: '',
       index: 0,
-      scheduledQuestionsOrNot: false,
       showModalFlag: false,
       selectedData: ''
-    }    
+    }   
+    
+    console.log("this.props.userName:  ", this.props.userName);    
 
-    this.getQuestionsByTech = this.getQuestionsByTech.bind(this);
-    this.getQuestionsByType = this.getQuestionsByType.bind(this);
   }
 
   componentDidMount() {
-    console.log("this.props.userName:  ", this.props.userName);    
-    console.log("getQuestionsByTech ", this.state.scheduledQuestionsOrNot);
-      this.getQuestionsByTech();
-   
-  }
-  
-
-  getQuestionsByTech() {
-    QuestionService.getQuestionsByTech("Java")
-      .then(
-        response => {
-          this.setState({ questions: response.data })
-        }
-      )
+    console.log("this.props.userName:componentDidMount  ", this.props.userName); 
+      this.getScheduledQuestionsByUserId(this.props.userName);   
   }
 
-  getQuestionsByType(e) {
-    QuestionService.getQuestionsByType(e.target.value)
-      .then(response => {
-        this.setState({ questions: response.data })
+  getScheduledQuestionsByUserId(userName) {
+    console.log("getScheduledQuestionsByUserId inside ---> ", userName);
+
+    const subQuestions = [];
+    ScheduledChallengeDataService.getScheduledQuestionByCandidateId(userName).then(
+      response => {
+        response.data.map((question) => {
+          console.log("question :", question)
+          if (question.type === 'SUBJECTIVE') {
+            subQuestions.push(question);
+          }
+          console.log("getScheduledQuestionsByUserId  subQuestions:", subQuestions)
+
+          this.setState({ questions: subQuestions });
+        });
       }
-      )
+    )
   }
+
+  
 
   titleFormatter = (cell, row) => {
     console.log("editUserLink ####", row);
-
-    let solveQuestionLink = `/solveQuestion/${row.id}`;
-    if (row.type === 'OBJECTIVE') {
-      solveQuestionLink = `/takeobjectivetest/${row.id}`    
-    }
+    let solveQuestionLink = `/solveQuestion/${row.id}`;  
     console.log("solveQuestionLink ####", solveQuestionLink);
-    return (<Link to={solveQuestionLink}>{row.title}</Link>) 
+    return (<Link to={{
+      pathname: `/solveQuestion/${row.id}`,
+      state: {
+        scheduledQuestions: true
+      }
+    }}>{row.title}</Link>) 
+
     
   }
-
+ 
   statementFormatter = (cell, row) => {
     let stmt = "";
     if (cell != null) {
@@ -78,7 +80,7 @@ class SubQuestionsList extends Component {
     return (<><Link>{Parser(newStmt)}</Link>
     </>);
   }
- 
+
   setModalFlag = () => this.setState({ showModalFlag: false });
 
   render() {
@@ -92,20 +94,8 @@ class SubQuestionsList extends Component {
       marginRight: '0.5%',
       marginBottom: '2%'
     };
-    const questionsList = this.state.questions
 
-    let filterByTypeComponent = (
-      <Row>
-        <abbr class="no-border" style={marginRight} >
-          <Button block outline color="primary" onClick={this.getQuestionsByType} value="SUBJECTIVE">Subjective</Button>
-        </abbr>
-        <abbr class="no-border" style={marginRight} >
-          <Button block outline color="primary" onClick={this.getQuestionsByType} value="OBJECTIVE">Objective</Button>
-        </abbr>
-      </Row>
-    );
-
- 
+    
 
     const options = {
       page: 1,  // page that shows as default
@@ -211,13 +201,12 @@ class SubQuestionsList extends Component {
       <div className="animated fadeIn" style={marginTop}>
 
         <div className="col-xs-10 big-line btn-group" id="Skills" data-skill="4" data-is-custom="False" style={{ padding: '.5rem' }}>
-          <h4>Programming Test </h4>
+          <h4>Scheduled Subjective Test</h4>
         </div>
         <Container>
-          {!this.state.scheduledQuestionsOrNot ? filterByTypeComponent : null}
-        
           <Row xs="12" className="justify-content-center">
           <Col xl={10}>
+
             {this.state.questions.length > 0
               &&
               <>
@@ -268,11 +257,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     solveTestQuestion: solveQuestion =>
-      dispatch({ type: actionTypes.SOLVEQUESTION, value: solveQuestion })
+      dispatch({ type: actionTypes.SOLVESCHEDQUESTION, value: solveQuestion })
 
   };
 };
 
 export default connect(
    mapStateToProps, mapDispatchToProps
-)(SubQuestionsList);
+)(SubSchedQuestionsList);

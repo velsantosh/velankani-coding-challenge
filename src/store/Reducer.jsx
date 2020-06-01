@@ -3,7 +3,10 @@ import * as actionTypes from "./Actions";
 const initialState = {
   userName: '',
   selectedQuestionData:{},
-  scheduledRequestData:{}
+  scheduledRequestData:{},
+  editUserData:{},
+  assignQuestionData:{}
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +25,16 @@ const reducer = (state = initialState, action) => {
        return{
         ...state,
         scheduledRequestData :action.value
+      }
+      case actionTypes.EDITUSERDATA:
+       return{
+        ...state,
+        editUserData :action.value
+      }
+      case actionTypes.ASSIGNQUESTION:
+       return{
+        ...state,
+        assignQuestionData :action.value
       }
   }
   return state;
