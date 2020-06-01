@@ -78,6 +78,19 @@ class ScheduledChallengeDataService {
         );
     }
 
+    updateChallengeStatus(candidateId) {
+
+        // return axios.get(`${apiBaseUrl}/updateChallengeStatus/${userId}`,
+        return axios.put(`http://localhost:8083/updateChallengeStatus/${candidateId}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+                },
+                crossdomain: true
+            }
+        );
+    }
+
 }
 
 export default new ScheduledChallengeDataService()

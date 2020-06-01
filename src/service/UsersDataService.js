@@ -26,8 +26,8 @@ class UsersDataService {
             'Access-Control-Allow-Origin': '*',
           },})
     }
-    download(userId){
-        return axios.get(`http://localhost:8083/subjResReport/${userId}`,{headers: {
+    download(userId,challengeid){
+        return axios.get(`http://localhost:8083/subjResReport/${userId}/${challengeid}`,{headers: {
             'Access-Control-Allow-Origin': '*',
           },responseType: 'blob',})
     }
@@ -75,10 +75,10 @@ class UsersDataService {
                  'Access-Control-Allow-Origin': '*',
                },})
     }
-    sendToInterviewers(user) {
+    sendToInterviewers(user, challengeid) {
         console.log('Create User');
         // return axios.post(`${apiBaseUrl}/user`, user);
-        return axios.post(`http://localhost:8083/send/candidate/report`, user);
+        return axios.post(`http://localhost:8083/send/candidate/report/${challengeid}`, user);
     }
 
 }
