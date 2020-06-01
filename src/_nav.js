@@ -16,10 +16,10 @@ export default {
       icon: 'icon-pencil',
     },
     {
-      name :'Assign Question',
+      name :'Schedule Test',
       actual_name: 'ASSIGN_QUESTION',
       url: '/assignQuestion/AssignedQuestion',
-      icon: 'icon-pencil'
+      icon: 'icon-calendar'
     },
     {
       name :'Take Test',
@@ -33,11 +33,10 @@ export default {
       url: '/testAccordion',
       icon: 'icon-puzzle',
     },
-    { 
-      name:'Candidate Report',
-      actual_name: 'CANDIDATES_REPORT',
+    { name:'Test Report',
+    actual_name:'CANDIDATES_REPORT',
       url: '/candidatesReport',
-      icon:'icon-puzzle',
+      icon:'icon-note',
     },
     {
        name:'Shedule Request Report',

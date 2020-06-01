@@ -15,6 +15,7 @@ import { MailList } from './MailList';
         super(props)
         this.userid=""
           this.id='';
+          this.challengeid=''
         this.state = {
          candidates: [],
          interviewer:[],
@@ -64,7 +65,7 @@ import { MailList } from './MailList';
              toEmailIds:stringOfListOfEmails,
                candidateId:this.id,
               }
-          UsersDataService.sendToInterviewers(payload)
+          UsersDataService.sendToInterviewers(payload,this.challengeid)
       .then(
           response => {
             if(response.data === null){
@@ -92,8 +93,9 @@ import { MailList } from './MailList';
            this.setState({isDropDown:!this.state.isDropDown});
          }
 
-          toggle(id){
+          toggle(id, challengeid){
             this.id=id;
+            this.challengeid=challengeid;
             console.log("togle is called");
             UsersDataService.getInterviewer()
       .then(
@@ -179,6 +181,12 @@ import { MailList } from './MailList';
             this.setState({interviewer:[...this.state.interviewer, mail]});
           }
     render() {
+        const marginRight = {
+          marginBottom: '20px',
+          marginRight: '0.5%',
+          marginTop: '20px'
+        };
+        
         const candidateList = this.state.candidates;
           const interviewerList=  this.state.interviewer;   
            const mailingList=this.state.emails;
@@ -187,14 +195,21 @@ import { MailList } from './MailList';
         return (  
             <div className="container-fluid">
                 <div >
-                <Card body color="info">
-            <CardHeader >CandidatesReport</CardHeader>
-      </Card>
+                 <h4 style={marginRight}>Candidate Report</h4>
                 </div>
                 <div>
                     <Table striped >
                         <thead>
-                            <tr><th><input type="checkbox" /></th><th> Candiadte Name </th> <th>Test Case Report </th><th> status</th><th>Test Report</th><th>Test scheduler</th></tr>
+                            <tr>
+                            <th scope="col" className="headingPrimary"><input type="checkbox" /></th>
+                            <th scope="col" className="headingPrimary">CANDIDATE NAME</th> 
+                            <th scope="col" className="headingPrimary">SUCCESS PERCENT</th>
+                            <th scope="col" className="headingPrimary"> STATUS</th>
+                            <th scope="col" className="headingPrimary">SCHEDULE DATE</th>
+                            <th scope="col" className="headingPrimary">TEST SCHEDULER</th>
+                            <th scope="col" className="headingPrimary">REPORT</th>
+                            <th scope="col" className="headingPrimary">ACTION</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {candidateList.map((cdetail ,index) =>
@@ -249,7 +264,7 @@ import { MailList } from './MailList';
     </Dropdown>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.sendToInterviewrs}>Proced</Button>{' '}
+          <Button color="primary" onClick={this.sendToInterviewrs}>Proceed</Button>{' '}
           <Button color="secondary" onClick={this.toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>

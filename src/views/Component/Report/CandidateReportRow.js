@@ -19,10 +19,10 @@ toggle (){
     
 }
   
-download(id,userName){
+download(id,userName,challengeid){
         console.log("download button is clicked");
          console.log(id);
-        UsersDataService.download(id)
+        UsersDataService.download(id,challengeid)
           .then(
               response => {
                 if(response.data === null){
@@ -56,7 +56,9 @@ download(id,userName){
                 <td color="info">{this.props.cdetail.candidateName}</td>
                 <td><Progress animated value={this.props.cdetail.testCasePercentage} color="success"/>{this.props.cdetail.testCasePercentage}%</td>
                 <td>{this.props.cdetail.status}</td>
-                <td><span><Button color="primary" size="sm" id="ranjeet" onClick={ ()=> this.download(this.props.cdetail.id,this.props.cdetail.candidateName)
+                <td>{this.props.cdetail.scheduleDate}</td>
+                <td color="success">{this.props.cdetail.testScheduler}</td>
+                <td><span><Button color="primary" size="sm" id="ranjeet" onClick={ ()=> this.download(this.props.cdetail.id,this.props.cdetail.candidateName,this.props.cdetail.challengeid)
                 }> View Report </Button>
                 <Tooltip
         placement="right"
@@ -65,8 +67,8 @@ download(id,userName){
         
         toggle={this.toggle}>{this.props.cdetail.testcaseReport}
       </Tooltip></span></td>
-                <td color="success">{this.props.cdetail.testScheduler}</td>
-               <td><Button color="success"onClick={ ()=> this.props.toggle2(this.props.cdetail.id)} size="sm" id="popover" >Forword </Button></td>
+                
+               <td><Button color="primary" onClick={ ()=> this.props.toggle2(this.props.cdetail.id,this.props.cdetail.challengeid)} size="sm" id="popover" >Forword </Button></td>
             </tr>
         );
 

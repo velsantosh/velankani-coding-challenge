@@ -3,6 +3,10 @@ import { Nav, NavItem, NavLink, Button, CardGroup, Container, Card, CardBody, Ca
 import { Link, NavLink as RRNavLink } from "react-router-dom";
 import cx from "classnames";
 import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
+import { connect } from "react-redux";
+import * as actionTypes from "../../../store/Actions";
+import classes from "./TakeChallenge.module.css";
+import Modals from '../../Notifications/Modals/Modals';
 
 class TakeChallenge extends Component {
   constructor(props) {
@@ -10,7 +14,8 @@ class TakeChallenge extends Component {
     this.state = {
       isChallengeFetched: false,
       responsedata: [],
-      noSubScheduledQues : false
+      noSubScheduledQues : false,
+	  redirectToLogin:false
     };
 
     console.log("takechallenge -> props:",this.props);
@@ -28,8 +33,22 @@ class TakeChallenge extends Component {
    
   }
 
+  updateChallengeStatus(){
+  ScheduledChallengeDataService.updateChallengeStatus(this.props.userName.length > 0 && this.props.userName)
+  .then(
+    response => {
+    this.setState({ redirectToLogin: response.data })
+    }
+  )
+ }
   render() {
 
+   const redirectToLogin = this.state.redirectToLogin;
+    if (redirectToLogin === true) {
+      return (
+        <Modals message={`Thanks, Our Recruitment team will update you.`} linkValue={"/login"}></Modals>
+      );
+    }
     const buttonContainer = {
       marginBottom: '20px !important',
       backgroundColor: '#1dafe2',
@@ -114,6 +133,9 @@ class TakeChallenge extends Component {
               </CardGroup>
             </Col>
           </Row>
+		  <Row className="justify-content-center">
+          <Button className={cx(classes.createBtn)} onClick={this.updateChallengeStatus.bind(this)}>Submit Challenge</Button>
+          </Row>
         </Container>
       </>
     );
@@ -121,4 +143,11 @@ class TakeChallenge extends Component {
   }
 }
 
-export default TakeChallenge;
+const mapStateToProps = state => {
+    return {
+      userName: state.userName
+    };
+  };
+  
+  export default connect(mapStateToProps)(TakeChallenge)
+//export default TakeChallenge;

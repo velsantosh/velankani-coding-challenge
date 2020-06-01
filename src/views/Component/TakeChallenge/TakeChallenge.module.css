@@ -1,0 +1,35 @@
+.showActive{
+    background-color: #20a8d8;
+    color: white;
+}
+
+.filterContainer{
+    margin-top:20px;
+
+}
+.filterBtn{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.createBtn{
+    margin-top: 50px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:20px;
+}
+
+.createNxtBtn{
+    margin-top: 5px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:5px;
+}
+
+.createTableBtn{
+    margin-top: 5px;
+    background-color :#1dafe2;
+    color:white;
+    margin-bottom:5px;
+    width: 50%;
+}
