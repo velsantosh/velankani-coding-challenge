@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+//import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import QuestionService from '../../../service/QuestionService'
 import classes from "./SelectQuestions.module.css";
@@ -9,76 +10,68 @@ class DeleteChallengeModal extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      modal: true,
-      response:false
-    };
+    // this.state = {
+    //   modal: true,
+    //   large: false,
+    //   small: false,
+    //   primary: false,
+    //   success: false,
+    //   warning: false,
+    //   danger: false,
+    //   info: false,
+    // };
 
-    this.toggle = this.toggle.bind(this);
     this.redirect = this.redirect.bind(this);
-    
+    this.redirectWithoutDel = this.redirectWithoutDel.bind(this);
   }
 
-  toggle() {
-    this.setState({
-      modal: !this.state.modal,
-    });
-    
-  }
-
-  redirect(flag) {
-    if(flag){
-      QuestionService.deleteChallenge(this.props.challengeId)
+  redirect() {
+      QuestionService.deleteChallenge(this.props.challengeid)
       .then(
           response => {
               console.log("DeleteChallenge_Response : ",response.status);
               if (response.status === 200) {
-                  this.setState({ redirectToBaseView: true })
+                  this.props.onHide();
               } else {
                   console.log("DeleteChallenge_Response : ", response.data)
                   this.props.history.push(`/404`)
               }
           }
       )
-    }
-    this.setState({
-      modal: !this.state.modal,
-      response:true
-    });
-    
+  }
+
+  redirectWithoutDel() {
+    this.props.onHide();
   }
 
   render() {
-    if(this.state.response){
-      return (
-        <Redirect to={{
-                             pathname: `/assignQuestion/AssignedQuestion`
-                             
-                          }}
-          />
-      )
-    }else{
+    
     return (
-      <div className="animated fadeIn">
-        
-                <Modal aria-labelledby="contained-modal-title-vcenter"
+      <div>
+      <Modal
+            {...this.props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
             centered
             animation={true}
-            style={{opacity:1}} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} backdrop="static">
-                  <ModalHeader toggle={this.redirect.bind(this, false)}>{this.props.header}</ModalHeader>
-                  <ModalBody>
-                  <div className="container">{`Do You Want To Permanently Delete the Test`}</div>
-                    
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" className={cx(classes.createBtn)} onClick={this.redirect.bind(this, true)}>Yes</Button>
-                    <Button color="primary" className={cx(classes.createBtn)} onClick={this.redirect.bind(this, false)}>No</Button>
-                  </ModalFooter>
-                </Modal>
-      </div>
+            style={{opacity:1}}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Assgined Questions
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Delete
+            </Modal.Body>
+            <Modal.Footer>
+            <Button color="primary" className={cx(classes.createBtn)} onClick={this.redirect}>Yes</Button>
+            <Button color="primary" className={cx(classes.createBtn)} onClick={this.redirectWithoutDel}>No</Button>
+            </Modal.Footer>
+          </Modal>
+          </div>
     );
   }
-}
 }
 
 export default DeleteChallengeModal;

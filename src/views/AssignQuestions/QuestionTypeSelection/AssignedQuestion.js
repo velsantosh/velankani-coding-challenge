@@ -137,11 +137,14 @@ class AssignedQuestion extends Component {
     const redirectToassignQuestion = this.state.redirectToassignQuestion;
     const redirectToReschedule = this.state.redirectToReschedule;
     const redirectToAssignModels = this.state.redirectToAssignModels;
-    let addModal = () => this.setState({ redirectToAssignModels: false });
+    let addModal = () => this.setState({ redirectToAssignModels: false, redirectToDeleteModel:false },()=> this.componentDidMount());
     if (this.state.redirectToDeleteModel === true) {
       return (
 
-        <DeleteChallengeModal challengeId={this.state.challengeId}></DeleteChallengeModal>
+        <DeleteChallengeModal show={this.state.redirectToDeleteModel} 
+                              challengeid={this.state.challengeId}
+                              onHide={addModal}>
+        </DeleteChallengeModal>
       );
     }
 
