@@ -39,12 +39,6 @@ export default {
       icon:'icon-note',
     },
     {
-       name:'Schedule Request Report',
-       actual_name: 'SHEDULE_REQUEST_REPORT',
-       url: '/scheduleRequestReport',
-       icon:'icon-puzzle',
-    },
-    {
       name :'Manage User',
       actual_name: 'Manage MANAGE_USER',
       url: '/manageQuestion/addQuestion',
@@ -57,7 +51,7 @@ export default {
       icon: 'icon-pencil',
     },
     {
-      name :'Schedule Test',
+      name :'Schedule Request',
       actual_name: 'SCHEDULE_TEST',
       url: '/scheduleTest',
       icon: 'icon-calendar',
