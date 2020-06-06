@@ -45,11 +45,9 @@ class SubSchedQuestionsList extends Component {
           console.log("question :", question)
           if (question.type === 'SUBJECTIVE') {
             subQuestions.push(question);
-          }
-          console.log("getScheduledQuestionsByUserId  subQuestions:", subQuestions)
-
-          this.setState({ questions: subQuestions });
+          }         
         });
+        this.setState({ questions: subQuestions });
       }
     )
   }
