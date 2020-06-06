@@ -1,0 +1,15 @@
+
+	tar -cvf uibootstrapchanges.tar   package-lock.json
+	tar -uvf uibootstrapchanges.tar   src/routes.js
+	tar -uvf uibootstrapchanges.tar   src/service/QuestionService.js
+	tar -uvf uibootstrapchanges.tar   src/store/Actions.jsx
+	tar -uvf uibootstrapchanges.tar   src/store/Reducer.jsx
+	tar -uvf uibootstrapchanges.tar   src/views/AssignQuestions/QuestionTypeSelection/AssignedQuestion.js
+	tar -uvf uibootstrapchanges.tar   src/views/AssignQuestions/QuestionTypeSelection/RescheduleChallenge.js
+	tar -uvf uibootstrapchanges.tar   src/views/Component/TakeChallenge/ObjectiveQuestionWizard/ObjectiveQuestionWizard.js
+	tar -uvf uibootstrapchanges.tar   src/views/Component/TakeChallenge/TakeChallenge.js
+	tar -uvf uibootstrapchanges.tar   src/views/Component/TakeChallenge/Test/SolveQuestion.js
+	tar -uvf uibootstrapchanges.tar   src/views/Component/TakeChallenge/Test/SubQuestionsList.js
+	tar -uvf uibootstrapchanges.tar   src/views/Users/Users.js
+
+	tar -uvf uibootstrapchanges.tar   src/views/Component/TakeChallenge/Test/SubSchedQuestionsList.js

@@ -1,0 +1,7 @@
+
+	tar -cvf uichanges.tar   package-lock.json
+	tar -uvf uichanges.tar   package.json
+	tar -uvf uichanges.tar   src/views/AssignQuestions/QuestionTypeSelection/QuestionType.js
+	tar -uvf uichanges.tar   src/views/AssignQuestions/QuestionTypeSelection/RescheduleQuesType.js
+	tar -uvf uichanges.tar   src/views/AssignQuestions/QuestionTypeSelection/SelectQuestions.js
+	tar -uvf uichanges.tar   src/views/Component/TakeChallenge/ObjectiveQuestionWizard/ObjectiveQuestionWizard.js
