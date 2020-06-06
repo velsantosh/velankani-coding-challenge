@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link , Redirect} from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Row, Table, CardFooter, Button, CardGroup, Input, Container } from 'reactstrap';
 import QuestionService from '../../../../service/QuestionService';
 import ScheduledChallengeDataService from '../../../../service/ScheduledChallengeDataService';
@@ -24,15 +24,15 @@ class SubSchedQuestionsList extends Component {
       index: 0,
       showModalFlag: false,
       selectedData: ''
-    }
-
-    console.log("this.props.userName:  ", this.props.userName);
+    }   
+    
+    console.log("this.props.userName:  ", this.props.userName);    
 
   }
 
   componentDidMount() {
-    console.log("this.props.userName:componentDidMount  ", this.props.userName);
-    this.getScheduledQuestionsByUserId(this.props.userName);
+    console.log("this.props.userName:componentDidMount  ", this.props.userName); 
+      this.getScheduledQuestionsByUserId(this.props.userName);   
   }
 
   getScheduledQuestionsByUserId(userName) {
@@ -46,29 +46,30 @@ class SubSchedQuestionsList extends Component {
           if (question.type === 'SUBJECTIVE') {
             subQuestions.push(question);
           }
+          console.log("getScheduledQuestionsByUserId  subQuestions:", subQuestions)
 
+          this.setState({ questions: subQuestions });
         });
-        this.setState({ questions: subQuestions });
       }
     )
   }
 
-
+  
 
   titleFormatter = (cell, row) => {
     console.log("editUserLink ####", row);
-    let solveQuestionLink = `/solveQuestion/${row.id}`;
+    let solveQuestionLink = `/solveQuestion/${row.id}`;  
     console.log("solveQuestionLink ####", solveQuestionLink);
     return (<Link to={{
       pathname: `/solveQuestion/${row.id}`,
       state: {
         scheduledQuestions: true
       }
-    }}>{row.title}</Link>)
+    }}>{row.title}</Link>) 
 
-
+    
   }
-
+ 
   statementFormatter = (cell, row) => {
     let stmt = "";
     if (cell != null) {
@@ -94,7 +95,7 @@ class SubSchedQuestionsList extends Component {
       marginBottom: '2%'
     };
 
-
+    
 
     const options = {
       page: 1,  // page that shows as default
@@ -130,7 +131,7 @@ class SubSchedQuestionsList extends Component {
 
     }
 
-
+    
     //define columns for table
     let columns = [{
       dataField: 'title',
@@ -138,7 +139,7 @@ class SubSchedQuestionsList extends Component {
       sort: true,
       align: 'center',
       headerAlign: 'center',
-      headerStyle: { color: '#47bff7', width: '1.5%' },
+      headerStyle: { color: '#47bff7', width :'1.5%' },
       formatter: this.titleFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
@@ -156,7 +157,7 @@ class SubSchedQuestionsList extends Component {
       headerAlign: 'center',
       headerStyle: {
         color: '#47bff7',
-        width: '1%'
+        width :'1%'
       }
 
     },
@@ -166,7 +167,7 @@ class SubSchedQuestionsList extends Component {
       sort: true,
       align: 'left',
       headerAlign: 'center',
-      headerStyle: { color: '#47bff7', width: '5%' },
+      headerStyle: { color: '#47bff7', width :'5%' },
       formatter: this.statementFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
@@ -184,7 +185,7 @@ class SubSchedQuestionsList extends Component {
       align: 'center',
       sort: true,
       headerAlign: 'center',
-      headerStyle: { color: '#47bff7', width: '1%' },
+      headerStyle: { color: '#47bff7', width :'1%' },
     },
     {
       dataField: 'expectedTime',
@@ -192,7 +193,7 @@ class SubSchedQuestionsList extends Component {
       sort: true,
       align: 'center',
       headerAlign: 'center',
-      headerStyle: { color: '#47bff7', width: '1.2%' },
+      headerStyle: { color: '#47bff7',  width :'1.2%' },
     }
     ]
 
@@ -204,42 +205,42 @@ class SubSchedQuestionsList extends Component {
         </div>
         <Container>
           <Row xs="12" className="justify-content-center">
-            <Col xl={10}>
+          <Col xl={10}>
 
-              {this.state.questions.length > 0
-                &&
-                <>
-                  <ToolkitProvider
-                    keyField="id"
-                    data={this.state.questions}
-                    columns={columns}
-                    search={onColumnMatch}
-                  >
-                    {
-                      props => (
-                        <div>
-                          <SearchBar {...props.searchProps} />
+            {this.state.questions.length > 0
+              &&
+              <>
+                <ToolkitProvider
+                  keyField="id"
+                  data={this.state.questions}
+                  columns={columns}
+                  search={onColumnMatch}
+                >
+                  {
+                    props => (
+                      <div>
+                        <SearchBar {...props.searchProps} />
 
-                          <BootstrapTable
-                            bootstrap4
-                            striped
-                            hover
-                            keyField='id'
-                            data={this.state.questions}
-                            columns={columns}
-                            pagination={paginationFactory(options)}
-                            {...props.baseProps}
-                            bordered={false} />
-                        </div>
-                      )
-                    }
-                  </ToolkitProvider>
-                </>
-              }
-              <Counter show={this.state.showModalFlag}
+                        <BootstrapTable
+                          bootstrap4
+                          striped
+                          hover
+                          keyField='id'
+                          data={this.state.questions}
+                          columns={columns}
+                          pagination={paginationFactory(options)}
+                          {...props.baseProps}
+                          bordered={false} />
+                      </div>
+                    )
+                  }
+                </ToolkitProvider>
+              </>
+            }
+            <Counter show={this.state.showModalFlag}
                 onHide={this.setModalFlag} statement={this.state.selectedData}></Counter>
-            </Col>
-          </Row>
+          </Col>
+        </Row>
         </Container>
       </div>
     )
@@ -262,5 +263,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+   mapStateToProps, mapDispatchToProps
 )(SubSchedQuestionsList);
