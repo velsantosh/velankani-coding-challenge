@@ -9,7 +9,7 @@ class QuestionService {
     
     addQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
-        return axios.post(`http://localhost:8082/subQuestion`,question,{
+        return axios.post(`http://localhost:8765/cctservice/subQuestion`,question,{
             headers: {
               'Content-Type': `multipart/form-data; boundary=${question._boundary}`,
             }});
@@ -17,7 +17,7 @@ class QuestionService {
 
     addObjQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
-        return axios.post(`http://localhost:8082/question`,question);
+        return axios.post(`http://localhost:8765/cctservice/question`,question);
     }
 
     updateUser(id, user) {
@@ -27,33 +27,27 @@ class QuestionService {
     getQuestions() {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8082/questions`);
+        return axios.get(`http://localhost:8765/cctservice/questions`);
     }
 
     getQuestionsByType(type) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8082/questionsByType/${type}`);
+        return axios.get(`http://localhost:8765/cctservice/questionsByType/${type}`);
     }
 
     assignObjQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
-        return axios.post(`http://localhost:8083/bulkAssignUser`,question);
+        return axios.post(`http://localhost:8765/srvservice/bulkAssignUser`,question);
     }
 
     retrieveAllTechnology(){
         // return axios.get(`${apiBaseUrl}/technologies/`)
-        return axios.get(`http://localhost:8082/technologies`)
+        return axios.get(`http://localhost:8765/cctservice/technologies`)
     }
 
-    // getQuestionsByTecType(type,tname) {
-    //     //console.log('executed service')
-    //     // return axios.get(`${apiBaseUrl}/questions`);
-    //     return axios.get(`http://localhost:8082/questions/type/${type}/tech/${tname}`);
-    // }
-
     getQuestionsByTypeTech(type,tech){
-        return axios.get(`http://localhost:8082/questions/type/${type}/tech/${tech}`,
+        return axios.get(`http://localhost:8765/cctservice/questions/type/${type}/tech/${tech}`,
         {headers: {
             'Content-Type':'application/json','access-control-allow-origin': '*'
            },
@@ -65,60 +59,60 @@ class QuestionService {
     getAllSchQuestionsByUserId(userId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/schQuesByUid/${userId}`);
+        return axios.get(`http://localhost:8765/srvservice/schQuesByUid/${userId}`);
     }
 
     addSubjectiveQuestion(subjectiveQuestionData){
-        return axios.post('http://localhost:8082/add/sub/question',subjectiveQuestionData);
+        return axios.post('http://localhost:8765/cctservice/add/sub/question',subjectiveQuestionData);
     }
     addObjectiveQuestion(objectiveQuestionData){
-        return axios.post('http://localhost:8082/add/obj/question',objectiveQuestionData);
+        return axios.post('http://localhost:8765/cctservice/add/obj/question',objectiveQuestionData);
     }
     modifySubjectiveQuestion(qId,questionData){
-        return axios.put(`http://localhost:8082/update/sub/question/${qId}`,questionData);
+        return axios.put(`http://localhost:8765/cctservice/update/sub/question/${qId}`,questionData);
     }
     modifyObjectiveQuestion(qId,questionData){
         console.log("jst before calling api",questionData);
-        return axios.put(`http://localhost:8082/update/obj/question/${qId}`,questionData);
+        return axios.put(`http://localhost:8765/cctservice/update/obj/question/${qId}`,questionData);
     }
     getQuestionsByTech(tech) {
         //console.log('getQuestionsByTech');      
-        return axios.get(`http://localhost:8082/questions/tech/${tech}`);
+        return axios.get(`http://localhost:8765/cctservice/questions/tech/${tech}`);
     }
 
     getQuestionsById(id) {
         //console.log('getQuestionsById')
 
-        return axios.get(`http://localhost:8082/question/${id}`);
+        return axios.get(`http://localhost:8765/cctservice/question/${id}`);
     }
 
     getChlngRecByAssignerId(assignerId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/chlngRecByassignerId/${assignerId}`);
+        return axios.get(`http://localhost:8765/srvservice/chlngRecByassignerId/${assignerId}`);
     }
 
     deleteChallenge(challengeId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.delete(`http://localhost:8083/challenge/${challengeId}`);
+        return axios.delete(`http://localhost:8765/srvservice/challenge/${challengeId}`);
     }
 
     getQuestionsByChallengeId(challengeId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/schQuesBychallengeId/${challengeId}`);
+        return axios.get(`http://localhost:8765/srvservice/schQuesBychallengeId/${challengeId}`);
     }
 
     getQuestionsNotByChallengeId(assigneduid,challengeId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/schQuesNotBychallengeId/${assigneduid}/${challengeId}`);
+        return axios.get(`http://localhost:8765/srvservice/schQuesNotBychallengeId/${assigneduid}/${challengeId}`);
     }
 
     assignUpdateQuestion(question) {
         // return axios.get(`${apiBaseUrl}/question`,question);
-        return axios.put(`http://localhost:8083/updateChallenge`,question);
+        return axios.put(`http://localhost:8765/srvservice/updateChallenge`,question);
     }
 }
 
