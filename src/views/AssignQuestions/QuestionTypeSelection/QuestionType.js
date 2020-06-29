@@ -6,6 +6,7 @@ import { Link, NavLink as RRNavLink } from "react-router-dom";
 import UsersDataService from '../../../service/UsersDataService'
 import QuestionService from '../../../service/QuestionService'
 import "react-datepicker/dist/react-datepicker.css";
+
 import classes from "./SelectQuestions.module.css";
 import cx from "classnames";
 
@@ -52,15 +53,17 @@ class QuestionType extends Component {
   }
 
   handleChange = date => {
+    // var myDate = date.toUTCString();
+    console.log("UTC date ::",date);
     this.setState({
       startDate: date
-    });
+    },()=>this.props.handleDate(this.state.startDate));
   };
 
     render(){
 
       const marginTop ={
-        marginTop: '100px'
+        marginTop: '200px'
       };
       
       const buttonContainer = {
@@ -115,34 +118,44 @@ class QuestionType extends Component {
                         <option key={3} value={"SUBJECTIVE"}>{"Subjective"}</option>
                     </select>  */}
                     <br></br> 
+                    <Row  className="justify-content-center" >
+              <Col xl="4">
                     <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')}>
                       <option value="B" disabled>Technology</option>
                         {technologyLists}
                     </select> 
-                    <br></br>       
+                    </Col>
+                    <br></br> 
+                    <Col xl="4">      
                     <select  className="form-control" id="exampleFormControlSelect1" value={values.users} onChange={handleChange('users')} disabled={values.dropDown}>
                     <option value="A" disabled>Candidate List</option>
                     {usersList}
                     </select>
+                    </Col>
                     <br></br>
+                    <Col xl="4">
                     <InputGroup className="mb-3">
-                      {/* <InputGroupAddon addonType="prepend" >
+                      <InputGroupAddon addonType="prepend" >
                         <InputGroupText>
-                          <i className="icon-user"></i>
+                          <i className="icon-calendar"></i>
                         </InputGroupText>
-                      </InputGroupAddon> */}
-                    {/* <DatePicker
-                        selected={this.state.startDate}
+                     
+                     <DatePicker
+                        selected={values.date}
                         onChange={this.handleChange}
-                        className="date-picker-icon"
-                        isClearable
-                        showMonthDropdown
+                        className="grey-border"
                         
-                    /> */}
-                    <Input type="date" placeholder="Select Date" onChange={handleChange('scheduleDate')} value={values.scheduleDate}/>
-                    </InputGroup>
-                    <br></br> 
-                    
+                        showMonthDropdown
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={30}
+                        timeCaption="time"
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                    />
+                    {/* <Input type="date" placeholder="Select Date" onChange={handleChange('scheduleDate')} value={values.scheduleDate}/> */}
+                    </InputGroupAddon> </InputGroup>
+                    </Col>
+                    </Row>                    
                   </Form>
           </CardBody>
           <CardFooter>

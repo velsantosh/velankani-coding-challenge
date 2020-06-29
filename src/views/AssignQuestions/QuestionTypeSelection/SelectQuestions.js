@@ -25,7 +25,9 @@ class SelectQuestions extends Component {
       selectedTechnology: "",
       scheduleDate:"",
       status:"Scheduled",
-      challengeid:""
+      challengeid:"",
+      assigndQuesT: [],
+      unassignQuesT:[]
     }
     this.getQuestionsByTech = this.getQuestionsByTech.bind(this)
   }
@@ -47,7 +49,7 @@ class SelectQuestions extends Component {
       this.setState({
         selectedTechnology: this.props.values.technology,
         userList: [this.props.values.users],
-        scheduleDate:this.props.values.scheduleDate,
+        scheduleDate:this.props.values.date,
         
       }, () => { this.getQuestionsByTech();
                 console.log("Assigned Date to Test",this.state.scheduleDate) });
@@ -67,7 +69,7 @@ class SelectQuestions extends Component {
       QuestionService.getQuestionsByTypeTech(e.target.value, this.state.selectedTechnology)
         .then(
           response => {
-            this.setState({ questions: response.data}, () => console.log("clean list", this.state.qidList))
+            this.setState({ questions: response.data}, () => this.handleToggleChange())
             this.setState({ type: type })
           }
         );
@@ -78,7 +80,7 @@ class SelectQuestions extends Component {
     QuestionService.getQuestionsByTech(this.state.selectedTechnology)
       .then(
         response => {
-          this.setState({ questions: response.data, qidList: [] }, () => console.log("clean list", this.state.qidList))
+          this.setState({ questions: response.data }, () => this.handleToggleChange())
         }
       )
   }
@@ -100,13 +102,19 @@ class SelectQuestions extends Component {
       });
   }
 
-  handleSubjectiveChange = (selectedValue) => {
-    console.log("Subjective radio", selectedValue);
-    this.setState({ qidList: [selectedValue] },
-      () => {
-        console.log("Selected Subjective Q list", this.state.qidList);
-        this.setState({ flag: false })
+  handleToggleChange(){
+    let assignList = [];
+    
+    if (this.state.qidList !== []) {
+       assignList = this.state.questions.filter((ques) => {
+        return this.state.qidList.includes(ques.id);
       });
+  } 
+  const itemnav = this.state.questions.filter((item) =>   {
+    return !assignList.some((ques) =>{return item.id === ques.id;});
+   });
+
+   this.setState({assigndQuesT:assignList,unassignQuesT:itemnav},()=> console.log("Assignment Toggling",this.state.unassignQuesT))
   }
 
   removeQuestion = itemId => {
@@ -130,7 +138,10 @@ class SelectQuestions extends Component {
   addQuestion() {
     let qidSize = this.state.qidList
     const uniqueSet = new Set(this.state.qidList);
-    console.log("final Question List",uniqueSet)
+    console.log("final Question List",this.state.scheduleDate);
+    const myDate = this.state.scheduleDate;
+    let d = myDate.toUTCString();
+    console.log("Date submitting",d);
     const selectedQues = [...uniqueSet];
     if (this.state.qidList.length !== 0) {
       
@@ -138,7 +149,7 @@ class SelectQuestions extends Component {
         "qidList": selectedQues,
         "assigneduidList": this.state.userList,
         "assigneruid":  this.props.userName,
-        "scheduleTime": this.state.scheduleDate,
+        "scheduleTime": d,
         "status":this.state.status,
         "challengeid":this.state.challengeid
       }
@@ -149,7 +160,7 @@ class SelectQuestions extends Component {
         let assignList = assignQidList.filter((ques) => {
           return this.state.qidList.includes(ques.id);
         });
-        console.log("assignList length", assignList.length)
+        console.log("assignList length", assignList)
         if (assignList.length === 0) {
           this.assignQuestion(data);
         }
@@ -213,6 +224,15 @@ class SelectQuestions extends Component {
     let questionsList = this.state.questions;
     let type = this.state.type;
     console.log("Selected Q Type", type)
+    // const assignList=[];
+    // if (this.state.qidList !== []) {
+    //    assignList = questions.filter((ques) => {
+    //     return this.state.qidList.includes(ques.id);
+    //   });
+    // } 
+    // const itemnav = questionsList.filter((item) =>   {
+    //   return !assignList.some((ques) =>{return item.id === ques.id;});
+    // });
     
     if (type === "SUBJECTIVE") {
       return (
@@ -259,8 +279,11 @@ class SelectQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion}/>
+                    {this.state.assigndQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -323,8 +346,11 @@ class SelectQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} />
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -391,7 +417,10 @@ class SelectQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={true} />
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
                       <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false} />
                     )}
                   </tbody>

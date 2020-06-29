@@ -12,8 +12,15 @@ class AssignSubjective extends Component {
         this.state={
             question: this.props.question,
             qidList:[],
-            message: null
+            message: null,
+            isChecked: true
         }
+    }
+
+    componentDidMount() {
+      this.setState({
+        isChecked: this.props.defaultChecked
+     });
     }
 
     handleChange = (event) =>
@@ -22,28 +29,32 @@ class AssignSubjective extends Component {
         let value = event.target.checked;
         console.log("valueONChange", value);
         console.log("valueONChange", event.target);
-        if(value){
-          //qids.push(question.id,question.id);
-          this.props.onSelectChange(this.state.question.id);
-        }
-        else{
-            this.props.onDeselect(this.state.question.id);
-        }
-    }
-  render() {
-    let addModal=()=> this.setState({addModelShow:false});
-    // const userList = usersData.filter((user) => user.id < 10)
-    //const questionsList = this.state.questions
-    const question = this.props.question;
-    var stmt = question.statement;
-    if(stmt) stmt=stmt.substr(0,30);
-    var newStmt = `${stmt}...`
+        this.setState({
+          isChecked: !this.state.isChecked,
+        },()=> {
+                  if(value){
+                  //qids.push(question.id,question.id);
+                    this.props.onSelectChange(this.state.question.id);
+                  }
+                  else{
+                     this.props.onDeselect(this.state.question.id);
+                  }
+              } );
+            }
+
+    render() {
+        let addModal=()=> this.setState({addModelShow:false});
+        // const userList = usersData.filter((user) => user.id < 10)
+        //const questionsList = this.state.questions
+        const question = this.props.question;
+        var stmt = question.statement;
+        if(stmt) stmt=stmt.substr(0,30);
+          var newStmt = `${stmt}...`
    
-    
     return (
                 
                     <tr key={question.id}>
-                      <td><input type="checkbox" onClick={this.handleChange}/></td>
+                      <td><input type="checkbox" onClick={this.handleChange} checked={this.state.isChecked}/></td>
                       <td>{question.title}</td>
                       <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>

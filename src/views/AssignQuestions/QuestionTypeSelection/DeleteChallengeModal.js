@@ -62,7 +62,7 @@ class DeleteChallengeModal extends Component {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              Delete
+              Challenge Deleted Successfully 
             </Modal.Body>
             <Modal.Footer>
             <Button color="primary" className={cx(classes.createBtn)} onClick={this.redirect}>Yes</Button>

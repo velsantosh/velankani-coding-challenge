@@ -49,7 +49,11 @@ class UserRegistration extends Component {
       formIsValid = false;
       errors["password"] = "Field cannot be empty";
     }
-    
+    else if(typeof fields["password"] !== "undefined" && !fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+      formIsValid = false;
+      errors["password"] = "e.g : Abcd@123";
+      alert("Password between 8 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace");
+  } 
     //Email
     if(!fields["email"]){
       formIsValid = false;
@@ -64,12 +68,6 @@ class UserRegistration extends Component {
         formIsValid = false;
         errors["email"] = "Email is not valid";
       }
-    }
-
-    //Password
-    if(!fields["password"]){
-      formIsValid = false;
-      errors["password"] = "Field cannot be empty";
     }
 
     if(!fields["rep_password"]){
@@ -93,9 +91,7 @@ class UserRegistration extends Component {
     e.preventDefault();
     if(this.handleValidation()){
       this.registerUser();
-     
-    }else{
-      alert("Form has errors.")
+      
     }
   }
 

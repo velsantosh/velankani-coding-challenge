@@ -21,7 +21,7 @@ export class RescheduleChallenge extends Component {
         users:'A',
         technology:'B',
         scheduleDate:'c',
-        date: new Date(),
+        date: new Date(this.props.location.state.challenge.scheduleTime),
         questions: []
         
     }
@@ -40,6 +40,12 @@ export class RescheduleChallenge extends Component {
     });
   };
 
+  handleDate = (dateSelect) =>{
+   
+    this.setState({
+    date: dateSelect
+  },()=>  console.log("Date",this.state.date));
+};
     handleChange = input => e => {
       console.log("Date",this.state.date);
       console.log("UsersList::",input);
@@ -48,12 +54,13 @@ export class RescheduleChallenge extends Component {
   };
 
   componentDidMount() {
-    let sDate;
-      let date = this.props.location.state.challenge.scheduleTime;
-      let finalDate = date;
-      if (date != null) {
-       finalDate=date.substr(0,date.indexOf("T"));
-      }
+    
+      //let dateOne = new Date(this.props.location.state.challenge.scheduleTime);
+      //console.log("Reschedule Date ::",dateOne)
+      // let finalDate = date;
+      // if (date != null) {
+      //  finalDate=date.substr(0,date.indexOf("T"));
+      // }
     //   console.log("Final Date Format", finalDate);
     //   let dateM = new Date(finalDate);
     // if (!isNaN(dateM.getTime())) {
@@ -63,9 +70,9 @@ export class RescheduleChallenge extends Component {
     // }
     //   console.log("Date Format", sDate);
     this.getQuestionsByChallengeId(this.props.location.state.challenge.challengeid);
-    this.setState({
-        scheduleDate:finalDate
-      });
+    // this.setState({
+    //     date:dateOne
+    //   });
 }
 
 getQuestionsByChallengeId(challengeid) {
@@ -80,7 +87,7 @@ getQuestionsByChallengeId(challengeid) {
     //console.log("UserName in URL:",this.state.assigneruid)
     const { step } = this.state;
     const { type } = this.state;
-    const {scheduleDate}  = this.state;
+    const {date}  = this.state;
     const { questions } = this.state;
 
      //let ques = questions[0].technology;
@@ -95,15 +102,16 @@ getQuestionsByChallengeId(challengeid) {
     const users = this.props.location.state.challenge.assigneduid;
     
     //var scheduleDate=scheduleDate.substr(0,scheduleDate.indexOf("T"));
-    const values = {type,users,technology,scheduleDate,status,dropDown,challengeid,questions,techdropDown}
+    const values = {type,users,technology,date,status,dropDown,challengeid,questions,techdropDown}
     
-    console.log("Scheduled Modified",scheduleDate);
+    console.log("Scheduled Modified",date);
     switch(step) {
       case 1:
         return (
           <RescheduleQuesType nextStep={this.nextStep}
                        handleChange={this.handleChange}
                        values={values}
+                       handleDate={this.handleDate}
           />
         )
         case 2:

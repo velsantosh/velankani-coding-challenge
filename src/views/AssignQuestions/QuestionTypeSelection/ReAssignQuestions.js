@@ -25,7 +25,9 @@ class ReAssignQuestions extends Component {
       selectedTechnology: "",
       scheduleDate:"",
       status:"Scheduled",
-      challengeid:""
+      challengeid:"",
+      assigndQuesT: [],
+      unassignQuesT:[]
     }
     this.getQuestionsByTech = this.getQuestionsByTech.bind(this)
   }
@@ -46,11 +48,11 @@ class ReAssignQuestions extends Component {
       this.setState({
         selectedTechnology: this.props.values.technology,
         userList: [this.props.values.users],
-        scheduleDate:this.props.values.scheduleDate,
+        scheduleDate:this.props.values.date,
         status: this.props.values.status,
         challengeid:this.props.values.challengeid
       }, () => { this.getQuestionsByTech();
-                console.log("Assigned Date to Test",this.state.scheduleDate) });
+                console.log("Assigned Date to Test",this.state.date) });
 
     }
 
@@ -67,7 +69,7 @@ class ReAssignQuestions extends Component {
       QuestionService.getQuestionsByTypeTech(e.target.value, this.state.selectedTechnology)
         .then(
           response => {
-            this.setState({ questions: response.data}, () => console.log("clean list", this.state.qidList))
+            this.setState({ questions: response.data}, () => this.handleToggleChange())
             this.setState({ type: type })
           }
         );
@@ -78,7 +80,7 @@ class ReAssignQuestions extends Component {
     QuestionService.getQuestionsByTech(this.state.selectedTechnology)
       .then(
         response => {
-          this.setState({ questions: response.data, qidList: [] }, () => console.log("clean list", this.state.qidList))
+          this.setState({ questions: response.data, qidList: [] }, () => this.handleToggleChange())
         }
       )
   }
@@ -149,7 +151,7 @@ class ReAssignQuestions extends Component {
         let assignList = assignQidList.filter((ques) => {
           return this.state.qidList.includes(ques.id);
         });
-        console.log("assignList length", assignList.length)
+        console.log("assignList length", assignList)
         if (assignList.length === 0) {
           this.assignQuestion(data);
         }
@@ -176,6 +178,21 @@ class ReAssignQuestions extends Component {
         }
       }
       )
+  }
+
+  handleToggleChange(){
+    let assignList = [];
+    
+    if (this.state.qidList !== []) {
+       assignList = this.state.questions.filter((ques) => {
+        return this.state.qidList.includes(ques.id);
+      });
+  } 
+  const itemnav = this.state.questions.filter((item) =>   {
+    return !assignList.some((ques) =>{return item.id === ques.id;});
+   });
+
+   this.setState({assigndQuesT:assignList,unassignQuesT:itemnav},()=> console.log("Assignment Toggling",this.state.unassignQuesT))
   }
 
   render() {
@@ -261,8 +278,11 @@ class ReAssignQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion}/>
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -326,8 +346,11 @@ class ReAssignQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} />
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -394,7 +417,10 @@ class ReAssignQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={true} />
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
                       <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false} />
                     )}
                   </tbody>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import UsersDataService from '../../../service/UsersDataService'
 class Register extends Component {
@@ -8,7 +9,8 @@ class Register extends Component {
 
     this.state = {
       fields: {},
-      errors: {}
+      errors: {},
+      redirectToLogin:false
     }
   }
 
@@ -31,7 +33,11 @@ class Register extends Component {
       formIsValid = false;
       errors["password"] = "Field cannot be empty";
     }
-    
+    else if(typeof fields["password"] !== "undefined" && !fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+      formIsValid = false;
+      errors["password"] = "e.g : Abcd@123";
+      alert("Password between 8 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace");
+  } 
     //Email
     if(!fields["email"]){
       formIsValid = false;
@@ -46,12 +52,6 @@ class Register extends Component {
         formIsValid = false;
         errors["email"] = "Email is not valid";
       }
-    }
-
-    //Password
-    if(!fields["password"]){
-      formIsValid = false;
-      errors["password"] = "Field cannot be empty";
     }
 
     if(!fields["rep_password"]){
@@ -75,9 +75,7 @@ class Register extends Component {
     e.preventDefault();
     if(this.handleValidation()){
         this.registerUser();
-      alert("Form submitted");
-    }else{
-      alert("Form has errors.")
+      
     }
   }
 
@@ -90,8 +88,9 @@ class Register extends Component {
   registerUser(){
     let data={
       "name":this.state.fields["name"],
-      "email":this.state.fields["email"],
-      "password":this.state.fields["password"]
+      "userId":this.state.fields["email"],
+      "password":this.state.fields["password"],
+      "roleId":"CANDIDATE"
       }
 console.log("User Detials:",data)
     //let permissionFlag= false;
@@ -100,8 +99,7 @@ console.log("User Detials:",data)
         response => {
           console.log("UserResponse : ",response.status)
             if(response.status === 200){
-              
-              window.location.href = "/Login";
+              this.setState({ redirectToLogin: true })
           }else{
             console.log("UserResponse : ",response.data)
           this.props.history.push(`/404`)}
@@ -111,6 +109,16 @@ console.log("User Detials:",data)
 } 
   
   render() {
+    const redirectToLogin = this.state.redirectToLogin;
+    if (redirectToLogin === true) {
+      return (
+        <Redirect to={{
+          pathname: '/login'
+          }}
+       />
+      );
+    }
+
     return (
       <div className="app flex-row align-items-center">
         <Container>

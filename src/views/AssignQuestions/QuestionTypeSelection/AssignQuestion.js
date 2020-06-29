@@ -26,7 +26,7 @@ class AssignQuestion extends Component {
     }
 
     nextStep = () => {
-      if(this.state.users ==='A' || this.state.technology ==='B' || this.state.scheduleDate ==='c'){
+      if(this.state.users ==='A' || this.state.technology ==='B'){
         alert("Select Proper Details")
       }else{
       const{ step } = this.state;
@@ -42,7 +42,12 @@ class AssignQuestion extends Component {
       step: step - 1
     });
   };
-
+  handleDate = (dateSelect) =>{
+   
+    this.setState({
+    date: dateSelect
+  },()=>  console.log("Date",this.state.date));
+};
     handleChange = input => e => {
       console.log("Date",this.state.date);
       console.log("UsersList::",input);
@@ -51,15 +56,15 @@ class AssignQuestion extends Component {
   };
 
   render() {
-    //console.log("UserName in URL:",this.state.assigneruid)
+    console.log("UserName in URL:",this.state.date)
     const { step } = this.state;
     const { type } = this.state;
     const { users } = this.state;
     const { technology } = this.state;
-    const { scheduleDate } = this.state;
+    const { date } = this.state;
     const { status } = this.state;
     const {challenge} = this.props.location.state;
-    const values = {type,users,technology,scheduleDate,status,challenge}
+    const values = {type,users,technology,date,status,challenge}
 
     switch(step) {
       case 1:
@@ -67,6 +72,7 @@ class AssignQuestion extends Component {
           <QuestionType nextStep={this.nextStep}
                        handleChange={this.handleChange}
                        values={values}
+                       handleDate={this.handleDate}
           />
         )
         case 2:

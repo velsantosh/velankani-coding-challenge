@@ -79,14 +79,14 @@ class AssignedQuestion extends Component {
     console.log(" reTest row",row)
 
     this.setState({ 
-      redirectToassignQuestion: true })
+      redirectToassignQuestion: true, question:row })
 
   }
 
   reSchedule(row) {
     console.log(" reSchedule row",row)
 
-    this.setState({ redirectToReschedule: true })
+    this.setState({ redirectToReschedule: true, question:row })
 
   }
 
@@ -114,16 +114,20 @@ class AssignedQuestion extends Component {
     }
 
     this.setState({ 
-      question : row })
+      question : row },()=>console.log("Under Action formatter ::",this.state.question))
     return (
       <>
-        <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} hidden={!actionFlag} onClick={this.reSchedule.bind(row)}>RESCHEDULE</Button>
-        <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} hidden={disableFlag} onClick={this.reTest.bind(row)} disabled={disableFlag}>RE-TEST</Button>
+        <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} hidden={!actionFlag} onClick={this.reSchedule.bind(this,row)}>RESCHEDULE</Button>
+        <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} hidden={disableFlag} onClick={this.reTest.bind(this,row)} disabled={disableFlag}>RE-TEST</Button>
         <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteChallenge.bind(this, row.challengeid)} >DELETE</Button>
       </>
     );
 
 
+  }
+
+  dateFormatter(cellContent, row){
+    return( new Date(row.scheduleTime).toLocaleString());
   }
   render() {
     const marginRight = {
@@ -158,6 +162,7 @@ class AssignedQuestion extends Component {
     }
 
     if (redirectToassignQuestion) {
+      console.log("Retest Data::",this.state.question)
       return (
         // <Redirect from="/login" to="/manageUser/UserList" />
         <Redirect to={{
@@ -169,7 +174,7 @@ class AssignedQuestion extends Component {
     }
 
      if (redirectToReschedule) {
-      console.log("inside Reschedule")
+      console.log("inside Reschedule",this.state.question)
       return (
         // <Redirect from="/login" to="/manageUser/UserList" />
         <Redirect to={{
@@ -211,7 +216,8 @@ class AssignedQuestion extends Component {
         dataField: 'scheduleTime',
         text: 'Scheduled Time',
         sort: true,
-        headerStyle: { color: '#47bff7' }
+        headerStyle: { color: '#47bff7' },
+        formatter: this.dateFormatter
       },
       {
         dataField: 'status',

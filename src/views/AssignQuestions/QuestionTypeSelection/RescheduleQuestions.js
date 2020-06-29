@@ -24,12 +24,14 @@ class RescheduleQuestions extends Component {
       redirectToBaseView: false,
       selectedTechnology: "",
       scheduleDate:"",
-      assignedQuesList: []
+      assigndQuesT: [],
+      unassignQuesT:[]
     }
     this.getQuestionsByTech = this.getQuestionsByTech.bind(this)
   }
 
   componentDidMount() {
+    
     if (Object.keys(this.props.scheduledRequestData).length >0 && this.props.values == null) {
       let UserList =[]
       UserList.push(this.props.scheduledRequestData.candidateEmailId)
@@ -42,6 +44,7 @@ class RescheduleQuestions extends Component {
 
     }
     else {
+         
         let qList = this.props.values.questions.map((question, index) =>
           qList=question.id)
 
@@ -49,8 +52,8 @@ class RescheduleQuestions extends Component {
       this.setState({
         selectedTechnology: this.props.values.technology,
         userList: [this.props.values.users],
-        scheduleDate:this.props.values.scheduleDate,
-        assignedQuesList:this.props.values.questions,
+        scheduleDate:this.props.values.date,
+        assigndQuesT:this.props.values.questions,
         qidList:qList
       }, () => { this.getQuestionsByTech();
         console.log("Assigned Date to Test",this.state.scheduleDate) });
@@ -70,7 +73,7 @@ class RescheduleQuestions extends Component {
       QuestionService.getQuestionsByTypeTech(e.target.value, this.state.selectedTechnology)
         .then(
           response => {
-            this.setState({ questions: response.data}, () => console.log("clean list", this.state.qidList))
+            this.setState({ questions: response.data}, () => this.handleToggleChange())
             this.setState({ type: type })
           }
         );
@@ -81,7 +84,7 @@ class RescheduleQuestions extends Component {
     QuestionService.getQuestionsByTech(this.state.selectedTechnology)
       .then(
         response => {
-          this.setState({ questions: response.data }, () => console.log("clean list", this.state.qidList))
+          this.setState({ questions: response.data }, () => this.handleToggleChange())
         }
       )
   }
@@ -181,6 +184,21 @@ class RescheduleQuestions extends Component {
       )
   }
 
+  handleToggleChange(){
+    let assignList = [];
+    
+    if (this.state.qidList !== []) {
+       assignList = this.state.questions.filter((ques) => {
+        return this.state.qidList.includes(ques.id);
+      });
+  } 
+  const itemnav = this.state.questions.filter((item) =>   {
+    return !assignList.some((ques) =>{return item.id === ques.id;});
+   });
+
+   this.setState({assigndQuesT:assignList,unassignQuesT:itemnav},()=> console.log("Assignment Toggling",this.state.unassignQuesT))
+  }
+
   render() {
 
     const marginTop = {
@@ -218,15 +236,8 @@ class RescheduleQuestions extends Component {
     let questionsList = this.state.questions;
     let type = this.state.type;
     console.log("Selected Q Type", type)
-    let assignedQues = this.state.assignedQuesList;
-    console.log("AssignedQuestionList",assignedQues);
     console.log("questionsList",questionsList);
-
-    const itemnav = questionsList.filter((item) =>   {
-        return !assignedQues.some((ques) =>{return item.id === ques.id;});
-   });
     
-   console.log("Final AssignedQuestionList",itemnav);
     if (type === "SUBJECTIVE") {
       return (
         <div className="animated fadeIn" style={marginTop}>
@@ -273,8 +284,11 @@ class RescheduleQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion}/>
+                    {this.state.assigndQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <AssignSubjective key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -338,8 +352,11 @@ class RescheduleQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {questionsList.map((question, index) =>
-                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} />
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
+                    )}
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <PopulateQid key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={false}/>
                     )}
                   </tbody>
                 </Table>
@@ -405,11 +422,11 @@ class RescheduleQuestions extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {assignedQues.map((question, index) =>
-                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={true}/>
+                  {this.state.assigndQuesT.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={true} />
                     )}
-                    {itemnav.map((question, index) =>
-                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false}/>
+                    {this.state.unassignQuesT.map((question, index) =>
+                      <PopulateAll key={index} question={question} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} buttonSelect={"checkbox"} type={type} defaultChecked={false} />
                     )}
                   </tbody>
                 </Table>

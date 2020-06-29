@@ -94,7 +94,9 @@ class UserEdit extends Component {
       if (typeof fields["password"] !== "undefined") {
         if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
           formIsValid = false;
-          errors["password"] = "Invalid Password";
+          errors["password"] = "e.g : Abcd@123";
+          alert("Password between 8 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace");
+
         }
       }
     
@@ -115,8 +117,6 @@ class UserEdit extends Component {
       e.preventDefault();
       if(this.handleValidation()){
         this.retrieveUsers();
-      }else{
-        alert("Form has errors.")
       }
     }
   
@@ -267,7 +267,7 @@ console.log("User Detials:",this.state.users)
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                       </InputGroupAddon>
-                      <Input ref="userName" type="text" placeholder="Email" autoComplete="userId" onChange={this.handleChange.bind(this, "userId")} value={this.state.users["userId"]}/>
+                      <Input ref="userName" type="text" placeholder="Email" autoComplete="userId" onChange={this.handleChange.bind(this, "userId")} value={this.state.users["userId"]} disabled/>
                        
                     </InputGroup>
 

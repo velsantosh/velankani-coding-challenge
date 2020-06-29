@@ -12,17 +12,25 @@ class PopulateQid extends Component {
             question: this.props.question,
             qidList:[],
             message: null,
-            addModelShow:false
+            addModelShow:false,
+            isChecked: true
         }
     }
 
-    
+    componentDidMount() {
+        this.setState({
+          isChecked: this.props.defaultChecked
+       });
+    }
      handleChange = (event) =>
     {
         //let selectedValue = event.target.value;
         let value = event.target.checked;
-        console.log("valueONChange", value);
-        console.log("valueONChange", event.target);
+        console.log("valueONChange Objective", value);
+        console.log("valueONChange ", event.target);
+        this.setState({
+          isChecked: !this.state.isChecked,
+        },()=> {
                                     if(value){
                                       //qids.push(question.id,question.id);
                                       this.props.onSelectChange(this.state.question.id);
@@ -30,7 +38,7 @@ class PopulateQid extends Component {
                                     else{
                                         this.props.onDeselect(this.state.question.id);
                                     }
-        
+                                  } );
     }
 
   render() {
@@ -43,7 +51,7 @@ class PopulateQid extends Component {
     
     return (
                     <tr key={question.id}>
-                      <td><input type="checkbox" onChange={this.handleChange}/></td>
+                      <td><input type="checkbox" onChange={this.handleChange} checked={this.state.isChecked}/></td>
                       <td>{question.title}</td>
                       <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>

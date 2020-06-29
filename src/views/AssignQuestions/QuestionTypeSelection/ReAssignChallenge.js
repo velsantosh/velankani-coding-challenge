@@ -26,7 +26,7 @@ export class ReAssignChallenge extends Component {
     }
 
     nextStep = () => {
-      if(this.state.technology ==='B' || this.state.scheduleDate ==='c'){
+      if(this.state.technology ==='B' ){
           console.log("DropDown user",this.state.users);
         alert("Select Proper Details")
       }else{
@@ -51,6 +51,13 @@ export class ReAssignChallenge extends Component {
       console.log("UsersList::::",e.target.value);
   };
 
+  handleDate = (dateSelect) =>{
+   
+    this.setState({
+    date: dateSelect
+  },()=>  console.log("Date",this.state.date));
+};
+
   componentDidMount() {
          
       this.setState({
@@ -66,14 +73,14 @@ export class ReAssignChallenge extends Component {
     const { step } = this.state;
     const { type } = this.state;
     const { technology } = this.state;
-    const { scheduleDate } = this.state;
+    const { date } = this.state;
     const status  = this.props.location.state.challenge.status;
     const dropDown = true;
     const techdropDown = false;
     const challengeid = this.props.location.state.challenge.challengeid;
     const users = this.props.location.state.challenge.assigneduid;
 
-    const values = {type,users,technology,scheduleDate,status,dropDown,challengeid,techdropDown}
+    const values = {type,users,technology,date,status,dropDown,challengeid,techdropDown}
 
     switch(step) {
       case 1:
@@ -81,6 +88,7 @@ export class ReAssignChallenge extends Component {
           <RescheduleQuesType nextStep={this.nextStep}
                        handleChange={this.handleChange}
                        values={values}
+                       handleDate={this.handleDate}
           />
         )
         case 2:
