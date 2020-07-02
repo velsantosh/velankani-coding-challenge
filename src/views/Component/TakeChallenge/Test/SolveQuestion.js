@@ -39,9 +39,10 @@ class SolveQuestion extends Component {
             submitted: false,
             isScheduledQuestion: this.props.location.state != null ? this.props.location.state.scheduledQuestions : false,
             editorHeight: '200px',
-            editorWidth: "1000px",
-            resultTabLabel: "JUnit Test Result"
-
+            editorWidth: "960px",
+            resultTabLabel: "JUnit Test Result",
+            checked: false,
+            userInputValue: ''
 
         };
         this.getQuestionsByType = this.getQuestionsByType.bind(this);
@@ -56,21 +57,26 @@ class SolveQuestion extends Component {
 
     handleRunTest = (e) => {
         console.log("handleRunTest for question id ", this.props);
+        console.log("handleRunTest this.state.userInputValue :", this.state.userInputValue);
+        this.setState({ checked: false });
+
         let quesResponseObj = {
             qId: this.state.qId,
             userInput: this.state.editorContent,
+            userInputValues: this.state.userInputValue,
         }
 
         let validateProgramContent = {
             className: "ExampleClass",
             quesResponseObj: quesResponseObj,
             userId: this.props.userName
+
         };
         ScheduledChallengeDataService.runScheduledQuestionTestCases(validateProgramContent)
             .then(
                 response => {
                     console.log("runScheduledQuestionTestCases testCaseResults: ", response.data)
-                    this.setState({ testCaseResults: response.data.userInput + " : " + response.data.qId });
+                    this.setState({ testCaseResults: this.state.userInputValue + " \n " + response.data.userInput });
                 }
             );
     };
@@ -115,6 +121,7 @@ class SolveQuestion extends Component {
 
     componentDidMount() {
         this.getQuestionsByType();
+
     }
 
     getQuestionsByType() {
@@ -148,19 +155,46 @@ class SolveQuestion extends Component {
         });
     };
 
-    // Handle fields change
-    handleChange = input => e => {
-        this.setState({ [input]: e.target.value });
-    };
 
 
     onCopy() {
         this.setState({ copied: true });
     }
 
+    handleChange = (event) => {
+        //let selectedValue = event.target.value;
+        let value = event.target.checked;
+        console.log("valueONChange", value);
+        this.setState({ checked: value });
+    }
+
+    handleTextArea = (event) => {
+        //let selectedValue = event.target.value;
+        let value = event.target.value;
+        console.log("handleTextArea", value);
+        this.setState({ userInputValue: value });
+    }
+
+    uploadFileHandler = (event) => {
+        //let selectedValue = event.target.value;
+        let value = event.target.checked;
+        console.log("valueONChange", value);
+        console.log("valueONChange", event.target);
+
+
+    }
     render() {
 
+        const TextAreaStyle = {
+            width: "50%",
+            height: "100%",
+            marginLeft: '25%',
+            marginRight: '25%',
+            marginBottom: '4%',
+            backgroundColor: "#F3EFEF"
+        };
         const titleStyle = {
+            marginBottom: '3%',
             marginLeft: '10px',
             alignText: 'right',
             padding: '1px 2px 1px 2px'
@@ -192,42 +226,60 @@ class SolveQuestion extends Component {
 
             var scheduledQuestionList = "/takechallenge";
         } else {
-            var scheduledQuestionList = "/subQuestionsList"; 
+            var scheduledQuestionList = "/subQuestionsList";
 
         }
 
-        let backToQuestList = (
-            <Row>
-                <Col md="5">
-                    <p style={{
-                        backgroundColor: "lightblue", marginLeft: '2%',
-                        fontSize: '18px', bottomRight: "40"
-                    }}>result submitted successfully..</p>
+        let userInputData = (
+            <Col>
+                <textarea name="description" value={this.state.userInputValue} onChange={this.handleTextArea}
+                    style={TextAreaStyle} />
+            </Col>
+        );
 
-                    <Link to={scheduledQuestionList}>
-                        <Button style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
-                    </Link>
-                </Col>
-            </Row>
+        let backToQuestList = (
+
+            <Col md="5">
+                <p style={{
+                    backgroundColor: "lightblue", marginLeft: '2%',
+                    fontSize: '18px', bottomRight: "40"
+                }}>result submitted successfully..</p>
+
+                <Link to={scheduledQuestionList}>
+                    <Button style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
+                </Link>
+            </Col>
+
         );
 
         let runAndSubmitBtns = (
             <Row>
                 <Col md="3">
-                    <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleSubmit}>Submit</Button>
+                        <div className="custom-file">
+                            <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                            <label className="custom-file-label" htmlFor="inputGroupFile01"> Upload Code as File </label>
+                        </div>
                 </Col>
-                <Col md="3" className="card-header-actions mb-3 mb-xl-0">
+                <Col md="3">
+                    <input type="checkbox" onChange={this.handleChange} id="inputCheckBox1" />
+                    <label htmlFor="inputCheckBox1"> Test against custom input</label>
+                </Col>
+                <Col className="card-header-actions mb-3 mb-xl-0 col-md-2">
+                    <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleSubmit}>Submit Test</Button>
+                </Col>
+                <Col className="card-header-actions mb-3 mb-xl-0 col-md-2"> 
                     <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
                 </Col>
             </Row>
         );
+
+
         nextPage = (
             <div>
                 <div>
                     <h1 className={cx(classes.heading)}>Solve Question</h1>
                 </div>
                 <Container>
-
                     <Row>
                         <Col sm={12}>
                             <CardGroup>
@@ -253,12 +305,14 @@ class SolveQuestion extends Component {
                                     {!this.state.submitted ? runAndSubmitBtns : null}
                                     {console.log("you are called from solveQuestion")}
                                     {this.state.submitted ? backToQuestList : null}
+
                                     <Row>
+                                        {this.state.checked ? userInputData : null}
 
                                     </Row>
 
                                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example"  >
-                                      
+
                                         <Tab eventKey="profile" title={this.state.resultTabLabel} >
                                             <Card style={testCaseStyle}>
                                                 <CardBody class="card h-300">

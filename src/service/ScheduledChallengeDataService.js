@@ -55,7 +55,7 @@ class ScheduledChallengeDataService {
     runScheduledQuestionTestCases(validateProgramContent)  {
 
         console.log("runScheduledQuestionTestCases submitted : ", validateProgramContent);
-        return axios.post(`http://localhost:8765/cctservice/validateSubjQues`, validateProgramContent,{
+        return axios.post(`http://localhost:8765/cctservice/runSubjQuesTestCode`, validateProgramContent,{
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
