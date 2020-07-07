@@ -20,7 +20,10 @@ class QuestionModel extends Component {
     let addModal=()=> this.setState({addModelShow:false});
     const question = this.props.question;
     console.log("Question ID in type:",question.id)
-    var stmt = question.statement;
+        var stmt2=''+question.statement;
+          var stmt3=Parser(stmt2);
+         var stmt = question.statement;
+     console.log(stmt);
     if(stmt) stmt=stmt.substr(0,30);
     var newStmt = `${stmt}...`
     
@@ -29,7 +32,7 @@ class QuestionModel extends Component {
                       <td>{question.title}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
                     <Counter show={this.state.addModelShow}
-                            onHide={addModal} statement={question.statement}></Counter>
+                            onHide={addModal} statement={stmt3}></Counter>
                     <td>{question.technology}</td>
                     <td>{question.type}</td>
                     

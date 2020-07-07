@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'react-bootstrap';
-import Parser from 'html-react-parser'
+import Parse from 'html-react-parser'
 
  export default class Counter extends Component {
 
@@ -9,7 +9,7 @@ import Parser from 'html-react-parser'
     }
        
       render() {
-        
+        //let  stmt=''+this.props.statement;
         return (
             <Modal
             {...this.props}
@@ -25,7 +25,7 @@ import Parser from 'html-react-parser'
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="container">{(this.props.statement)}</div>
+             <p>{(this.props.statement)}</p> 
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.props.onHide}>Close</Button>

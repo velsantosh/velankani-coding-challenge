@@ -67,6 +67,20 @@ class CreateQuestion extends Component {
                                         </Link>
                                     </CardBody>
                                 </Card>
+                                <Card style={cardStyle}>
+                                    <CardBody>
+                                        <CardTitle style={titleStyle}>Upload questions</CardTitle>
+                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                    </CardBody>
+                                    <CardBody style={cardTxt}>
+                                        <CardText>Upload file to add questions.</CardText>
+                                    </CardBody>
+                                    <CardBody>
+                                    <Link to="/manageQuestion/UploadFile">
+                                            <Button className="btn btn-primary mb-1" style={buttonContainer}>Upload File </Button>
+                                        </Link>
+                                    </CardBody>
+                                </Card>
                             </CardGroup>
                         </Col>
                     </Row>

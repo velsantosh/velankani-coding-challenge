@@ -35,10 +35,12 @@ class AssignSubjective extends Component {
     // const userList = usersData.filter((user) => user.id < 10)
     //const questionsList = this.state.questions
     const question = this.props.question;
+    var stmt2=''+question.statement;
+    var stmt3= Parser(stmt2);
     var stmt = question.statement;
     if(stmt) stmt=stmt.substr(0,30);
     var newStmt = `${stmt}...`
-   
+  
     
     return (
                 
@@ -48,7 +50,7 @@ class AssignSubjective extends Component {
                       <td>{question.topic}</td>
                     <td onClick={()=>this.setState({addModelShow:true})} className="headingPrimary"><Link>{Parser(newStmt)}</Link></td>
                     <Counter show={this.state.addModelShow}
-                    onHide={addModal} statement={question.statement}></Counter>
+                    onHide={addModal} statement={stmt3}></Counter>
                     <td>{question.difficulty}</td>
                     <td>{question.experience}</td>
                     <td>{question.expectedTime}</td>

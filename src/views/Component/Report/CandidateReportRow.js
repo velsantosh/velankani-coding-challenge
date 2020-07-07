@@ -59,9 +59,9 @@ download(id,userName,challengeid){
                 <td>{this.props.cdetail.scheduleDate}</td>
                 <td color="success">{this.props.cdetail.testScheduler}</td>
                 <td><span><Button color="primary" size="sm" id="ranjeet" onClick={ ()=> this.download(this.props.cdetail.id,this.props.cdetail.candidateName,this.props.cdetail.challengeid)
-                }> View Report </Button>
+                }>ViewReport</Button>
                 <Tooltip
-        placement="right"
+        placement="left"
         isOpen={this.state.tooltipOpen}
         target="ranjeet"
         

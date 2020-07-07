@@ -41,7 +41,9 @@ class Questions extends Component {
       this.getQuestionsByTypeTech(this.state.activeType, this.state.activeTechnology);
     });
   }
-
+   onChange(e){
+     console.log("called from onchange");
+   }
   handleTech(e) {
     this.setState({
       activeTechnology: e.target.value

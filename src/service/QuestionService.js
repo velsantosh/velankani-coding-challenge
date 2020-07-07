@@ -65,7 +65,13 @@ class QuestionService {
     getAllSchQuestionsByUserId(userId) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
-        return axios.get(`http://localhost:8083/schQuesByUid/${userId}`);
+        return axios.get(`http://localhost:8083/schQuesByUid/${userId}`,
+        {headers: {
+            'Content-Type':'application/json','access-control-allow-origin': '*'
+           },
+       crossdomain: true
+       }
+        )
     }
 
     addSubjectiveQuestion(subjectiveQuestionData){
@@ -120,6 +126,25 @@ class QuestionService {
         // return axios.get(`${apiBaseUrl}/question`,question);
         return axios.put(`http://localhost:8083/updateChallenge`,question);
     }
+    uploadSubjFile(question) {
+        // return axios.get(`${apiBaseUrl}/question`,question);
+        return axios.post(`http://localhost:8082/uploadSubjFile`,question,
+        {
+            headers: {
+              'Content-Type': `multipart/form-data`,
+            }});
+            
+    }
+    uploadObjFile(question) {
+        // return axios.get(`${apiBaseUrl}/question`,question);
+        return axios.post(`http://localhost:8082/uploadObjFile`,question,
+        {
+            headers: {
+              'Content-Type': `multipart/form-data`,
+            }});
+            
+    }
+
 }
 
 export default new QuestionService()

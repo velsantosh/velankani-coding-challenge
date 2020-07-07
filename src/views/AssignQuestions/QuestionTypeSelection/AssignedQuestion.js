@@ -58,6 +58,7 @@ class AssignedQuestion extends Component {
     QuestionService.getQuestionsByChallengeId(challengeid)
       .then(
         response => {
+               //console.log(response.data)
           this.setState({ ques: response.data, redirectToAssignModels: true }, () => console.log("Model Question List", this.state.ques))
         }
       )
