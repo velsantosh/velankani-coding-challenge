@@ -132,7 +132,7 @@ class uploadFile extends Component {
                                 <Card style={cardStyle}>
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Upload File To Add ObjectiveQuestions</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/codingQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
                                     </CardBody>
                                     <CardBody>
                                     <input type="file" onChange={(e)=>this.onFileChange(e)} /> 
@@ -144,7 +144,7 @@ class uploadFile extends Component {
                                 <Card style={cardStyle}>
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Upload File To add SubjectiveQuestions </CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardImg src={'../../../assets/img/avatars/codingQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
                                     </CardBody>
                                     <CardBody>
                                     <input type="file" onChange={this.onFileChange} /> 
