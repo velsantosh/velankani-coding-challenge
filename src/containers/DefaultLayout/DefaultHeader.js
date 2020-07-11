@@ -33,7 +33,7 @@ class DefaultHeader extends Component {
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/users" className="nav-link">Users</Link>
+            <NavLink to="/users" className="nav-link">Users</NavLink>
           </NavItem>
           <NavItem className="px-3">
             <NavLink to="/settings" className="nav-link">Settings</NavLink>

@@ -45,7 +45,7 @@ const ObjectiveQuestionWizard = React.lazy(()=> import('./views/Component/TakeCh
 const CreateQuestion = React.lazy(() => import('./views/ManageQuestion/CreateQuestion/CreateQuestion'));
 const CreateSubjective = React.lazy(() => import('./views/ManageQuestion/CreateSubjective/CreateSubjective'));
 const CreateObjective = React.lazy(() => import('./views/ManageQuestion/CreateObjective/CreateObjective'));
-
+const uploadFile = React.lazy(() => import('./views/ManageQuestion/UploadFile/uploadFile'));
 const ModifySubjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifySubjectiveQuestion/ModifySubjectiveQuestion'));
 const ModifyObjectiveQuestion = React.lazy(() => import('./views/ManageQuestion/ModifyObjectiveQuestion/ModifyObjectiveQuestion'));
 
@@ -97,7 +97,8 @@ const routes = [
   {path :'/manageQuestion/CreateObjective', name: 'Create_Objective', component: CreateObjective},
   {path :'/manageQuestion/modifySubjectiveQuestion', name: 'Modify_Question', component: ModifySubjectiveQuestion},
   {path :'/manageQuestion/modifyObjectiveQuestion',name:'Modify_Question',component: ModifyObjectiveQuestion},
-
+  { path: '/manageQuestion/uploadFile', name: 'Upload_File', component : uploadFile},
+  
   { path: '/manageUser/users', name: 'Manage User', component: Users },
   { path: '/manageUser/user/:id', exact: true, name: 'User Details', component: User },
   { path: '/manageUser/user/:id/edit', exact: true, name: 'Edit User', component: UserEdit },

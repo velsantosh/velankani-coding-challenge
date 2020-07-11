@@ -41,11 +41,15 @@ class SubSchedQuestionsList extends Component {
     const subQuestions = [];
     ScheduledChallengeDataService.getScheduledQuestionByCandidateId(userName).then(
       response => {
+         console.log(response.data);
         response.data.map((question) => {
           console.log("question :", question)
           if (question.type === 'SUBJECTIVE') {
             subQuestions.push(question);
-          }         
+          }
+          console.log("getScheduledQuestionsByUserId  subQuestions:", subQuestions)
+
+         // this.setState({ questions: subQuestions });
         });
         this.setState({ questions: subQuestions });
       }
