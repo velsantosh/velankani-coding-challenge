@@ -13,13 +13,21 @@ class uploadFile extends Component {
           selectedFile:null,
           response:false,
           isModelOpen:false,
+          isResponseError:false,
+          error:null
         }
         this.onFileChange=this.onFileChange.bind(this);  
         this.fileData=this.fileData.bind(this);
         this.onFileUpload=this.onFileUpload.bind(this);
         this.onFileUploadSubj=this.onFileUploadSubj.bind(this);
         this.toggle=this.toggle.bind(this);
+        this.toggle2=this.toggle2.bind(this);
       }
+         toggle2(){
+          this.setState({selectedFile:null})
+          this.setState({isResponseError:!this.state.isResponseError})
+          console.log("called from toggle2");
+         }
         toggle(){
           this.setState({selectedFile:null})
           this.setState({isModelOpen:!this.state.isModelOpen})
@@ -41,11 +49,16 @@ class uploadFile extends Component {
          console.log(response.data.status);
         }else{
         console.log(response.data);
+        console.log(response.data.message)
         console.log(response.status); 
+        console.log("ranjeet")
         this.toggle();
       }
    }
- )   
+ ).catch (error =>{console.log(error.response.data.error)
+               this.state.error=error.response.data.message;
+               this.setState({isResponseError:!this.state.isResponseError})
+              }) 
 }    
     
     onFileUpload(){
@@ -63,11 +76,16 @@ class uploadFile extends Component {
               //this.setState({flag:true})
           }else{
             console.log(response.data);
-            console.log(response.status);  
+              console.log(response.data.message);
+              console.log("ranjeet")
+              console.log(response.status);  
              this.toggle();
           }
         }
-      )   
+      ).catch (error =>{console.log(error.response.data)
+        this.state.error=error.response.data.message;
+        this.setState({isResponseError:!this.state.isResponseError})
+      })   
     }
     onFileChange(e){
         this.setState({ selectedFile: e.target.files[0] });
@@ -165,6 +183,14 @@ class uploadFile extends Component {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={this.toggle}>Ok</Button>{' '}
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={this.state.isResponseError}>
+        <ModalBody>
+           {this.state.error}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.toggle2}>Ok</Button>{' '}
         </ModalFooter>
       </Modal>
     </div>
