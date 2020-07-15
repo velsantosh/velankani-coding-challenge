@@ -59,6 +59,7 @@ const ReAssignChallenge = React.lazy(() => import('./views/AssignQuestions/Quest
 const RescheduleChallenge = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/RescheduleChallenge'));
 
 const ScheduleTest = React.lazy(() => import('./views/Component/ScheduleTest/ScheduleTest'));
+const ManagePermission = React.lazy(() => import('./views/Users/ManagePermission'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -103,7 +104,7 @@ const routes = [
   { path: '/manageUser/user/:id', exact: true, name: 'User Details', component: User },
   { path: '/manageUser/user/:id/edit', exact: true, name: 'Edit User', component: UserEdit },
   { path: '/manageUser/user/:userName', exact: true, name: 'User Details', component: User },
-
+  { path: '/manageUser/managePermission', name: 'Manage Permissions', component: ManagePermission },
 
   { path: '/manageUser/createUser', name: 'Add User', component: UserRegistration_1 },
   { path: '/manageUser/deleteUser', name: 'Delete User', component: UserRegistration_1 },

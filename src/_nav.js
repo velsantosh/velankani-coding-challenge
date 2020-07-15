@@ -9,6 +9,13 @@ export default {
       icon: 'icon-user',
       
      },
+	 {
+      name :'Manage Permission',
+      actual_name: 'MANAGE_PERMISSION',
+      url: '/manageUser/managePermission',
+      icon: 'icon-pencil',
+      
+     },
     {
       name :'Manage Question',
       actual_name: 'MANAGE_QUESTION',
