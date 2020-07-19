@@ -28,6 +28,10 @@ const QuestionList = React.lazy(() => import('./views/ManageQuestion/QuestionsLi
 const QuestionType = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/QuestionType'));
 const AssignQuestion = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/AssignQuestion'));
 const SelectQuestions = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/SelectQuestions'));
+const QuestionTemplate = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/QuestionTemplate'));
+const CreateQuestionTemplate = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/CreateQuestionTemplate'));
+const ManageQuestionTemplate = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/ManageQuestionTemplate'));
+const ModifyQuestionTemplate = React.lazy(() => import('./views/AssignQuestions/QuestionTypeSelection/ModifyQuestionTemplate'));
 
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
@@ -60,6 +64,7 @@ const RescheduleChallenge = React.lazy(() => import('./views/AssignQuestions/Que
 
 const ScheduleTest = React.lazy(() => import('./views/Component/ScheduleTest/ScheduleTest'));
 const ManagePermission = React.lazy(() => import('./views/Users/ManagePermission'));
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -106,6 +111,7 @@ const routes = [
   { path: '/manageUser/user/:userName', exact: true, name: 'User Details', component: User },
   { path: '/manageUser/managePermission', name: 'Manage Permissions', component: ManagePermission },
 
+
   { path: '/manageUser/createUser', name: 'Add User', component: UserRegistration_1 },
   { path: '/manageUser/deleteUser', name: 'Delete User', component: UserRegistration_1 },
 
@@ -131,6 +137,9 @@ const routes = [
   { path: '/assignQuestion/AssignedQuestion', name: 'Assign_Questions', component: AssignedQuestion },
   { path: '/assignQuestion/ReAssignChallenge', name: 'Assign_Questions', component: ReAssignChallenge },
   { path: '/assignQuestion/RescheduleChallenge', name: 'Assign_Questions', component: RescheduleChallenge },
+  { path: '/createQuestionTemplate', name: 'Assign_Questions', component: CreateQuestionTemplate },
+  { path: '/manageQuestionTemplate', name: 'Assign_Questions', component: ManageQuestionTemplate },
+  { path: '/modifyQuestionTemplate', name: 'Assign_Questions', component: ModifyQuestionTemplate },
 
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },
