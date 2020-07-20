@@ -50,29 +50,26 @@ class SelectQuestionTemplate extends Component {
     }
 
     getAllQuestionTemplates() {
-
-
         const { technology, difficultyLevel, experience } = this.props.values;
-
-        console.log("this.this.state.technology : ", technology, difficultyLevel, experience);
+        console.log("getAllQuestionTemplates : ", technology, difficultyLevel, experience);
         QuestionService.getAllQuestTempByTechDiffiExp(technology, difficultyLevel, experience)
             .then(
                 response => {
-                    this.setState({ templateNameList: response.data })
+                    this.setState({ templateNameList: response.data });
 
                 }
             );
 
-    }
 
+            console.log("getAllQuestionTemplates  ################### : ", this.state.templateNameList);
+
+    }
 
     handleTemplateName = (event) => {
         console.log("selected Title : ", event.target.value);
 
         this.setState({ title: event.target.value })
         this.subQuestionData.templateName = event.target.value
-
-
     }
 
     handleTechnology = (event) => {
@@ -81,7 +78,6 @@ class SelectQuestionTemplate extends Component {
         this.setState({ technology: event.target.value })
         this.getQuestionsByTech(event.target.value);
         this.subQuestionData.technology = event.target.value
-
     }
     handleExperiance = (event) => {
         console.log("selected Experiance : ", event.target.value);
@@ -90,12 +86,10 @@ class SelectQuestionTemplate extends Component {
 
     }
 
-
     assignQuestionTemplate = () => {
 
         const myDate = this.props.values.date;
         let expDate = myDate.toUTCString();
-
         console.log(" questionList ---: ", this.state.seletedQuestionTemplate.questionList.toString().split(" "));
 
         const QuestionSchedulerCustom = {
@@ -129,21 +123,15 @@ class SelectQuestionTemplate extends Component {
             redirectToBaseView: true
         });
     }
-
-
-
-
     cancel = () => {
         this.setState({
             modal: false
-
         });
     }
 
     back = e => {
         e.preventDefault();
         this.props.prevStep();
-
     }
 
     selectedType = (e) => {

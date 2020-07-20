@@ -17,6 +17,7 @@ class CreateQuestionTemplate extends Component {
         "templateName": '',
         "technology": '',
         "experience": '',
+        difficulty : '',
         "questionList": '',
     }
 
@@ -31,6 +32,7 @@ class CreateQuestionTemplate extends Component {
             questionList: [],
             technology: '',
             experience: '',
+            difficulty : '',
             title: '',
             qidList: []
 
@@ -57,15 +59,11 @@ class CreateQuestionTemplate extends Component {
 
     handleTemplateName = (event) => {
         console.log("selected Title : ", event.target.value);
-
         this.setState({ title: event.target.value })
         this.subQuestionData.templateName = event.target.value
-
-
     }
 
     handleTechnology = (event) => {
-
         console.log("selected  technology : ", event.target.value);
         this.setState({ technology: event.target.value })
         this.getQuestionsByTech(event.target.value);
@@ -77,6 +75,11 @@ class CreateQuestionTemplate extends Component {
         this.setState({ experience: event.target.value });
         this.subQuestionData.experience = event.target.value
 
+    }
+    handleDifficulty = (event) => {
+        console.log("selected difficulty : ", event.target.value);
+        this.setState({ difficulty: event.target.value });
+        this.subQuestionData.difficulty = event.target.value
     }
 
 
@@ -310,6 +313,18 @@ class CreateQuestionTemplate extends Component {
                                     </Input>
                                 </FormGroup>
                             </Col>
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="difficultyComponentSelect" style={lableStyle}>Difficulty Level</Label>
+                                    <Input type="select" name="topic" id="difficultyComponentSelect" onChange={(e) => this.handleDifficulty(e)}>
+                                    <option disabled selected>Select Difficulty Level</option>
+                                    <option>Easy</option>
+                                    <option>Medium</option>
+                                    <option>Hard</option>
+                                    </Input>
+                                </FormGroup>
+                            </Col> 
+
                         </Row>
                         <FormGroup>
                             <Label for="statement" style={lableStyle}>Select Questions</Label>

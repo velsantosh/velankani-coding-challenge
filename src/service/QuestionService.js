@@ -136,13 +136,13 @@ class QuestionService {
     }
 
     getAllQuestTempByTechDiffiExp(technology, difficulty, experience) {
-        console.log('executed getAllQuestionTemplates : ', technology, difficulty, experience);
-        return axios.get(`http://localhost:8765/cctservice/questions/${technology}/${difficulty}/${experience}`);
+        console.log('executed getAllQuestTempByTechDiffiExp : ', technology, difficulty, experience);
+        return axios.get(`http://localhost:8765/cctservice/getFilteredTemplates/${technology}/${difficulty}/${experience}`);
 
     }
 
     assignQuestionsByTemplate(QuestionSchedulerData) {
-        console.log('executed getAllQuestionTemplates : ', QuestionSchedulerData)
+        console.log('executed assignQuestionsByTemplate : ', QuestionSchedulerData)
         return axios.post(`http://localhost:8765/srvservice/assignTemplates`, QuestionSchedulerData);
 
     }

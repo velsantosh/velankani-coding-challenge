@@ -11,19 +11,26 @@ import * as actionTypes from "../../../store/Actions";
 
 class AssignQuestion extends Component {
 
-  state = {
-    step: 'SELECTION_WIZARD',
-    type: 'CA',
-    users: 'A',
-    technology: 'B',
-    templateName: 'TN',
-    scheduleDate: 'c',
-    date: new Date(),
-    status: 'Scheduled',
-    templateInUse: false,
-    challenge : ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 'SELECTION_WIZARD',
+      type: 'CA',
+      users: 'A',
+      technology: 'B',
+      templateName: 'TN',
+      scheduleDate: 'c',
+      date: new Date(),
+      status: 'Scheduled',
+      templateInUse: false,
+      challenge: '',
+      difficultyLevel : '',
+      questionList : []
 
+    }
+    console.log("this.props-- SelectQuestionTemplate :", this.props.values);
   }
+
 
   nextStep = () => {
     if (this.state.users === 'A' || this.state.technology === 'B') {
@@ -38,48 +45,50 @@ class AssignQuestion extends Component {
         this.setState({
           step: 'SELECTION_TEMPLATE'
         });
-      }   
+      }
     }
   };
-  
+
   submit = () => {
     if (this.state.users === 'A' || this.state.technology === 'B') {
       alert("Select Proper Details")
     } else {
       console.log("Dynamic Question Template is assinged to the user: ", this.state.users);
-      const myDate = this.props.values.date;
+      console.log("Dynamic Question Template is assinged this.state: ", this.state);
+      const myDate = this.state.date;
       let expDate = myDate.toUTCString();
 
-      console.log(" questionList ---: ", this.state.seletedQuestionTemplate.questionList.toString().split(" "));
+      //console.log(" questionList ---: ", this.state.seletedQuestionTemplate.questionList.toString().split(" "));
 
       const QuestionSchedulerCustom = {
-          qidList: this.state.seletedQuestionTemplate.questionList, //@NonNull List<String> 
-          assigneduidList: this.props.values.users.split(), //@NonNull List<String> 
-          assigneruid: this.props.userName, //	private @NonNull String
-          scheduleTime: expDate, //	private @NonNull Date
-          status: this.props.values.status, //	private @NonNull String
-          templateType: this.props.values.templateName, //	private @ String
-          templateId: this.state.seletedQuestionTemplate.id, //	private @ String
-          technology: this.props.values.technology, //	private @ String
-          experience: this.state.seletedQuestionTemplate.experience, //	private @ String
-          difficulty: this.state.seletedQuestionTemplate.difficulty, //	private @ String
-          templateName: this.state.seletedQuestionTemplate.templateName //	private @ String
+        qidList: this.state.questionList, //@NonNull List<String> 
+        assigneduidList: this.state.users.split(), //@NonNull List<String> 
+        assigneruid: this.props.userName, //	private @NonNull String
+        scheduleTime: expDate, //	private @NonNull Date
+        status: this.state.status, //	private @NonNull String
+        templateType: this.state.templateName, //	private @ String
+        templateId: this.state.id, //	private @ String
+        technology: this.state.technology, //	private @ String
+        experience: this.state.experience, //	private @ String
+        difficulty: this.state.difficultyLevel, //	private @ String
+        templateName: '' //	private @ String
+        
 
       }
 
       QuestionService.assignQuestionsByTemplate(QuestionSchedulerCustom)
-          .then(
-              response => {
-                  console.log("response--->", response.data)
-              }
-          );
-      
-          this.setState({
-          redirectToBaseView: true
-      });
-  }
+        .then(
+          response => {
+            console.log("response--->", response.data)
+          }
+        );
 
-    
+      this.setState({
+        redirectToBaseView: true
+      });
+    }
+
+
   };
 
   prevStep = () => {
@@ -90,7 +99,7 @@ class AssignQuestion extends Component {
     });
   };
 
-  handleDate = (dateSelect) =>{   
+  handleDate = (dateSelect) => {
     this.setState({
       date: dateSelect
     }, () => console.log("Date", this.state.date));
@@ -104,7 +113,7 @@ class AssignQuestion extends Component {
     });
   };
 
-  
+
   handleChange = input => e => {
     console.log("Date", this.state.date);
     console.log("UsersList::", input);
@@ -126,8 +135,10 @@ class AssignQuestion extends Component {
     const { templateInUse } = this.state;
 
 
-    const values = { type, users, technology, date, status,
-       challenge, templateName, experience, difficultyLevel, templateInUse }
+    const values = {
+      type, users, technology, date, status,
+      challenge, templateName, experience, difficultyLevel, templateInUse
+    }
 
     switch (step) {
       case 'SELECTION_WIZARD':
