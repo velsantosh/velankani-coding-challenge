@@ -135,6 +135,13 @@ class QuestionService {
 
     }
 
+    getAllQuestionsByTechDiffiExp(technology, difficulty, experience) {
+        console.log('executed getAllQuestionsByTechDiffiExp : ', technology, difficulty, experience);
+        return axios.get(`http://localhost:8765/cctservice/questions/${technology}/${difficulty}/${experience}`);
+
+    }
+
+
     getAllQuestTempByTechDiffiExp(technology, difficulty, experience) {
         console.log('executed getAllQuestTempByTechDiffiExp : ', technology, difficulty, experience);
         return axios.get(`http://localhost:8765/cctservice/getFilteredTemplates/${technology}/${difficulty}/${experience}`);

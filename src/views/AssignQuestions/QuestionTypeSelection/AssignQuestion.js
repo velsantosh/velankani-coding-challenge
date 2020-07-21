@@ -6,7 +6,7 @@ import SelectQuestionTemplate from './SelectQuestionTemplate';
 import QuestionService from '../../../service/QuestionService'
 
 import { connect } from "react-redux";
-import * as actionTypes from "../../../store/Actions";
+import Modals from '../../Notifications/Modals/Modals';
 
 
 class AssignQuestion extends Component {
@@ -24,8 +24,9 @@ class AssignQuestion extends Component {
       status: 'Scheduled',
       templateInUse: false,
       challenge: '',
-      difficultyLevel : '',
-      questionList : []
+      difficultyLevel: '',
+      questionList: [],
+      assignQuestTempStatus: false
 
     }
     console.log("this.props-- SelectQuestionTemplate :", this.props.values);
@@ -72,14 +73,18 @@ class AssignQuestion extends Component {
         experience: this.state.experience, //	private @ String
         difficulty: this.state.difficultyLevel, //	private @ String
         templateName: '' //	private @ String
-        
+
 
       }
 
       QuestionService.assignQuestionsByTemplate(QuestionSchedulerCustom)
         .then(
           response => {
-            console.log("response--->", response.data)
+            console.log("response--->", response.data);
+            this.setState({
+              assignQuestTempStatus: response.data
+            })
+
           }
         );
 
@@ -122,6 +127,15 @@ class AssignQuestion extends Component {
   };
 
   render() {
+
+    if (this.state.assignQuestTempStatus) {
+      console.log("this.state.assignQuestTempStatus")
+      return (
+        <Modals message={`Dynamic QuestionTemplated assigned successfully for UserId: ${this.props.values.users}`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+      );
+    }
+
+
     const { step } = this.state;
     const { type } = this.state;
     const { users } = this.state;

@@ -18,7 +18,7 @@ class ModifyQuestionTemplate extends Component {
         "templateName": '',
         "technology": '',
         "experience": '',
-        "difficulty" : '',
+        "difficulty": '',
         "questionList": '',
     }
 
@@ -26,11 +26,11 @@ class ModifyQuestionTemplate extends Component {
         super(props);
         const { difficulty, experience, id, questionList, technology, templateName } = this.props.questionTempData;
         this.state = {
-            qidList : [],
+            qidList: [],
             qId: '',
             disabled: true,
             redirectToBaseView: false,
-            templateId : id,
+            templateId: id,
             questionList: [],
             technology: technology,
             experience: experience,
@@ -41,23 +41,26 @@ class ModifyQuestionTemplate extends Component {
         };
 
         console.log("this.props.questionTempData: ", this.props.questionTempData);
-        console.log("this.props : ", this.props);
         console.log("this.props location.state.selectRow: ", this.props.location.state.selectedRow);
 
     }
 
     componentDidMount() {
         const { technology, difficulty, experience } = this.state;
-        this.getAllQuestTempByTechDiffiExp(technology, difficulty, experience);
+        console.log("componentDidMount technology, difficulty, experience : ", technology, difficulty, experience);
+
+        this.getAllQuestionsByTechDiffiExp(technology, difficulty, experience);
     }
 
 
-    getAllQuestTempByTechDiffiExp(technology, difficulty, experience) {
+    getAllQuestionsByTechDiffiExp(technology, difficulty, experience) {
 
-        console.log("this.this.state.technology  getAllQuestTempByTechDiffiExp : ", technology, difficulty, experience);
-        QuestionService.getAllQuestTempByTechDiffiExp(technology, difficulty, experience)
+        console.log("getAllQuestionsByTechDiffiExp technology, difficulty, experience : ", technology, difficulty, experience);
+        QuestionService.getAllQuestionsByTechDiffiExp(technology, difficulty, experience)
             .then(
                 response => {
+                    console.log("getAllQuestionsByTechDiffiExp  response.data : ", response.data);
+
                     this.setState({ questionList: response.data })
 
                 }
@@ -86,18 +89,18 @@ class ModifyQuestionTemplate extends Component {
     handleDifficultyLevel = (event) => {
         console.log("selected  difficulty : ", event.target.value);
         this.setState({ difficulty: event.target.value })
-        this.getAllQuestTempByTechDiffiExp(this.state.technology, this.state.difficulty, this.state.experience);
+        this.getAllQuestionsByTechDiffiExp(this.state.technology, event.target.value, this.state.experience);
     }
 
     handleTechnology = (event) => {
         console.log("selected  technology : ", event.target.value);
         this.setState({ technology: event.target.value })
-        this.getAllQuestTempByTechDiffiExp(this.state.technology, this.state.difficulty, this.state.experience);
+        this.getAllQuestionsByTechDiffiExp(event.target.value, this.state.difficulty, this.state.experience);
     }
     handleExperiance = (event) => {
         console.log("selected Experiance : ", event.target.value);
         this.setState({ experience: event.target.value });
-        this.getAllQuestTempByTechDiffiExp(this.state.technology, this.state.difficulty, this.state.experience);
+        this.getAllQuestionsByTechDiffiExp(this.state.technology, this.state.difficulty, event.target.value);
 
     }
 
@@ -152,7 +155,7 @@ class ModifyQuestionTemplate extends Component {
         this.ModifyQuestionTemplateData.technology = this.state.technology;
         this.ModifyQuestionTemplateData.experience = this.state.experience;
 
-        QuestionService.updateQuestionTemplate(this.ModifyQuestionTemplateData, this.state.templateId )
+        QuestionService.updateQuestionTemplate(this.ModifyQuestionTemplateData, this.state.templateId)
             .then(response => {
                 this.setState({
                     redirectToBaseView: true
@@ -290,13 +293,6 @@ class ModifyQuestionTemplate extends Component {
             },
         };
 
-        function onColumnMatch({ searchText, value, column, row }) {
-            if (searchText == row.name || searchText == row.userName || searchText == row.role) {
-                return true;
-            }
-
-        }
-
 
         return (
             <>
@@ -383,7 +379,6 @@ class ModifyQuestionTemplate extends Component {
                                             keyField="id"
                                             data={this.state.questionList}
                                             columns={columns}
-                                            search={onColumnMatch}
                                         >
                                             {
                                                 props => (

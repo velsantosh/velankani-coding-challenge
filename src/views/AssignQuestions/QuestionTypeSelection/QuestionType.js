@@ -187,7 +187,7 @@ class QuestionType extends Component {
                 <Form name="registerform" className="registerform" >
                   <br></br>
                   <Row>
-                  {console.log("values.templateInUse  ", values.templateInUse)}
+                    {console.log("values.templateInUse  ", values.templateInUse)}
                     <Col md={{ span: 6 }} >
                       <input type="checkbox" value={this.state.templateInUse} onChange={this.handleTemplateInUseChange} id="inputCheckBox1" />
                       <label htmlFor="inputCheckBox1" style={marginDropDown}>Select Question Tempalate</label>
@@ -196,8 +196,8 @@ class QuestionType extends Component {
                   <Row className="d-flex justify-content-aroun" >
 
                     <Col xl="4">
-                      <select style={marginDropDown} className="form-control" id="exampleFormControlSelect1" value={values.users} 
-                      onChange={handleChange('users')}  disabled={values.dropDown}>
+                      <select style={marginDropDown} className="form-control" id="exampleFormControlSelect1" value={values.users}
+                        onChange={handleChange('users')} disabled={values.dropDown}>
                         <option value="A" disabled>Candidate List</option>
                         {usersList}
                       </select>
@@ -205,7 +205,7 @@ class QuestionType extends Component {
                     <br></br>
                     <Col xl="4">
                       <select style={marginDropDown} className="form-control" id="exampleFormControlSelect2" value={values.technology}
-                       onChange={handleChange('technology')}>
+                        onChange={handleChange('technology')} disabled={values.dropDown}>
                         <option value="B" disabled>Technology</option>
                         {technologyLists}
                       </select>
@@ -233,7 +233,7 @@ class QuestionType extends Component {
                         </InputGroupAddon>
                       </InputGroup>
                     </Col>
-                    {this.state.templateInUse ? quesTempComponent : null}                    
+                    {this.state.templateInUse ? quesTempComponent : null}
                     {experianceComponent}
                     {difficultyComponent}
                   </Row>
