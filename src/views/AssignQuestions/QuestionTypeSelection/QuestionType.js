@@ -125,7 +125,7 @@ class QuestionType extends Component {
     let quesTempComponent = (
 
       <Col xl="4" >
-        <select style={marginDropDown} className="form-control" id="experianceComponentSelect1"
+        <select style={marginDropDown} className="form-control" id="experianceComponentSelect"
           value={values.templateName} onChange={handleChange('templateName')}>
           <option disabled selected>Select Question Tempalate</option>
           <option>Static Template</option>
@@ -144,7 +144,6 @@ class QuestionType extends Component {
           <option>4-6</option>
           <option>6-8</option>
           <option>8+</option>
-
         </select>
       </Col>
 
@@ -152,9 +151,9 @@ class QuestionType extends Component {
 
     let difficultyComponent = (
       <Col xl="4" >
-        <select style={marginDropDown} className="form-control" id="difficultyComponentSelect"
+        <select style={marginDropDown} className="form-control" id="experianceComponentSelect"
           value={values.difficultyLevel} onChange={handleChange('difficultyLevel')}>
-          <option disabled selected>Select Difficulty Level</option>
+          <option disabled selected>Select Difficulty</option>
           <option>Easy</option>
           <option>Medium</option>
           <option>Hard</option>

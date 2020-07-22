@@ -85,7 +85,7 @@ class CreateQuestionTemplate extends Component {
 
     createQuestionTemplate = () => {
         console.log("this.state.qidList", this.state.qidList);
-        this.subQuestionData.questionList = this.state.qidList;
+        this.subQuestionData.questionList = this.state.qidList.toString();
 
         QuestionService.createQuestionTemplate(this.subQuestionData)
             .then(response => {

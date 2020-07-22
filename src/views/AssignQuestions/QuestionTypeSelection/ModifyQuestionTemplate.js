@@ -34,14 +34,16 @@ class ModifyQuestionTemplate extends Component {
             questionList: [],
             technology: technology,
             experience: experience,
-            templateNameList: questionList,
+            templateQuestList: questionList,
             templateName: templateName,
             difficulty: difficulty
 
         };
 
         console.log("this.props.questionTempData: ", this.props.questionTempData);
-        console.log("this.props location.state.selectRow: ", this.props.location.state.selectedRow);
+        console.log("templateQuestList: ", this.state.templateQuestList[0].split(" "));
+        //console.log("templateQuestList:split ", this.state.templateQuestList.split(" "));
+        
 
     }
 
@@ -62,6 +64,8 @@ class ModifyQuestionTemplate extends Component {
                     console.log("getAllQuestionsByTechDiffiExp  response.data : ", response.data);
 
                     this.setState({ questionList: response.data })
+
+
 
                 }
             );
@@ -150,7 +154,7 @@ class ModifyQuestionTemplate extends Component {
     updateQuestionTemplate = () => {
         console.log("this.state.qidList", this.state.qidList);
         this.ModifyQuestionTemplateData.templateName = this.state.templateName;
-        this.ModifyQuestionTemplateData.questionList = this.state.qidList;
+        this.ModifyQuestionTemplateData.questionList = this.state.qidList.toString();
         this.ModifyQuestionTemplateData.difficulty = this.state.difficulty;
         this.ModifyQuestionTemplateData.technology = this.state.technology;
         this.ModifyQuestionTemplateData.experience = this.state.experience;
@@ -187,8 +191,8 @@ class ModifyQuestionTemplate extends Component {
         };
 
         const text = {
-            textAlign: 'right',
-            marginRight: '7%'
+            textAlign: 'left',
+            marginLeft: '7%'
         }
 
         const redirectToBaseView = this.state.redirectToBaseView;
@@ -299,7 +303,7 @@ class ModifyQuestionTemplate extends Component {
                 <Row>
                     <div>
                         <h2 className={cx(classes.heading)}>Modify Question Template : </h2>
-                        <h4 style={text} className="headingPrimary">Template Name : <strong><u>{this.state.templateName}</u></strong></h4>
+                        <h6 style={text} className="headingPrimary">Template Name : <strong><u>{this.state.templateName}</u></strong></h6>
                     </div>
                 </Row>
 

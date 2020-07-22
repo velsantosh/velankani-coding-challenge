@@ -126,8 +126,16 @@ class QuestionService {
     updateQuestionTemplate(questionTemplateData, templateId) {
 
         console.log('executed updateQuestionTemplate : ', questionTemplateData)
-        return axios.put(`http://localhost:8765/cctservice//update/questionTemplate/${templateId}`, questionTemplateData);
+        return axios.put(`http://localhost:8765/cctservice/update/questionTemplate/${templateId}`, questionTemplateData);
     }
+
+    getAllQuestionsDataByTemplateId(templateId) {
+        console.log('executed getAllQuestionsDataByTemplateId : ')
+        return axios.get(`http://localhost:8765/cctservice/getAllQuestionsDataByTemplateId/${templateId}`,templateId);
+
+    }
+
+    
 
     getAllQuestionTemplates() {
         console.log('executed getAllQuestionTemplates : ')

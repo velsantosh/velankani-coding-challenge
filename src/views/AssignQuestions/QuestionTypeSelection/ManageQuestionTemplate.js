@@ -10,7 +10,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Parser from 'html-react-parser';
-import Counter from '../../AssignQuestions/QuestionTypeSelection/Counter';
+import QuestionDetails from '../../AssignQuestions/QuestionTypeSelection/QuestionDetails';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import Modals from '../../Notifications/Modals/Modals';
 
@@ -28,14 +28,15 @@ class ManageQuestionTemplate extends Component {
             showModalFlag: false,
             selectedData: '',
             question: '',
+            questionData: [],
             templateId: '',
             redirectToDeleteModel: false,
-            selectedRow : ''
+            selectedRow: ''
         }
     }
 
     componentDidMount() {
-        console.log("afser here getAllQuestionTemplates");
+        console.log(" componentDidMount getAllQuestionTemplates");
         this.getAllQuestionTemplates();
     }
 
@@ -77,6 +78,7 @@ class ManageQuestionTemplate extends Component {
         if (cell != null) {
             stmt = cell[0].substr(0, 20);
         }
+
         var newStmt = `${stmt}...`
         return (<><Link>{Parser(newStmt)}</Link>
         </>);
@@ -87,12 +89,23 @@ class ManageQuestionTemplate extends Component {
         return (<Link to={{
             pathname: `/modifyQuestionTemplate`,
             state: {
-              selectedRow : row
+                selectedRow: row
             }
-          }}>
+        }}>
             {row.templateName}</Link>)
 
-       
+
+    }
+
+    viewQuestionFormatter = (cellContent, row) => {
+        this.setState({
+            question: row
+        })
+        return (
+            <>
+                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.viewTemplateQuestionDetails.bind(this, row.id)} >View Questions</Button>
+            </>
+        );
     }
 
     actionFormatter = (cellContent, row) => {
@@ -101,23 +114,38 @@ class ManageQuestionTemplate extends Component {
         })
         return (
             <>
-            <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteQuestionTemplate.bind(this, row.id)} >DELETE</Button>
+                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteQuestionTemplate.bind(this, row.id)} >DELETE</Button>
             </>
         );
     }
 
+    viewTemplateQuestionDetails(row) {
+        console.log(" view Template Question Details", row);
+
+        QuestionService.getAllQuestionsDataByTemplateId(row).then(
+            response => {
+                this.setState({
+                    ...this.state,
+                    questionData: response.data,
+                    showModalFlag: true
+                })
+            }
+        );
+    }
+
+
     deleteQuestionTemplate(row) {
         console.log(" delete Question Template row", row);
-        
+
         QuestionService.deleteQuestionTemplate(row.toString()).then(
             response => {
                 console.log(" delete Question Template row response ", response);
                 if (response.status === 200) {
-                    this.setState({...this.state, redirectToDeleteModel: true })
-                  } else {
+                    this.setState({ ...this.state, redirectToDeleteModel: true })
+                } else {
                     console.log("delete Question Template : ", response.data)
                     this.props.history.push(`/404`)
-                  }        
+                }
             }
         )
     }
@@ -139,7 +167,7 @@ class ManageQuestionTemplate extends Component {
             formatter: this.templateNameFormatter,
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    console.log("######## row : ",row)
+                    console.log("######## row : ", row)
                     this.props.setSelectedTemplate(row);
                 }
 
@@ -156,16 +184,7 @@ class ManageQuestionTemplate extends Component {
             text: 'Question Id list',
             sort: true,
             headerStyle: { color: '#47bff7' },
-            formatter: this.statementFormatter,
-            events: {
-                onClick: (e, column, columnIndex, row, rowIndex) => {
-                    this.setState({
-                        ...this.state,
-                        showModalFlag: true,
-                        selectedData: Parser(row.questionList[0])
-                    })
-                },
-            }
+            formatter: this.viewQuestionFormatter
         },
         {
             dataField: 'difficulty',
@@ -221,14 +240,14 @@ class ManageQuestionTemplate extends Component {
             if (searchText == row.templateName || searchText == row.questionList) {
                 return true;
             }
-        }       
+        }
 
-        if(this.state.redirectToDeleteModel){
+        if (this.state.redirectToDeleteModel) {
             console.log("Question Templated Deleted successfully");
             return (
-              <Modals message={`Question Templated Deleted successfully.`} linkValue={"/manageQuestion/questionList"}></Modals>
+                <Modals message={`Question Templated Deleted successfully.`} linkValue={"/manageQuestion/questionList"}></Modals>
             );
-          } 
+        }
         return (
             <div className="animated fadeIn">
                 <Container>
@@ -291,7 +310,6 @@ class ManageQuestionTemplate extends Component {
                                             props => (
                                                 <div>
                                                     <SearchBar {...props.searchProps} />
-
                                                     <BootstrapTable
                                                         bootstrap4
                                                         striped
@@ -308,10 +326,13 @@ class ManageQuestionTemplate extends Component {
                                     </ToolkitProvider>
                                 </>
                             }
-                            <Counter show={this.state.showModalFlag}
-                                onHide={this.setModalFlag} statement={this.state.selectedData}></Counter>
+
                         </Col>
+
                     </Row>
+
+                    <QuestionDetails show={this.state.showModalFlag}
+                        onHide={this.setModalFlag} templatedata={this.state.questionData}></QuestionDetails>
                 </Container>
             </div>
         )
@@ -321,7 +342,7 @@ class ManageQuestionTemplate extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setSelectedTemplate : selectedTemplateData =>
+        setSelectedTemplate: selectedTemplateData =>
             dispatch({ type: actionTypes.SELECTEDTEMPLATEDATA, value: selectedTemplateData })
     };
 };
