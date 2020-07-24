@@ -6,7 +6,7 @@ import { Link, NavLink as RRNavLink } from "react-router-dom";
 import UsersDataService from '../../../service/UsersDataService'
 import QuestionService from '../../../service/QuestionService'
 import "react-datepicker/dist/react-datepicker.css";
-
+import Modals from '../../Notifications/Modals/Modals'
 import classes from "./SelectQuestions.module.css";
 import cx from "classnames";
 
@@ -80,6 +80,14 @@ class QuestionType extends Component {
   }
   render() {
 
+           if (this.state.assignQuestTempStatus) {
+            console.log("this.state.assignQuestTempStatus")
+            return (
+                <Modals message={`Question Templated assigned successfully for UserId: ${this.props.values.users}`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+            );
+        } 
+
+
     const marginDropDown = {
       marginLeft: '5px',
       marginRight: '5px',
@@ -125,9 +133,9 @@ class QuestionType extends Component {
     let quesTempComponent = (
 
       <Col xl="4" >
-        <select style={marginDropDown} className="form-control" id="experianceComponentSelect"
+        <select style={marginDropDown} className="form-control" id="templateNameComponentSelect"
           value={values.templateName} onChange={handleChange('templateName')}>
-          <option disabled selected>Select Question Tempalate</option>
+          <option disabled selected defaultValue = "Select Question Tempalate11">Select Question Tempalate</option>
           <option>Static Template</option>
           <option>Dynamic Template</option>
         </select>
@@ -151,9 +159,9 @@ class QuestionType extends Component {
 
     let difficultyComponent = (
       <Col xl="4" >
-        <select style={marginDropDown} className="form-control" id="experianceComponentSelect"
+        <select style={marginDropDown} className="form-control" id="difficultyLevelComponentSelect"
           value={values.difficultyLevel} onChange={handleChange('difficultyLevel')}>
-          <option disabled selected>Select Difficulty</option>
+          <option disabled selected defaultValue = "Select Difficulty 222" >Select Difficulty</option>
           <option>Easy</option>
           <option>Medium</option>
           <option>Hard</option>
@@ -186,7 +194,6 @@ class QuestionType extends Component {
                 <Form name="registerform" className="registerform" >
                   <br></br>
                   <Row>
-                    {console.log("values.templateInUse  ", values.templateInUse)}
                     <Col md={{ span: 6 }} >
                       <input type="checkbox" value={this.state.templateInUse} onChange={this.handleTemplateInUseChange} id="inputCheckBox1" />
                       <label htmlFor="inputCheckBox1" style={marginDropDown}>Select Question Tempalate</label>

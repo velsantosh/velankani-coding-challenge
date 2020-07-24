@@ -18,13 +18,13 @@ class AssignQuestion extends Component {
       type: 'CA',
       users: 'A',
       technology: 'B',
-      templateName: 'TN',
+      //templateName: 'TN',
       scheduleDate: 'c',
       date: new Date(),
       status: 'Scheduled',
       templateInUse: false,
       challenge: '',
-      difficultyLevel: '',
+      //difficultyLevel: '',
       questionList: [],
       assignQuestTempStatus: false
 
@@ -82,17 +82,15 @@ class AssignQuestion extends Component {
           response => {
             console.log("response--->", response.data);
             this.setState({
+              ...this.state,
               assignQuestTempStatus: response.data
+              // redirectToBaseView: true
             })
+
 
           }
         );
-
-      this.setState({
-        redirectToBaseView: true
-      });
     }
-
 
   };
 
@@ -128,14 +126,6 @@ class AssignQuestion extends Component {
 
   render() {
 
-    if (this.state.assignQuestTempStatus) {
-      console.log("this.state.assignQuestTempStatus")
-      return (
-        <Modals message={`Dynamic QuestionTemplated assigned successfully for UserId: ${this.props.values.users}`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
-      );
-    }
-
-
     const { step } = this.state;
     const { type } = this.state;
     const { users } = this.state;
@@ -153,6 +143,21 @@ class AssignQuestion extends Component {
       type, users, technology, date, status,
       challenge, templateName, experience, difficultyLevel, templateInUse
     }
+
+
+    if (this.state.assignQuestTempStatus) {
+      console.log("this.state.assignQuestTempStatus ", this.state.assignQuestTempStatus)
+      return (
+        <Modals message={`Dynamic QuestionTemplated assigned successfully for UserId: ${values.users}`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+      );
+    }
+
+    // if (!this.state.assignQuestTempStatus) {
+    //   console.log("this.state.assignQuestTempStatus ", this.state.assignQuestTempStatus)
+    //   return (
+    //     <Modals message={`No Suitable QuestionTemplate found for the criteria. Please select proper values `} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+    //   );
+    // }
 
     switch (step) {
       case 'SELECTION_WIZARD':

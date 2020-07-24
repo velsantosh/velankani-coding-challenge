@@ -135,8 +135,6 @@ class QuestionService {
 
     }
 
-    
-
     getAllQuestionTemplates() {
         console.log('executed getAllQuestionTemplates : ')
         return axios.get(`http://localhost:8765/cctservice/getAllQuestionsTemplates`);
@@ -148,7 +146,6 @@ class QuestionService {
         return axios.get(`http://localhost:8765/cctservice/questions/${technology}/${difficulty}/${experience}`);
 
     }
-
 
     getAllQuestTempByTechDiffiExp(technology, difficulty, experience) {
         console.log('executed getAllQuestTempByTechDiffiExp : ', technology, difficulty, experience);

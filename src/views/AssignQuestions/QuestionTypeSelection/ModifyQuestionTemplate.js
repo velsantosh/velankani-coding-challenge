@@ -62,14 +62,9 @@ class ModifyQuestionTemplate extends Component {
             .then(
                 response => {
                     console.log("getAllQuestionsByTechDiffiExp  response.data : ", response.data);
-
                     this.setState({ questionList: response.data })
-
-
-
                 }
             );
-
     }
 
 
@@ -166,6 +161,17 @@ class ModifyQuestionTemplate extends Component {
                 });
             })
     }
+    statementFormatter = (cell, row) => {
+        let stmt = "";
+        if (cell != null) {
+          stmt = cell.substr(0, 30);
+        }
+    
+        var newStmt = `${stmt}...`
+        return (<><Link>{Parser(newStmt)}</Link>
+        </>);
+      }
+
     render() {
         const buttonContainer = {
             width: '200px',

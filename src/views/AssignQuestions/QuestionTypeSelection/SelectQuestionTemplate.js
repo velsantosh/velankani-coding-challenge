@@ -39,7 +39,7 @@ class SelectQuestionTemplate extends Component {
             qidList: [],
             modal: false,
             seletedQuestionTemplate: '',
-            assignQuestTempStatus : false
+            assignQuestTempStatus: false
 
         };
         console.log("this.props-- SelectQuestionTemplate :", this.props.values);
@@ -56,13 +56,8 @@ class SelectQuestionTemplate extends Component {
             .then(
                 response => {
                     this.setState({ templateNameList: response.data });
-
                 }
             );
-
-
-            console.log("getAllQuestionTemplates  ################### : ", this.state.templateNameList);
-
     }
 
     handleTemplateName = (event) => {
@@ -113,10 +108,10 @@ class SelectQuestionTemplate extends Component {
 
                     console.log("response--->", response.data);
 
-                   this.setState({
-                    assignQuestTempStatus : response.data
-                   })
-                 
+                    this.setState({
+                        assignQuestTempStatus: response.data
+                    })
+
                 }
             );
         this.setState({
@@ -163,13 +158,6 @@ class SelectQuestionTemplate extends Component {
     }
     render() {
 
-  
-        if(this.state.assignQuestTempStatus){
-            console.log("this.state.assignQuestTempStatus")
-            return (
-              <Modals message={`Question Templated assigned successfully for UserId: ${this.props.values.users}`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
-            );
-          } 
 
 
         const buttonContainer = {
@@ -388,7 +376,6 @@ class SelectQuestionTemplate extends Component {
                         </ModalFooter>
                     </Modal>
                 </div>
-
 
 
             </>

@@ -4,7 +4,6 @@ import { Button, Form, FormGroup, Label, Input, Container, FormText, Col, Row, I
 import QuestionService from '../../../service/QuestionService';
 import classes from "../../ManageQuestion/CreateSubjective/CreateSubjective.module.css";
 import cx from "classnames";
-import Slider from '@material-ui/core/Slider';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -17,7 +16,7 @@ class CreateQuestionTemplate extends Component {
         "templateName": '',
         "technology": '',
         "experience": '',
-        difficulty : '',
+        difficulty: '',
         "questionList": '',
     }
 
@@ -30,9 +29,9 @@ class CreateQuestionTemplate extends Component {
             qId: '',
             redirectToBaseView: false,
             questionList: [],
-            technology: '',
-            experience: '',
-            difficulty : '',
+            technology: 'Java',
+            experience: '0-2',
+            difficulty: 'Easy',
             title: '',
             qidList: []
 
@@ -40,20 +39,30 @@ class CreateQuestionTemplate extends Component {
     }
 
     componentDidMount() {
-        this.getQuestionsByTech(this.state.technology);
+        this.getQuestionsByTech();
     }
 
-
-    getQuestionsByTech(technology) {
-        console.log("this.this.state.technology : ", technology);
-        QuestionService.getQuestionsByTech(technology)
+    getQuestionsByTech() {
+        console.log("get all the questions : ");
+        QuestionService.getQuestions()
             .then(
                 response => {
                     this.setState({ questionList: response.data })
 
                 }
             );
+    }
 
+    getAllQuestionsByTechDiffiExp(technology, difficulty, experience) {
+
+        console.log("getAllQuestionsByTechDiffiExp technology, difficulty, experience : ", technology, difficulty, experience);
+        QuestionService.getAllQuestionsByTechDiffiExp(technology, difficulty, experience)
+            .then(
+                response => {
+                    console.log("getAllQuestionsByTechDiffiExp  response.data : ", response.data);
+                    this.setState({ questionList: response.data })
+                }
+            );
     }
 
 
@@ -66,27 +75,28 @@ class CreateQuestionTemplate extends Component {
     handleTechnology = (event) => {
         console.log("selected  technology : ", event.target.value);
         this.setState({ technology: event.target.value })
-        this.getQuestionsByTech(event.target.value);
         this.subQuestionData.technology = event.target.value
+        this.getAllQuestionsByTechDiffiExp(event.target.value, this.state.difficulty, this.state.experience);
 
     }
     handleExperiance = (event) => {
         console.log("selected Experiance : ", event.target.value);
         this.setState({ experience: event.target.value });
         this.subQuestionData.experience = event.target.value
+        this.getAllQuestionsByTechDiffiExp(this.state.technology, this.state.difficulty, event.target.value);
 
     }
     handleDifficulty = (event) => {
         console.log("selected difficulty : ", event.target.value);
         this.setState({ difficulty: event.target.value });
         this.subQuestionData.difficulty = event.target.value
-    }
+        this.getAllQuestionsByTechDiffiExp(this.state.technology, event.target.value, this.state.experience);
 
+    }
 
     createQuestionTemplate = () => {
         console.log("this.state.qidList", this.state.qidList);
         this.subQuestionData.questionList = this.state.qidList.toString();
-
         QuestionService.createQuestionTemplate(this.subQuestionData)
             .then(response => {
                 this.setState({
@@ -140,7 +150,16 @@ class CreateQuestionTemplate extends Component {
             });
     }
 
+    statementFormatter = (cell, row) => {
+        let stmt = "";
+        if (cell != null) {
+            stmt = cell.substr(0, 30);
+        }
 
+        var newStmt = `${stmt}...`
+        return (<><Link>{Parser(newStmt)}</Link>
+        </>);
+    }
 
     render() {
         const buttonContainer = {
@@ -256,10 +275,6 @@ class CreateQuestionTemplate extends Component {
             clickToSelect: true,
             onSelect: (row, isSelect, rowIndex, e) => {
                 console.log("------>", row.id);
-                console.log("------>", isSelect);
-                console.log("------>", rowIndex);
-                console.log("------>", e);
-
                 if (isSelect) {
                     this.handleSelectChange(row.id);
                 } else {
@@ -317,13 +332,13 @@ class CreateQuestionTemplate extends Component {
                                 <FormGroup>
                                     <Label for="difficultyComponentSelect" style={lableStyle}>Difficulty Level</Label>
                                     <Input type="select" name="topic" id="difficultyComponentSelect" onChange={(e) => this.handleDifficulty(e)}>
-                                    <option disabled selected>Select Difficulty Level</option>
-                                    <option>Easy</option>
-                                    <option>Medium</option>
-                                    <option>Hard</option>
+                                        <option disabled selected>Select Difficulty Level</option>
+                                        <option>Easy</option>
+                                        <option>Medium</option>
+                                        <option>Hard</option>
                                     </Input>
                                 </FormGroup>
-                            </Col> 
+                            </Col>
 
                         </Row>
                         <FormGroup>

@@ -73,16 +73,7 @@ class ManageQuestionTemplate extends Component {
             )
     }
 
-    statementFormatter = (cell, row) => {
-        let stmt = "";
-        if (cell != null) {
-            stmt = cell[0].substr(0, 20);
-        }
-
-        var newStmt = `${stmt}...`
-        return (<><Link>{Parser(newStmt)}</Link>
-        </>);
-    }
+   
 
     templateNameFormatter = (cell, row) => {
         let templateLink = `/modifyQuestionTemplate`;
@@ -97,16 +88,6 @@ class ManageQuestionTemplate extends Component {
 
     }
 
-    viewQuestionFormatter = (cellContent, row) => {
-        this.setState({
-            question: row
-        })
-        return (
-            <>
-                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.viewTemplateQuestionDetails.bind(this, row.id)} >View Questions</Button>
-            </>
-        );
-    }
 
     actionFormatter = (cellContent, row) => {
         this.setState({
@@ -114,7 +95,8 @@ class ManageQuestionTemplate extends Component {
         })
         return (
             <>
-                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteQuestionTemplate.bind(this, row.id)} >DELETE</Button>
+                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.viewTemplateQuestionDetails.bind(this, row.id)}>VIEW QUESTIONS</Button>
+                <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteQuestionTemplate.bind(this, row.id)}>DELETE</Button>
             </>
         );
     }
@@ -179,13 +161,7 @@ class ManageQuestionTemplate extends Component {
             sort: true,
             headerStyle: { color: '#47bff7' }
         },
-        {
-            dataField: 'questionList',
-            text: 'Question Id list',
-            sort: true,
-            headerStyle: { color: '#47bff7' },
-            formatter: this.viewQuestionFormatter
-        },
+
         {
             dataField: 'difficulty',
             text: 'Difficulty',

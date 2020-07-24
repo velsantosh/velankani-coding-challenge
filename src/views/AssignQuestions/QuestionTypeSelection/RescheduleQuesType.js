@@ -73,6 +73,8 @@ export class RescheduleQuesType extends Component {
 
       const userList = this.state.users;
       const { handleChange, values } = this.props; 
+
+      console.log("technology ----values.technology : >", values.technology)
       
       let usersList = userList.length > 0
     	&& userList.map((user, index) => {
@@ -95,7 +97,7 @@ export class RescheduleQuesType extends Component {
               <Col xl="12">
               <Card className="shadow-lg mx-10">
               <CardHeader className=" mb-12">
-                <strong><i className="icon-info pr-1 headingPrimary"></i>Assign Questions</strong>
+                <strong><i className="icon-info pr-1 headingPrimary"></i> Re Assign Questions</strong>
                 </CardHeader>
                 <CardBody>
             
