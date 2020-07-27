@@ -4,8 +4,23 @@ import { Button, Modal, ModalBody, ModalHeader, ModalFooter, Table } from 'react
 import { Col, Row } from 'reactstrap';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
+import Parser from "html-react-parser";
+import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 
 class QuestionDetails extends Component {
+
+
+    statementFormatter = (cell, row) => {
+        let stmt = "";
+        if (cell != null) {
+            stmt = cell.substr(0, 30);
+        }
+
+        var newStmt = `${stmt}...`
+        return (<><Link>{Parser(newStmt)}</Link>
+        </>);
+    }
 
     render() {
         console.log("QuestionDetails ", this.props);
@@ -16,7 +31,13 @@ class QuestionDetails extends Component {
             text: 'Question Statement',
             sort: true,
             headerStyle: { color: '#47bff7' },
-            //formatter: this.templateNameFormatter,
+            formatter: this.statementFormatter,
+            events: {
+                onClick: (e, column, columnIndex, row, rowIndex) => {
+                    console.log(row)
+                }
+            }
+
 
         }]
 
@@ -31,7 +52,7 @@ class QuestionDetails extends Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Assgined Questions QuestionDetails
+                        Template Questions Details
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

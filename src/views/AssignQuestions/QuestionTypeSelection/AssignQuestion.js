@@ -109,7 +109,7 @@ class AssignQuestion extends Component {
   };
 
   handleCheckBox = (e) => {
-    console.log("afser new handle handleCheckBox---->");
+    console.log("handle handleCheckBox---->");
     console.log("handleCheckBox::", e);
     this.setState({
       templateInUse: e
@@ -135,7 +135,7 @@ class AssignQuestion extends Component {
     const { difficultyLevel } = this.state;
     const { date } = this.state;
     const { status } = this.state;
-    const { challenge } = this.props.location.state;
+    const { challenge } = this.props.location.state ? this.props.location.state :"";
     const { templateInUse } = this.state;
 
 

@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 import Modals from '../../Notifications/Modals/Modals';
+import QuestionDetails from '../../AssignQuestions/QuestionTypeSelection/QuestionDetails';
 
 class SelectQuestionTemplate extends Component {
 
@@ -31,7 +32,6 @@ class SelectQuestionTemplate extends Component {
             dropdownOpen: new Array(6).fill(false),
             activeTab: new Array(4).fill('1'),
             qId: '',
-            redirectToBaseView: false,
             templateNameList: [],
             technology: '',
             experience: '',
@@ -39,7 +39,10 @@ class SelectQuestionTemplate extends Component {
             qidList: [],
             modal: false,
             seletedQuestionTemplate: '',
-            assignQuestTempStatus: false
+            assignQuestTempStatus: false,
+            questionData: [],
+            showModalFlag: false
+
 
         };
         console.log("this.props-- SelectQuestionTemplate :", this.props.values);
@@ -85,10 +88,12 @@ class SelectQuestionTemplate extends Component {
 
         const myDate = this.props.values.date;
         let expDate = myDate.toUTCString();
-        console.log(" questionList ---: ", this.state.seletedQuestionTemplate.questionList.toString().split(" "));
+        console.log(" questionList ---: ", this.state.seletedQuestionTemplate);
+
+       // const templateData 
 
         const QuestionSchedulerCustom = {
-            qidList: this.state.seletedQuestionTemplate.questionList, //@NonNull List<String> 
+            qidList: this.state.seletedQuestionTemplate.questionList.toString().split(","), //@NonNull List<String> 
             assigneduidList: this.props.values.users.split(), //@NonNull List<String> 
             assigneruid: this.props.userName, //	private @NonNull String
             scheduleTime: expDate, //	private @NonNull Date
@@ -105,18 +110,15 @@ class SelectQuestionTemplate extends Component {
         QuestionService.assignQuestionsByTemplate(QuestionSchedulerCustom)
             .then(
                 response => {
-
                     console.log("response--->", response.data);
-
                     this.setState({
                         assignQuestTempStatus: response.data
+
                     })
 
                 }
             );
-        this.setState({
-            redirectToBaseView: true
-        });
+
     }
     cancel = () => {
         this.setState({
@@ -145,17 +147,39 @@ class SelectQuestionTemplate extends Component {
                 );
         }
     }
-    handleSelectChange = (row) => {
-        console.log("qwerty", row);
-        console.log("this.props.values :", this.props.values);
-        this.setState({ seletedQuestionTemplate: row });
 
+
+
+    handleSelectChange = (selectedValue) => {
+        this.setState({
+            ...this.state,
+            seletedQuestionTemplate: selectedValue,
+            flag: false 
+        });
     }
+
 
     actionFormatter = (cell, row) => {
-        return (<Button className="btn btn-primary mb-1" style={{ "backgroundColor": '#20a8d8', "color": 'white' }}>
-            View Questions</Button>)
+
+        return (<Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.viewTemplateQuestionDetails.bind(this, row.id)}>VIEW QUESTIONS</Button>)
+          
     }
+    viewTemplateQuestionDetails(row) {
+        console.log(" view Template Question Details", row);
+
+        QuestionService.getAllQuestionsDataByTemplateId(row).then(
+            response => {
+                this.setState({
+                    ...this.state,
+                    questionData: response.data,
+                    showModalFlag: true
+                })
+            }
+        );
+    }
+    setModalFlag = () => this.setState({ showModalFlag: false });
+
+
     render() {
 
 
@@ -182,9 +206,6 @@ class SelectQuestionTemplate extends Component {
             marginBottom: '5px',
             marginLeft: '0.5%'
         };
-
-        const redirectToBaseView = this.state.redirectToBaseView;
-
 
         let columns = [{
             dataField: 'templateName',
@@ -259,16 +280,11 @@ class SelectQuestionTemplate extends Component {
             mode: 'radio',
             clickToSelect: true,
             onSelect: (row, isSelect, rowIndex, e) => {
-                console.log("----id-->", row.id);
-                console.log("---isSelect-->", isSelect);
-                console.log("----rowIndex-->", rowIndex);
-                console.log("----e-->", e);
-
+                console.log("----id-->", row.id);               
                 if (isSelect) {
                     this.handleSelectChange(row);
-                } else {
-                    this.removeQuestion(row.id);
                 }
+               
             },
         };
 
@@ -278,6 +294,14 @@ class SelectQuestionTemplate extends Component {
             }
 
         }
+
+        if (this.state.assignQuestTempStatus) {
+            console.log("this.state.assignQuestTempStatus ", this.state.assignQuestTempStatus)
+            return (
+                <Modals message={` ${this.state.seletedQuestionTemplate.templateName}' : QuestionTemplated assigned successfully`} linkValue={"/assignQuestion/AssignedQuestion"}></Modals>
+            );
+        }
+
 
         return (
             <>
@@ -355,7 +379,8 @@ class SelectQuestionTemplate extends Component {
                         <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.assignQuestionTemplate} >Assign Template</Button>
                         <Button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.back}>Previous</Button>
                     </Form>
-
+                    <QuestionDetails show={this.state.showModalFlag}
+                        onHide={this.setModalFlag} templatedata={this.state.questionData}></QuestionDetails>
                 </Container>
 
                 <div>
