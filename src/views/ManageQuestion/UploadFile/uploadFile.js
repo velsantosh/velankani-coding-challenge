@@ -4,41 +4,109 @@ import { Link } from 'react-router-dom';
 import QuestionService from '../../../service/QuestionService'
 import classes from "../CreateQuestion/CreateQuestion.module.css";
 import cx from "classnames";
-
+import { FileIcon, defaultStyles } from 'react-file-icon';
+import {TiDocumentText} from "react-icons/ti";
 class uploadFile extends Component {
     constructor(props){
-        super(props);
-    
-        this.state = {
+      super(props)
+      this.myRef = React.createRef();  
+       this.subjRef= React.createRef();
+      this.state = {
           selectedFile:null,
           response:false,
           isModelOpen:false,
           isResponseError:false,
-          error:null
+          subjSelectedFile:null,
+          error:null,
+          isSubjModelOpen:false,
+          isSujResponseError:false,
+          isSubjModelOpen:false,
         }
-        this.onFileChange=this.onFileChange.bind(this);  
-        this.fileData=this.fileData.bind(this);
+         this.chooseFile=this.chooseFile.bind(this);
+         this.chooseSubjFile=this.chooseSubjFile.bind(this);
+         this.onFileChange=this.onFileChange.bind(this);  
+         this.onSubjFileChange=this.onSubjFileChange.bind(this);
+         this.fileData=this.fileData.bind(this);
         this.onFileUpload=this.onFileUpload.bind(this);
         this.onFileUploadSubj=this.onFileUploadSubj.bind(this);
         this.toggle=this.toggle.bind(this);
         this.toggle2=this.toggle2.bind(this);
+        this.isSelected=this.isSelected.bind(this);
+         this.getFileName=this.getFileName.bind(this);
+        this.getSubjFileName=this.getSubjFileName.bind(this);
+        this.isSubjSelected=this.isSubjSelected.bind(this);
+        this.subjToggle=this.subjToggle.bind(this);
+        this.handleSubjError=this.handleSubjError.bind(this);
       }
-         toggle2(){
+         getFileName(){
+              if(this.state.selectedFile) {
+                return this.state.selectedFile.name
+              }else{
+          return 'No File Choosen'}
+         } 
+         getSubjFileName(){
+          if(this.state.subjSelectedFile) {
+            return this.state.subjSelectedFile.name
+          }else{
+      return 'No File Choosen'}
+     } 
+         isSelected(){
+         if(this.state.selectedFile){
+           return "Cancel"
+         }else{
+           return "ChooseFile"
+         }
+       }
+       isSubjSelected(){
+        if(this.state.subjSelectedFile){
+          return "Cancel"
+        }else{
+          return "ChooseFile"
+        }
+      } 
+       
+       chooseFile(){
+          console.log("choose File")
+            if(this.state.selectedFile){
+              this.setState({selectedFile:null})
+            }else{
+              this.myRef.current.click()
+            }
+          //this.myRef.current.click()
+        }  
+        chooseSubjFile(){
+          console.log("choose File")
+            if(this.state.subjSelectedFile){
+              this.setState({subjSelectedFile:null})
+            }else{
+              this.subjRef.current.click()
+            }
+          //this.myRef.current.click()
+        }
+        toggle2(){
           this.setState({selectedFile:null})
           this.setState({isResponseError:!this.state.isResponseError})
           console.log("called from toggle2");
          }
-        toggle(){
+         toggle(){
           this.setState({selectedFile:null})
           this.setState({isModelOpen:!this.state.isModelOpen})
           console.log("called from toggle");
         }
+         subjToggle(){
+          //this.setState({subjSelectedFile:null})
+          this.setState({isSubjModelOpen:!this.state.isSubjModelOpen})
+          console.log("called from toggle");
+        }
+      handleSubjError(){
       
+
+      }
       onFileUploadSubj(){
       console.log('from file upload2')
     const data = new FormData() 
-   data.append('file', this.state.selectedFile)
-   console.warn(this.state.selectedFile);
+   data.append('file', this.state.subjSelectedFile)
+   console.warn(this.state.subjSelectedFile);
    QuestionService.uploadObjFile(data)
  .then(
      response => {
@@ -52,11 +120,14 @@ class uploadFile extends Component {
         console.log(response.data.message)
         console.log(response.status); 
         console.log("ranjeet")
-        this.toggle();
+        this.state.subjSelectedFile=null;
+        this.setState({isSubjModelOpen:!this.state.isSubjModelOpen})
+        //this.subjToggle();
       }
    }
  ).catch (error =>{console.log(error.response.data.error)
-               this.state.error=error.response.data.message;
+               this.state.subjSelectedFile=null;
+              this.state.error=error.response.data.message;
                this.setState({isResponseError:!this.state.isResponseError})
               }) 
 }    
@@ -90,28 +161,31 @@ class uploadFile extends Component {
     onFileChange(e){
         this.setState({ selectedFile: e.target.files[0] });
      }
-      fileData(){
-        if (this.state.selectedFile) { 
-          
-            return ( 
-              <div> 
-                <h2>File Details:</h2> 
-                <p>File Name: {this.state.selectedFile.name}</p> 
-                <p>File Type: {this.state.selectedFile.type}</p> 
-                <p> 
-                  Last Modified:{" "} 
-                  {this.state.selectedFile.lastModifiedDate.toDateString()} 
-                </p> 
-              </div> 
-            ); 
-          } else { 
+     onSubjFileChange(e){
+      this.setState({ subjSelectedFile: e.target.files[0] });
+   }
+     fileData(){
+       // if (this.state.selectedFile) { 
+            
+          //  return ( 
+             // <div> 
+               // <h2>File Details:</h2> 
+                //<p>File Name: {this.state.selectedFile.name}</p> 
+                //<p>File Type: {this.state.selectedFile.type}</p> 
+                //<p> 
+                 // Last Modified:{" "} 
+                 // {this.state.selectedFile.lastModifiedDate.toDateString()} 
+                //</p> 
+              //</div> 
+            //); 
+         // } else { 
             return ( 
               <div> 
                 <br /> 
                 <h4>Choose before Pressing the Upload button</h4> 
               </div> 
             ); 
-          } 
+          //} 
 
       }
      render() {
@@ -119,7 +193,8 @@ class uploadFile extends Component {
         const buttonContainer = {
             marginBottom: '20px !important',
             backgroundColor: '#1dafe2',
-            color: 'white'
+             marginLeft: '.5rem' ,
+             color: 'white'
         };
         const cardStyle = {
             backgroundColor: 'rgba(128, 128, 128, 0.08)',
@@ -137,38 +212,46 @@ class uploadFile extends Component {
         const cardTxt = {
             height: '70px'
         }
-
+           
         return (
                   
                 <div>
                     <h1>Create Your Custom Question</h1>
-                
-                <Container>
+
+                <Container style={{  borderColor: '#333' }}>
                     <Row className="">
-                        <Col md="12">
-                            <CardGroup>
-                                <Card style={cardStyle}>
+                        <Col md="10">
+                            <CardGroup >
+                                <Card >
                                     <CardBody>
-                                        <CardTitle style={titleStyle}>Upload File To Add ObjectiveQuestions</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardTitle color="primary">Upload File To Add ObjectiveQuestions</CardTitle>
+                                        <TiDocumentText color='blue' size='10rem' />
                                     </CardBody>
                                     <CardBody>
-                                    <input type="file" onChange={(e)=>this.onFileChange(e)} /> 
-                                    <button className="btn btn-primary mb-1" style={buttonContainer} onClick={(e)=>this.onFileUpload()}> 
+                                    <input type="file"  style={{display:'none'}} onChange={(e)=>this.onFileChange(e)} ref={this.myRef}  /> 
+                                    <Button color="primary"   onClick={(e)=>this.chooseFile()}> 
+                                      {this.isSelected()}
+                                    </Button>{'          '}
+                                      <span>{this.getFileName()} </span>{'    '}
+                                    <Button color="success" disabled={!this.state.selectedFile}  onClick={(e)=>this.onFileUpload()}> 
                                       Upload! 
-                                    </button> 
+                                    </Button> 
                                     </CardBody>
                                 </Card>
-                                <Card style={cardStyle}>
+                                <Card >
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Upload File To add SubjectiveQuestions </CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/codingQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <TiDocumentText  color='blue' size='10rem' />
                                     </CardBody>
                                     <CardBody>
-                                    <input type="file" onChange={this.onFileChange} /> 
-                                    <button className="btn btn-primary mb-1" style={buttonContainer} onClick={this.onFileUploadSubj}> 
+                                    <input type="file"     style={{display:'none'}} onChange={this.onSubjFileChange} ref={this.subjRef}/> 
+                                    <Button color="primary"   onClick={(e)=>this.chooseSubjFile()}> 
+                                      {this.isSubjSelected()}
+                                    </Button>{'          '}
+                                      <span>{this.getSubjFileName()} </span>{'    '}
+                                    <Button color="success" disabled={!this.state.subjSelectedFile} onClick={this.onFileUploadSubj}> 
                                       Upload! 
-                                    </button> 
+                                    </Button> 
                                     </CardBody>
                                 </Card>
                             </CardGroup>
@@ -185,12 +268,28 @@ class uploadFile extends Component {
           <Button color="primary" onClick={this.toggle}>Ok</Button>{' '}
         </ModalFooter>
       </Modal>
+      <Modal isOpen={this.state.isSubjModelOpen}>
+        <ModalBody>
+            Question Added Succesfully.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.subjToggle}>Ok</Button>{' '}
+        </ModalFooter>
+      </Modal>
       <Modal isOpen={this.state.isResponseError}>
         <ModalBody>
            {this.state.error}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={this.toggle2}>Ok</Button>{' '}
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={this.state.isSujResponseError}>
+        <ModalBody>
+           {this.state.error}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.handleSubjError}>Ok</Button>{' '}
         </ModalFooter>
       </Modal>
     </div>
