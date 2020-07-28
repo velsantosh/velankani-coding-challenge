@@ -92,15 +92,11 @@ class AssignedQuestion extends Component {
   }
 
   assigneduidFormatter = (cellContent, row) => {
-
     // this.setState({ challengeId: row.challengeid })
-    console.log("row---->", row)
     return (<Link>{row.assigneduid}</Link>)
   }
 
   actionFormatter = (cellContent, row) => {
-
-    console.log("row---->", row)
 
     let actionFlag = false;
     let disableFlag = false;
@@ -115,7 +111,7 @@ class AssignedQuestion extends Component {
     }
 
     this.setState({ 
-      question : row },()=>console.log("Under Action formatter ::",this.state.question))
+      question : row })
     return (
       <>
         <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} hidden={!actionFlag} onClick={this.reSchedule.bind(this,row)}>RESCHEDULE</Button>

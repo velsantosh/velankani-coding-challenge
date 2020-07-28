@@ -80,6 +80,16 @@ class UsersDataService {
         // return axios.post(`${apiBaseUrl}/user`, user);
         return axios.post(`http://localhost:8765/srvservice/send/candidate/report/${challengeid}`, user);
     }
+	updateRolePermission(roleId, permissionDTO) {
+        //console.log('executed service')
+        //return axios.put(`${apiBaseUrl}/user/uname/${id}`, user);
+        return axios.put(`http://localhost:8081/permission/${roleId}`, permissionDTO);
+    }
+
+    getPermissionIdByRole(roleId){
+        // return axios.get(`${apiBaseUrl}/users/`)
+        return axios.get(`http://localhost:8081/permissionByRole/${roleId}`)
+    }
 
 }
 

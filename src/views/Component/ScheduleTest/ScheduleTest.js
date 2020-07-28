@@ -12,7 +12,9 @@ class ScheduleTest extends Component {
     super(props)
     this.state = {
       scheduledRequestData: [],
-      redirectToQuestionsPage: false
+      redirectToQuestionsPage: false,
+      challenge :'',
+      challengeRec:[]
     }
   }
 
@@ -91,7 +93,8 @@ class ScheduleTest extends Component {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           this.props.setScheduledRequestData(row);
           this.setState({
-            redirectToQuestionsPage: true
+            redirectToQuestionsPage: true,
+            challenge : row
           })
         }
       }
@@ -100,7 +103,12 @@ class ScheduleTest extends Component {
 
     const redirectToQuestionsPage = this.state.redirectToQuestionsPage;
     if (redirectToQuestionsPage === true) {
-      return (<Redirect to="/selectQuestions" />);
+     // return (<Redirect to="/selectQuestions" />);
+      return (<Redirect to={{
+        pathname: '/assignQuestion/AssignQuestion', 
+        state: { challenge: this.state.challengeRec} 
+      }}
+      />);
     }
     return (
       <>

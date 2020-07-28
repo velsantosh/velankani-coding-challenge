@@ -224,7 +224,12 @@ class Questions extends Component {
             </div>
           </Row> */}
           <Row xs={2} md={4} lg={6}>
-            <Col md={{ span: 6, offset: 10 }}>
+          <Col md={{ span: 6, offset: 7 }}>
+              <Link to="/manageQuestionTemplate">
+                <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Manage Question Templates</Button>
+              </Link>
+            </Col>
+            <Col >
               <Link to="/manageQuestion/createQuestion">
                 <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Create New Question</Button>
               </Link>

@@ -5,7 +5,8 @@ const initialState = {
   selectedQuestionData:{},
   scheduledRequestData:{},
   editUserData:{},
-  assignQuestionData:{}
+  assignQuestionData:{},
+  selectedTemplateData:{}
 
 };
 
@@ -36,6 +37,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         assignQuestionData :action.value
       }
+      case actionTypes.SELECTEDTEMPLATEDATA:
+        return{
+         ...state,
+         selectedTemplateData :action.value
+       }
   }
   return state;
 };
