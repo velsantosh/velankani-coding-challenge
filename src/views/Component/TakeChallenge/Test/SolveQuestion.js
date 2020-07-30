@@ -18,6 +18,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
 import Parser from 'html-react-parser';
 import AceEditor from "react-ace";
+import TestTimer from './TestTimer';
 
 class SolveQuestion extends Component {
 
@@ -42,11 +43,39 @@ class SolveQuestion extends Component {
             editorWidth: "960px",
             resultTabLabel: "JUnit Test Result",
             checked: false,
-            userInputValue: ''
+            userInputValue: '',
+            runTestClickCounter: 0,
+            time: 0,
+            isOn: false,
+            start: 0,
+            expectedMinutes: '120'
 
         };
         this.getQuestionsByType = this.getQuestionsByType.bind(this);
         this.updatedEditorContent = this.updatedEditorContent.bind(this);
+        this.startTimer = this.startTimer.bind(this)
+        this.stopTimer = this.stopTimer.bind(this)
+        this.resetTimer = this.resetTimer.bind(this)
+    }
+
+    startTimer() {
+        this.setState({
+            isOn: true,
+            time: this.state.time,
+            start: Date.now() - this.state.time
+        })
+
+        this.timer = setInterval(() => this.setState({
+            time: Date.now() - this.state.start
+        }), 1);
+    }
+
+    stopTimer() {
+        this.setState({ isOn: false })
+        clearInterval(this.timer)
+    }
+    resetTimer() {
+        this.setState({ time: 0, isOn: false })
     }
 
     updatedEditorContent(newValue) {
@@ -58,8 +87,9 @@ class SolveQuestion extends Component {
     handleRunTest = (e) => {
         console.log("handleRunTest for question id ", this.props);
         console.log("handleRunTest this.state.userInputValue :", this.state.userInputValue);
+        console.log("handleRunTest this.state.runTestClickCounter :", this.state.runTestClickCounter);
         this.setState({ checked: false });
-
+        this.setState({ runTestClickCounter: this.state.runTestClickCounter + 1 })
         let quesResponseObj = {
             qId: this.state.qId,
             userInput: this.state.editorContent,
@@ -81,9 +111,28 @@ class SolveQuestion extends Component {
             );
     };
 
+    msToTime = (duration) => {
+        var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    }
+
     handleSubmit = (event) => {
 
-        console.log("this.props.userName handleSubmit", this.props.userName);
+        const secondsRemaining = this.state.time;
+        this.stopTimer();
+
+        console.log(" total time: ", this.state.time);
+        console.log(" total start: ", this.state.start);
+        console.log("time tooken for the test secondsRemaining :", this.msToTime(secondsRemaining));
+        const min = this.msToTime(secondsRemaining);
         let key = {
             qid: this.state.qId,
             userId: this.props.userName
@@ -93,16 +142,17 @@ class SolveQuestion extends Component {
             program: this.state.editorContent,
             consolidatedoutput: this.state.editorContent,
             className: "ExampleClass",
+            timeTook: this.msToTime(secondsRemaining),
+            clicksonRunTest : this.state.runTestClickCounter,
             key: key
         };
 
-        console.log("clicked on submit new values here solveQuestion: ", this.state.editorContent);
         ScheduledChallengeDataService.submitScheduledSubQuestionResultsByUserId(resultValue)
             .then(
                 response => {
                     console.log("submitScheduledSubQuestionResultsByUserId testCaseResults: ", response)
                     if (response.data) {
-                        this.setState({ testCaseResults: "Test result submitted successfully" });
+                        this.setState({ testCaseResults: "Test result submitted successfully : " + this.state.runTestClickCounter });
                     }
                     else {
                         this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully" });
@@ -121,6 +171,9 @@ class SolveQuestion extends Component {
 
     componentDidMount() {
         this.getQuestionsByType();
+
+        this.startTimer();
+        console.log(" this.state.time")
 
     }
 
@@ -176,13 +229,16 @@ class SolveQuestion extends Component {
     }
 
     uploadFileHandler = (event) => {
-        //let selectedValue = event.target.value;
         let value = event.target.checked;
         console.log("valueONChange", value);
         console.log("valueONChange", event.target);
-
-
     }
+
+    timeOver = () => {
+
+        //            alert("Time over");
+    }
+
     render() {
 
         const TextAreaStyle = {
@@ -218,7 +274,6 @@ class SolveQuestion extends Component {
         }
 
         let idx = this.state.step;
-        console.log("index :", idx);
 
         let nextPage;
 
@@ -255,10 +310,10 @@ class SolveQuestion extends Component {
         let runAndSubmitBtns = (
             <Row>
                 <Col md="3">
-                        <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
-                            <label className="custom-file-label" htmlFor="inputGroupFile01"> Upload Code as File </label>
-                        </div>
+                    <div className="custom-file">
+                        <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01"> Upload Code as File </label>
+                    </div>
                 </Col>
                 <Col md="3">
                     <input type="checkbox" onChange={this.handleChange} id="inputCheckBox1" />
@@ -267,7 +322,7 @@ class SolveQuestion extends Component {
                 <Col className="card-header-actions mb-3 mb-xl-0 col-md-2">
                     <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleSubmit}>Submit Test</Button>
                 </Col>
-                <Col className="card-header-actions mb-3 mb-xl-0 col-md-2"> 
+                <Col className="card-header-actions mb-3 mb-xl-0 col-md-2">
                     <Button disabled={this.state.submitted} block outline color="primary" style={buttonContainer} onClick={this.handleRunTest}>Run Test</Button>
                 </Col>
             </Row>
@@ -277,8 +332,20 @@ class SolveQuestion extends Component {
         nextPage = (
             <div>
                 <div>
-                    <h1 className={cx(classes.heading)}>Solve Question</h1>
+
+                    <Row className={cx(classes.filterContainer)}>
+
+                        <div className="col-md-6 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
+                            <h1 className={cx(classes.heading)}>Solve Question</h1>
+
+                        </div>
+                        <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '18%' }}>
+                            {// <TestTimer timeOver= {this.timeOver} expectedMinutes = {this.state.expectedMinutes}></TestTimer>
+                            }
+                        </div>
+                    </Row>
                 </div>
+
                 <Container>
                     <Row>
                         <Col sm={12}>
@@ -303,7 +370,6 @@ class SolveQuestion extends Component {
                                     </Card>
 
                                     {!this.state.submitted ? runAndSubmitBtns : null}
-                                    {console.log("you are called from solveQuestion")}
                                     {this.state.submitted ? backToQuestList : null}
 
                                     <Row>

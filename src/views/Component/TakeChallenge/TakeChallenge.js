@@ -40,7 +40,6 @@ class TakeChallenge extends Component {
       .then(
         response => {
           response.data.map((question) => {
-            console.log("question 123####:", question)
             if (question.type === 'SUBJECTIVE') {
               subQuestions.push(question);
             } else {
