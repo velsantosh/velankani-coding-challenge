@@ -20,6 +20,8 @@ class ModifySubjectiveQuestion extends Component {
         "topic": '',
         "statement": '',
         "methodName": '',
+        "experience": '',
+        "createdUserid": this.props.userName,
         "expectedTime": '',
         "difficulty": '',
         "junitText": '',
@@ -43,7 +45,9 @@ class ModifySubjectiveQuestion extends Component {
             expectedTime: this.props.questionData.expectedTime,
             difficulty: this.props.questionData.difficulty,
             junitText: this.props.questionData.junitText,
-            technologyId: this.props.questionData.technologyId
+            technologyId: this.props.questionData.technologyId,
+            experience: this.props.questionData.experience
+
         };
 
 
@@ -111,6 +115,12 @@ class ModifySubjectiveQuestion extends Component {
         })
     }
 
+    handleExperience = (event) => {
+        this.setState({
+            ...this.state,
+            experience: event.target.value
+        })
+    }
     handleTopic = (event) => {
         this.setState({
             ...this.state,
@@ -157,6 +167,7 @@ class ModifySubjectiveQuestion extends Component {
             this.modifyQuestionData.difficulty = this.state.difficulty;
             this.modifyQuestionData.junitText = this.state.junitText;
             this.modifyQuestionData.technologyId = this.state.technologyId;
+            this.modifyQuestionData.experience = this.state.experience;
             this.modifySubjectiveQuestion(this.state.qId, this.modifyQuestionData);
         })
     }
@@ -320,7 +331,9 @@ class ModifySubjectiveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-        questionData: state.selectedQuestionData
+        questionData: state.selectedQuestionData,
+        userName: state.userName
+
     };
 };
 

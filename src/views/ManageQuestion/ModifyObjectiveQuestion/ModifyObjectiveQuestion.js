@@ -14,6 +14,8 @@ class ModifyObjectiveQuestion extends Component {
         "technology": '',
         "topic": '',
         "statement": '',
+        "experience": '',
+        "createdUserid": this.props.userName,
         "options": new Array(4),
         "correct_option": '',
         "difficulty": '',
@@ -35,7 +37,8 @@ class ModifyObjectiveQuestion extends Component {
             option3: this.props.questionData.options[3],
             correctOption: this.props.questionData.correctOption,
             difficulty: this.props.questionData.difficulty,
-            technologyId: this.props.questionData.technologyId
+            technologyId: this.props.questionData.technologyId,
+            experience : this.props.questionData.experience
         };
     }
 
@@ -116,6 +119,8 @@ class ModifyObjectiveQuestion extends Component {
         this.modifyQuestionData.statement = this.state.statement;
         this.modifyQuestionData.difficulty = this.state.difficulty;
         this.modifyQuestionData.technologyId = this.state.technologyId;
+        this.modifyQuestionData.experience = this.state.experience;
+
         this.modifyObjectiveQuestion(this.state.qId, this.modifyQuestionData);
     }
 
@@ -264,7 +269,8 @@ class ModifyObjectiveQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-        questionData: state.selectedQuestionData
+        questionData: state.selectedQuestionData,
+        userName: state.userName
     };
 };
 
