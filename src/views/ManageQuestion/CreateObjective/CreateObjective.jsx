@@ -6,6 +6,7 @@ import classes from "../CreateSubjective/CreateSubjective.module.css";
 import cx from "classnames";
 import { makeStyles } from '@material-ui/core/styles';
 import CKEditor from 'ckeditor4-react';
+import { connect } from "react-redux";
 
 class CreateObjective extends Component {
     objQuestionData = {
@@ -13,6 +14,8 @@ class CreateObjective extends Component {
         "technology": '',
         "topic": '',
         "statement": '',
+        "experience": '',
+        "createdUserid": this.props.userName,
         "options": new Array(4),
         "correct_option": '',
         "difficulty": ''
@@ -45,6 +48,9 @@ class CreateObjective extends Component {
     }
     handleTechnology = (event) => {
         this.objQuestionData.technology = event.target.value;
+    }
+    handleExperience = (event) => {
+        this.objQuestionData.experience = event.target.value;
     }
     handleTopic = (event) => {
         this.objQuestionData.topic = event.target.value;
@@ -167,6 +173,20 @@ class CreateObjective extends Component {
                                             </Input>
                                         </FormGroup>
                                     </Col>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label for="experience" style={lableStyle}>Experience</Label>
+                                            <Input type="select" name="experience" id="experience" onChange={(e) => this.handleExperience(e)}>
+                                                <option disabled selected>Select Experience</option>
+                                                <option>0-2</option>
+                                                <option>2-4</option>
+                                                <option>4-6</option>
+                                                <option>6-8</option>
+                                                <option>8+</option>
+                                            </Input>
+                                        </FormGroup>
+                                    </Col>
+
                                 </Row>
                                 <FormGroup>
                                     <Label for="statement" style={lableStyle}>Question Statement</Label>
@@ -234,4 +254,12 @@ class CreateObjective extends Component {
     }
 }
 
-export default CreateObjective;
+const mapStateToProps = state => {
+    return {
+        userName: state.userName
+    };
+};
+
+export default connect(
+    mapStateToProps, null
+)(CreateObjective)

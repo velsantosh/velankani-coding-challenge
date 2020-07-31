@@ -15,6 +15,8 @@ class CreateSubjective extends Component {
         "title": '',
         "technology": '',
         "topic": '',
+        "experience": '',
+        "createdUserid": this.props.userName,
         "statement": '',
         "methodName": '',
         "expectedTime": '',
@@ -92,6 +94,9 @@ class CreateSubjective extends Component {
     handleTechnology = (event) => {
         this.subQuestionData.technology = event.target.value;
     }
+    handleExperience = (event) => {
+        this.subQuestionData.experience = event.target.value;
+    }
     handleTopic = (event) => {
         this.subQuestionData.topic = event.target.value;
     }
@@ -127,7 +132,7 @@ class CreateSubjective extends Component {
             backgroundColor: '#1dafe2',
             color: 'white'
         };
-        
+
         const lableStyle = {
             fontWeight: 'bold'
         };
@@ -177,6 +182,19 @@ class CreateSubjective extends Component {
                                         <option disabled selected>Select Technology</option>
                                         <option>Java</option>
 
+                                    </Input>
+                                </FormGroup>
+                            </Col>
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="experience" style={lableStyle}>Experience</Label>
+                                    <Input type="select" name="experience" id="experience" onChange={(e) => this.handleExperience(e)}>
+                                        <option disabled selected>Select Experience</option>
+                                        <option>0-2</option>
+                                        <option>2-4</option>
+                                        <option>4-6</option>
+                                        <option>6-8</option>
+                                        <option>8+</option>
                                     </Input>
                                 </FormGroup>
                             </Col>
