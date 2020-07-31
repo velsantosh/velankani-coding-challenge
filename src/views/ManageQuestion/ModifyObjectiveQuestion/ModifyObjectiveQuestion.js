@@ -38,7 +38,7 @@ class ModifyObjectiveQuestion extends Component {
             correctOption: this.props.questionData.correctOption,
             difficulty: this.props.questionData.difficulty,
             technologyId: this.props.questionData.technologyId,
-            experience : this.props.questionData.experience
+            experience: this.props.questionData.experience
         };
     }
 
@@ -58,6 +58,13 @@ class ModifyObjectiveQuestion extends Component {
             ...this.state,
             technology: event.target.value
         });
+    }
+
+    handleExperience = (event) => {
+        this.setState({
+            ...this.state,
+            experience: event.target.value
+        })
     }
 
     handleTopic = (event) => {
@@ -197,6 +204,19 @@ class ModifyObjectiveQuestion extends Component {
                                                 <option>OOPS</option>
                                                 <option>Data Structures</option>
                                                 <option>Spring</option>
+                                            </Input>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label for="experience" style={lableStyle}>Experience</Label>
+                                            <Input type="select" name="experience" id="experience" defaultValue={this.state.experience} onChange={(e) => this.handleExperience(e)}>
+                                                <option disabled selected>Select Experience</option>
+                                                <option>0-2</option>
+                                                <option>2-4</option>
+                                                <option>4-6</option>
+                                                <option>6-8</option>
+                                                <option>8+</option>
                                             </Input>
                                         </FormGroup>
                                     </Col>

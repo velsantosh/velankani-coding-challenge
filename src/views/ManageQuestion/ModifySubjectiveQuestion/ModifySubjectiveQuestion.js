@@ -263,6 +263,19 @@ class ModifySubjectiveQuestion extends Component {
                                     </Input>
                                 </FormGroup>
                             </Col>
+                            <Col md={4}>
+                                <FormGroup>
+                                    <Label for="experience" style={lableStyle}>Experience</Label>
+                                    <Input type="select" name="experience" id="experience" defaultValue={this.state.experience} onChange={(e) => this.handleExperience(e)}>
+                                        <option disabled selected>Select Experience</option>
+                                        <option>0-2</option>
+                                        <option>2-4</option>
+                                        <option>4-6</option>
+                                        <option>6-8</option>
+                                        <option>8+</option>
+                                    </Input>
+                                </FormGroup>
+                            </Col>
                         </Row>
                         <FormGroup>
                             <Label for="statement" style={lableStyle}>Question Statement</Label>
