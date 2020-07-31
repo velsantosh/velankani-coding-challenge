@@ -8,6 +8,7 @@ import EditorJava from '../../Component/EditorJava';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import CKEditor from 'ckeditor4-react';
+import { connect } from "react-redux";
 
 class CreateSubjective extends Component {
 
@@ -277,4 +278,12 @@ class CreateSubjective extends Component {
     }
 }
 
-export default CreateSubjective;
+const mapStateToProps = state => {
+    return {
+        userName: state.userName
+    };
+};
+
+export default connect(
+    mapStateToProps, null
+)(CreateSubjective)
