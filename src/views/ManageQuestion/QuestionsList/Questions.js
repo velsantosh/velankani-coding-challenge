@@ -12,6 +12,9 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import Parser from 'html-react-parser';
 import Counter from '../../AssignQuestions/QuestionTypeSelection/Counter';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import DeleteQuestionModal from '../../AssignQuestions/QuestionTypeSelection/DeleteQuestionModal';
+
+
 
 class Questions extends Component {
 
@@ -25,7 +28,10 @@ class Questions extends Component {
       activeType: 'subjective',
       activeTechnology: 'java',
       showModalFlag: false,
-      selectedData: ''
+      showDeleteModalFlag: false,
+      selectedData: '',
+      redirectToDeleteModel: false,
+      questionId: ''
     }
   }
 
@@ -41,9 +47,7 @@ class Questions extends Component {
       this.getQuestionsByTypeTech(this.state.activeType, this.state.activeTechnology);
     });
   }
-   onChange(e){
-     console.log("called from onchange");
-   }
+
   handleTech(e) {
     this.setState({
       activeTechnology: e.target.value
@@ -80,9 +84,31 @@ class Questions extends Component {
     return (<Link to={questionLink}>{row.title}</Link>)
   }
 
+  actionFormatter = (cellContent, row) => {
+    this.setState({
+      question: row
+    })
+    return (
+      <>
+        <Button className="btn btn-primary mb-1" className={cx(classes.createTableBtn)} onClick={this.deleteQuestion.bind(this, row.id)}>DELETE</Button>
+      </>
+    );
+  }
+  deleteQuestion(row) {
+    console.log(" delete Question Id", row);
+    this.setState({
+      ...this.state,
+      redirectToDeleteModel: true,
+      questionId: row
+
+    })
+
+  }
   setModalFlag = () => this.setState({ showModalFlag: false });
+  deleteModal = () => this.setState({ redirectToDeleteModel: false });
 
   render() {
+
     const marginRight = {
       marginRight: '3%'
     }
@@ -132,6 +158,14 @@ class Questions extends Component {
       text: 'Experience',
       sort: true,
       headerStyle: { color: '#47bff7' }
+    },
+    {
+      dataField: 'action',
+      text: 'Action',
+      sort: true,
+      headerStyle: { color: '#47bff7' },
+      formatter: this.actionFormatter
+
     }
 
     ]
@@ -168,6 +202,13 @@ class Questions extends Component {
         return true;
       }
 
+    }
+
+    if (this.state.redirectToDeleteModel) {
+      console.log("Question Deleted successfully");
+      return (
+        <DeleteQuestionModal show={this.state.redirectToDeleteModel} questionId={this.state.questionId} onHide={this.deleteModal}></DeleteQuestionModal>
+      );
     }
 
     return (
@@ -224,7 +265,7 @@ class Questions extends Component {
             </div>
           </Row> */}
           <Row xs={2} md={4} lg={6}>
-          <Col md={{ span: 6, offset: 7 }}>
+            <Col md={{ span: 6, offset: 7 }}>
               <Link to="/manageQuestionTemplate">
                 <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Manage Question Templates</Button>
               </Link>
@@ -247,7 +288,7 @@ class Questions extends Component {
                     data={this.state.questions}
                     columns={columns}
                     search
-                    //search={onColumnMatch}
+                  //search={onColumnMatch}
                   >
                     {
                       props => (

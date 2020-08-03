@@ -31,6 +31,10 @@ class QuestionService {
         return axios.get(`http://localhost:8765/cctservice/questions`);
     }
 
+    deleteQuestiob(qId) {
+        console.log('executed deleteQuestiob')
+        return axios.delete(`http://localhost:8765/cctservice/question/${qId}`);
+    }
     getQuestionsByType(type) {
         //console.log('executed service')
         // return axios.get(`${apiBaseUrl}/questions`);
