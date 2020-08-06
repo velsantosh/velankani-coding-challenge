@@ -7,9 +7,16 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Parser from "html-react-parser";
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import Counter from '../../AssignQuestions/QuestionTypeSelection/Counter';
 
 class QuestionDetails extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            showModalFlag: false
+        }
+    }
 
     statementFormatter = (cell, row) => {
         let stmt = "";
@@ -21,6 +28,7 @@ class QuestionDetails extends Component {
         return (<><Link>{Parser(newStmt)}</Link>
         </>);
     }
+    setModalFlag = () => this.setState({ showModalFlag: false });
 
     render() {
         console.log("QuestionDetails ", this.props);
@@ -34,11 +42,14 @@ class QuestionDetails extends Component {
             formatter: this.statementFormatter,
             events: {
                 onClick: (e, column, columnIndex, row, rowIndex) => {
-                    console.log(row)
+                    this.setState({
+                        ...this.state,
+                        showModalFlag: true,
+                        selectedData: Parser(row.statement)
+                    })
                 }
+
             }
-
-
         }]
 
         return (
@@ -89,13 +100,12 @@ class QuestionDetails extends Component {
                                     </>
                                 }
 
-
-
-
-
                             </Col>
 
                         </Row>
+                        <Counter show={this.state.showModalFlag}
+                            onHide={this.setModalFlag} statement={this.state.selectedData}></Counter>
+
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
@@ -106,4 +116,4 @@ class QuestionDetails extends Component {
     }
 
 }
-export default QuestionDetails;    
+export default QuestionDetails;
