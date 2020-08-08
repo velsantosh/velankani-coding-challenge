@@ -6,6 +6,8 @@ import AssignPermissions from './AssignPermissions';
 import UsersDataService from '../../service/UsersDataService';
 
 import PermissionModal from './PermissionModal';
+import people from '../../assets/img/avatars/cil-people.png'
+
 export class ManagePermission extends Component {
     constructor(props){
         super(props);
@@ -170,7 +172,7 @@ export class ManagePermission extends Component {
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-people.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={people} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.users["role"]}/> */}

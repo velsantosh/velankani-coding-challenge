@@ -3,7 +3,8 @@ import { Button, Card, CardGroup, Container, CardBody, CardText, CardTitle, Card
 import { Link } from 'react-router-dom';
 import classes from "../CreateQuestion/CreateQuestion.module.css";
 import cx from "classnames";
-
+import codingQues from "../../../assets/img/avatars/codingQues.JPG"
+import mcqQues from "../../../assets/img/avatars/mcqQues.JPG"
 
 class CreateQuestion extends Component {
 
@@ -42,7 +43,7 @@ class CreateQuestion extends Component {
                                 <Card style={cardStyle}>
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Programming Question</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/codingQues.jpg'} className={cx(classes.questionImg)} alt="Coding question img" />
+                                        <CardImg src={codingQues} className={cx(classes.questionImg)} alt="Coding question img" />
                                     </CardBody>
                                     <CardBody style={cardTxt}>
                                         <CardText>Create a coding task in various programming languages and add different test cases to validate candidate solutions.</CardText>
@@ -56,7 +57,7 @@ class CreateQuestion extends Component {
                                 <Card style={cardStyle}>
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Multiple Choice Question</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardImg src={mcqQues} className={cx(classes.questionImg)} alt="MCQ Image" />
                                     </CardBody>
                                     <CardBody style={cardTxt}>
                                         <CardText>For questions with multiple answer options but only one correct answer.</CardText>
@@ -70,7 +71,7 @@ class CreateQuestion extends Component {
                                 <Card style={cardStyle}>
                                     <CardBody>
                                         <CardTitle style={titleStyle}>Upload questions</CardTitle>
-                                        <CardImg src={'../../../assets/img/avatars/mcqQues.jpg'} className={cx(classes.questionImg)} alt="MCQ Image" />
+                                        <CardImg src={mcqQues} className={cx(classes.questionImg)} alt="MCQ Image" />
                                     </CardBody>
                                     <CardBody style={cardTxt}>
                                         <CardText>Upload file to add questions.</CardText>

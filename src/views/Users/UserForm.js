@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import briefcase from '../../assets/img/avatars/cil-briefcase.png'
+import building from '../../assets/img/avatars/cil-building.png'
+import people from '../../assets/img/avatars/cil-people.png'
+
 
 class UserForm extends Component {
   constructor(props) {
@@ -132,7 +136,7 @@ class UserForm extends Component {
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-building.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={building} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input ref="companyname"type="text" name="companyname" placeholder="Companyname" autoComplete="companyname" onChange={this.handleChange} value={this.state.fields["companyname"]}/>
@@ -141,7 +145,7 @@ class UserForm extends Component {
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-briefcase.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={briefcase} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="experience"type="text" placeholder="Experience" autoComplete="experience" onChange={this.handleChange.bind(this, "experience")} value={this.state.fields["experience"]}/> */}
@@ -155,7 +159,7 @@ class UserForm extends Component {
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-people.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={people} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.fields["role"]}/> */}

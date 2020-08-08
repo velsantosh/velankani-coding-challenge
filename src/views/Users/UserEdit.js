@@ -6,6 +6,9 @@ import UsersDataService from '../../service/UsersDataService'
 import classes from "./Users.module.css";
 import cx from "classnames";
 import Modals from '../Notifications/Modals/Modals';
+import briefcase from '../../assets/img/avatars/cil-briefcase.png'
+//import building from '../../assets/img/avatars/cil-building.png'
+import people from '../../assets/img/avatars/cil-people.png'
 class UserEdit extends Component {
   constructor(props) {
     super(props)
@@ -274,7 +277,7 @@ console.log("User Detials:",this.state.users)
                     {/* <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-building.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={building} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input ref="companyname"type="text" placeholder="Companyname" autoComplete="companyname" onChange={this.handleChange.bind(this, "companyname")} value={this.state.users["companyname"]}/>
@@ -283,7 +286,7 @@ console.log("User Detials:",this.state.users)
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-briefcase.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={briefcase} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="experience"type="text" placeholder="Experience" autoComplete="experience" onChange={this.handleChange.bind(this, "experience")} value={this.state.users["experience"]}/> */}
@@ -297,7 +300,7 @@ console.log("User Detials:",this.state.users)
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-people.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={people} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.users["role"]}/> */}

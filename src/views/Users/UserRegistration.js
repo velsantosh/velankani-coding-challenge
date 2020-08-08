@@ -5,7 +5,10 @@ import UsersDataService from '../../service/UsersDataService'
 import Modals from '../Notifications/Modals/Modals';
 import cx from "classnames";
 import classes from "./Users.module.css";
-//import logo from '../../assets/img/brand/cil-building.png'
+import briefcase from '../../assets/img/avatars/cil-briefcase.png'
+//import building from '../../assets/img/avatars/cil-building.png'
+import people from '../../assets/img/avatars/cil-people.png'
+
 
 //const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
@@ -182,7 +185,7 @@ console.log("User Detials:",data)
                     {/* <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-building.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={building} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input ref="companyname"type="text" placeholder="Companyname" autoComplete="companyname" onChange={this.handleChange.bind(this, "companyname")} value={this.state.fields["companyname"]}/>
@@ -191,7 +194,7 @@ console.log("User Detials:",data)
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-briefcase.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={briefcase} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="experience"type="text" placeholder="Experience" autoComplete="experience" onChange={this.handleChange.bind(this, "experience")} value={this.state.fields["experience"]}/> */}
@@ -205,7 +208,7 @@ console.log("User Detials:",data)
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <img src={'../../assets/img/avatars/cil-people.png'} width="15" height="10" className="img-brand" alt="User" />
+                        <img src={people} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
                       </InputGroupAddon>
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.fields["role"]}/> */}

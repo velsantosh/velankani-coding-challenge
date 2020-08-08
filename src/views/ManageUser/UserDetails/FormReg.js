@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Button, Card, CardBody,  Col, Row, Input, InputGroup, InputGroupAddon, InputGroupText, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import UsersDataService from '../../../service/UsersDataService';
+import briefcase from '../../assets/img/avatars/cil-briefcase.png';
+import people from '../../assets/img/avatars/cil-people.png';
 export class FormReg extends Component {
     constructor(props) {
         super(props)
@@ -73,7 +75,7 @@ export class FormReg extends Component {
                                 <InputGroup className="mb-3">
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText>
-                                    <img src={'../../assets/img/avatars/cil-briefcase.png'} width="15" height="10" className="img-brand" alt="User" />
+                                    <img src={briefcase} width="15" height="10" className="img-brand" alt="User" />
                                     </InputGroupText>
                                 </InputGroupAddon>
                                 {/* <Input ref="experience"type="text" placeholder="Experience" autoComplete="experience" onChange={this.handleChange.bind(this, "experience")} value={this.state.fields["experience"]}/> */}
@@ -87,7 +89,7 @@ export class FormReg extends Component {
                                 <InputGroup className="mb-3">
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText>
-                                    <img src={'../../assets/img/avatars/cil-people.png'} width="15" height="10" className="img-brand" alt="User" />
+                                    <img src={people} width="15" height="10" className="img-brand" alt="User" />
                                     </InputGroupText>
                                 </InputGroupAddon>
                                 {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.fields["role"]}/> */}
