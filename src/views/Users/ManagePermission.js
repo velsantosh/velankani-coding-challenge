@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classes from "./Users.module.css";
 import cx from "classnames";
-import { Card, CardBody, CardHeader, Col, Row, CardFooter, Button, Form, Table, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, CardFooter, Button, Form, Table, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import AssignPermissions from './AssignPermissions';
 import UsersDataService from '../../service/UsersDataService';
 
@@ -114,7 +114,14 @@ export class ManagePermission extends Component {
         ));
     }
     render() {
-
+      const lableStyle = {
+        fontWeight: 'bold',
+        marginLeft:'0.0%',
+      };
+      const rowStyle = {
+        
+        marginLeft:'0.4%',
+      };
       let addModal = () => this.setState({ redirectToDeleteModel:false },()=> this.redirect());
       if (this.state.redirectToDeleteModel === true) {
         return (
@@ -168,15 +175,17 @@ export class ManagePermission extends Component {
                   </Table> */}
 
                   <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)}>
-                   <Row>
+                  <h2><b>Manage Permissions Based On Roles</b></h2>
+                  <Label for="qtitle" style={lableStyle}>User Role</Label>
+                   <Row style={rowStyle}>
                     <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
+                      {/* <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                         <img src={people} width="15" height="10" className="img-brand" alt="User" />
                         </InputGroupText>
-                      </InputGroupAddon>
+                      </InputGroupAddon> */}
                       {/* <Input ref="role" type="text" placeholder="Role" autoComplete="role" onChange={this.handleChange.bind(this, "role")} value={this.state.users["role"]}/> */}
-                      <select  className="form-control" id="exampleFormControlSelect" value={this.state.value} onChange={this.handleChange}>
+                      <select  className="form-control"  id="exampleFormControlSelect" value={this.state.value} onChange={this.handleChange}>
                         <option value="C" disabled>Select Role</option>
                         <option key={2} value={"2"}>{"ADMIN"}</option>
                         <option key={3} value={"3"}>{"RECRUITMENT"}</option>
@@ -187,9 +196,9 @@ export class ManagePermission extends Component {
                     </select>  
                     </InputGroup>
                     </Row>
-                    <Row>
-                    <Table responsive hover striped>
-                  <thead>
+                    <Row style={rowStyle}>
+                    <Table  responsive hover striped >
+                  <thead >
                     <tr>
                       <th scope="col" className="headingPrimary">#</th>
                       <th scope="col" className="headingPrimary">PERMISSIONS</th>
@@ -197,7 +206,7 @@ export class ManagePermission extends Component {
                       
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody >
                   {this.state.assigndQuesT.map((permission, index) =>
                     <AssignPermissions key={index} permission={permission} onSelectChange={this.handleSelectChange} onDeselect={this.removeQuestion} defaultChecked={true}/>
                       )}

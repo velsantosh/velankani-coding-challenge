@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, Col, CardHeader, Form, Row, CardFooter, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Button, Card, CardBody, Col, CardHeader, Form, Row, CardFooter, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import DatePicker from "react-datepicker";
 import { Link, NavLink as RRNavLink } from "react-router-dom";
 //import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
@@ -79,7 +79,9 @@ class QuestionType extends Component {
 
   }
   render() {
-
+    const lableStyle = {
+      fontWeight: 'bold'
+    };
            if (this.state.assignQuestTempStatus) {
             console.log("this.state.assignQuestTempStatus")
             return (
@@ -95,14 +97,17 @@ class QuestionType extends Component {
 
     }
     const marginTop = {
-      marginTop: '200px'
+      marginTop: '50px'
     };
 
     const buttonContainer = {
       backgroundColor: '#1dafe2',
       color: 'white',
     };
-
+    
+    const marginButton = {
+      marginTop: '1.5%'
+    };
 
     const userList = this.state.users;
 
@@ -132,7 +137,8 @@ class QuestionType extends Component {
     //console.log("state data ", this.state.responsedata);
     let quesTempComponent = (
 
-      <Col xl="4" >
+      <Col xl="4" style={marginButton}>
+        <Label for="qtitle" style={lableStyle}>Question Tempalate</Label>
         <select style={marginDropDown} className="form-control" id="templateNameComponentSelect"
           value={values.templateName} onChange={handleChange('templateName')}>
           <option disabled selected defaultValue = "Select Question Tempalate11">Select Question Tempalate</option>
@@ -143,7 +149,8 @@ class QuestionType extends Component {
     );
 
     let experianceComponent = (
-      <Col xl="4" >
+      <Col xl="4" style={marginButton}>
+        <Label for="qtitle" style={lableStyle}>Experiance</Label>
         <select style={marginDropDown} className="form-control" id="experianceComponentSelect"
           value={values.experience} onChange={handleChange('experience')}>
           <option disabled selected>Select Experiance</option>
@@ -158,7 +165,8 @@ class QuestionType extends Component {
     );
 
     let difficultyComponent = (
-      <Col xl="4" >
+      <Col xl="4" style={marginButton}>
+        <Label for="qtitle" style={lableStyle}>Difficulty</Label>
         <select style={marginDropDown} className="form-control" id="difficultyLevelComponentSelect"
           value={values.difficultyLevel} onChange={handleChange('difficultyLevel')}>
           <option disabled selected defaultValue = "Select Difficulty 222" >Select Difficulty</option>
@@ -182,16 +190,17 @@ class QuestionType extends Component {
       </Col>
     )
     return (
-      <div className="animated fadeIn align-items-center">
-        <Row xl="12" className="justify-content-center" style={marginTop}>
+      <div>
+        <Row xl="12"  >
           <Col xl="12">
-            <Card className="shadow-lg mx-10">
+            {/* <Card className="shadow-lg mx-10">
               <CardHeader className=" mb-12">
                 <strong><i className="icon-info pr-1 headingPrimary"></i>Assign Questions</strong>
               </CardHeader>
-              <CardBody>
+              <CardBody> */}
 
                 <Form name="registerform" className="registerform" >
+                <h1>Schedule Challenge For Candidate</h1>
                   <br></br>
                   <Row>
                     <Col md={{ span: 6 }} >
@@ -200,25 +209,28 @@ class QuestionType extends Component {
                     </Col>
                   </Row>
                   <Row className="d-flex justify-content-aroun" >
-
+                 
                     <Col xl="4">
+                    <Label for="qtitle" style={lableStyle}>Candidate ID</Label>
                       <select style={marginDropDown} className="form-control" id="exampleFormControlSelect1" value={values.users}
                         onChange={handleChange('users')} disabled={values.dropDown}>
-                        <option value="A" disabled>Candidate List</option>
+                        <option value="A" disabled>Select Candidate</option>
                         {usersList}
                       </select>
                     </Col>
                     <br></br>
                     <Col xl="4">
+                    <Label for="qtitle" style={lableStyle}>Technology</Label>
                       <select style={marginDropDown} className="form-control" id="exampleFormControlSelect2" value={values.technology}
                         onChange={handleChange('technology')} disabled={values.dropDown}>
-                        <option value="B" disabled>Technology</option>
+                        <option value="B" disabled>Select Technology</option>
                         {technologyLists}
                       </select>
                     </Col>
 
                     <br></br>
                     <Col xl="4">
+                    <Label for="qtitle" style={lableStyle}>Date/Time</Label>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend" >
                           <InputGroupText>
@@ -244,16 +256,16 @@ class QuestionType extends Component {
                     {difficultyComponent}
                   </Row>
                 </Form>
-              </CardBody>
-              <CardFooter>
-                <Row className="justify-content-left">
+              {/* </CardBody>
+              <CardFooter> */}
+                <Row className="justify-content-left" style={marginButton}>
                   {console.log("values.templateName ===", values.templateName)}
                   {values.templateName === "Dynamic Template" ? submitButtonCmp : null}
                   {!(values.templateName === "Dynamic Template") ? nextButtonCmp : null}
 
                 </Row>
-              </CardFooter>
-            </Card>
+              {/* </CardFooter>
+            </Card> */}
           </Col>
         </Row>
 

@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import {Button, Card, CardBody, Col, CardHeader, Form, Row, CardFooter, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
+import {Button, Card, CardBody, Col, CardHeader, Form, Row, CardFooter, Input, InputGroup, InputGroupAddon, InputGroupText, Label} from 'reactstrap';
 import DatePicker from "react-datepicker";
 import { Link, NavLink as RRNavLink } from "react-router-dom";
 //import ScheduledChallengeDataService from '../../../service/ScheduledChallengeDataService';
@@ -70,6 +70,13 @@ export class RescheduleQuesType extends Component {
         color:'white',
       };
 
+      const marginButton = {
+        marginTop: '1.5%'
+      };
+
+      const lableStyle = {
+        fontWeight: 'bold'
+      };
 
       const userList = this.state.users;
       const { handleChange, values } = this.props; 
@@ -95,11 +102,11 @@ export class RescheduleQuesType extends Component {
             <div className="animated fadeIn align-items-center">
             <Row xl="12" className="justify-content-center" style={marginTop}>
               <Col xl="12">
-              <Card className="shadow-lg mx-10">
+              {/* <Card className="shadow-lg mx-10">
               <CardHeader className=" mb-12">
                 <strong><i className="icon-info pr-1 headingPrimary"></i> Re Assign Questions</strong>
                 </CardHeader>
-                <CardBody>
+                <CardBody> */}
             
                 <Form name="registerform" className="registerform" >
                 {/* <p>Select Subject challenge  - This type of test consists of one coding test. To solve the challenge click on below link.</p> */}
@@ -112,20 +119,24 @@ export class RescheduleQuesType extends Component {
                     <br></br> 
                     <Row  className="justify-content-center" >
                     <Col xl="4">
-                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')} disabled={values.techdropDown}>
-                      <option value="B" disabled>Technology</option>
-                        {technologyLists}
-                    </select> 
-                    </Col>
-                    <br></br>
-                    <Col xl="4">        
+                    <Label for="candidate" style={lableStyle}>Candidate ID</Label>        
                     <select  className="form-control" id="exampleFormControlSelect1" value={values.users} onChange={handleChange('users')} disabled={values.dropDown}>
-                    <option value="A" disabled>Candidate List</option>
+                    <option value="A" disabled>Select Candidate</option>
                     {usersList}
                     </select>
                     </Col>
                     <br></br>
+                    <Col xl="4">
+                    <Label for="technology" style={lableStyle}>Technology</Label>
+                    <select  className="form-control" id="exampleFormControlSelect1" value={values.technology} onChange={handleChange('technology')} disabled={values.techdropDown}>
+                      <option value="B" disabled>Select Technology</option>
+                        {technologyLists}
+                    </select> 
+                    </Col>
+                    <br></br>
+                    
                     <Col xl="4"> 
+                    <Label for="date" style={lableStyle}>Date/Time</Label>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend" >
                         <InputGroupText>
@@ -150,9 +161,9 @@ export class RescheduleQuesType extends Component {
                     </Row> 
                     
                   </Form>
-          </CardBody>
-          <CardFooter>
-                    <Row className="justify-content-left">
+          {/* </CardBody>
+          <CardFooter> */}
+                    <Row className="justify-content-left" style={marginButton}>
                         <Col xs="12" sm="6">
                         <Button className={cx(classes.createNxtBtn)} onClick={this.continue}>Next</Button>
                           
@@ -162,8 +173,8 @@ export class RescheduleQuesType extends Component {
                           </Link> */}
                         </Col>
                     </Row>
-                    </CardFooter>
-        </Card>
+                    {/* </CardFooter>
+        </Card> */}
         </Col>
         </Row> 
             

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, CardFooter } from 'reactstrap';
+import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, CardFooter, Label } from 'reactstrap';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import UsersDataService from '../../service/UsersDataService'
 import Modals from '../Notifications/Modals/Modals';
@@ -43,7 +43,7 @@ class UserRegistration extends Component {
       formIsValid = false;
       errors["username"] = "Field cannot be empty";
     }
-    else if(typeof fields["username"] !== "undefined" && !fields["username"].match(/^[a-zA-Z]+$/)){
+    else if(typeof fields["username"] !== "undefined" && !fields["username"].match(/^[a-zA-Z\s]+?$/)){
         formIsValid = false;
         errors["username"] = "Only letters";
     } 
@@ -130,12 +130,13 @@ console.log("User Detials:",data)
 } 
   
   render() {
+    const lableStyle = {
+      fontWeight: 'bold'
+    };
 
     const buttonContainer = {
       marginRight:'0.5%',
       marginTop: '5px',
-      backgroundColor :'#1dafe2',
-      color:'white',
     };
 
     const iconContainer = {
@@ -154,15 +155,15 @@ console.log("User Detials:",data)
 );
     }else{
     return (
-      <div className="app flex-row align-items-center">
+      <div>
         <Container xl="12">
-          <Row className="justify-content-center">
+          <Row >
             <Col md="10" lg="10" xl="12">
-              <Card className="mx-4 shadow-lg mx-10">
-                <CardBody className="p-4">
+              {/* <Card className="mx-4 shadow-lg mx-10">
+                <CardBody className="p-4"> */}
                   <Form name="registerform" className="registerform" onSubmit= {this.contactSubmit.bind(this)}>
-                    <h1>Register</h1>
-                    <p className="text-muted">User account</p>
+                    <h1>Registeration</h1>
+                    <Label for="qtitle" style={lableStyle}>User Details</Label>
                     <span style={{color: "red"}} className="error">{this.state.errors["username"]}</span>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend" >
@@ -255,21 +256,21 @@ console.log("User Detials:",data)
 
                   
                   </Row>
-                  <CardFooter>
+                  {/* <CardFooter> */}
                     <Row className="justify-content-left">
                         <Col xs="12" sm="6">
                         {/* <Button className="btn-success mb-1" onClick={this.continue}>Next</Button> */}
-                        <Button className={cx(classes.createBtn)}><span>Submit</span></Button>
+                        <Button className={cx(classes.createBtn)} style={buttonContainer}><span>Submit</span></Button>
                         <Link to="/manageUser/users">
-                          <Button className={cx(classes.createBtn)}><span>Cancel</span></Button>
+                          <Button className={cx(classes.createBtn) } style={buttonContainer}><span>Cancel</span></Button>
                           </Link>
                     </Col>
                     </Row>
-                    </CardFooter>
+                    {/* </CardFooter> */}
                   </Form>
-                </CardBody>
+                {/* </CardBody>
                 
-              </Card>
+              </Card> */}
             </Col>
           </Row>
         </Container>

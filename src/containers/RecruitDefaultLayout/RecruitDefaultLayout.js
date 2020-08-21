@@ -78,7 +78,7 @@ class RecruitDefaultLayout extends Component {
       }
       
     console.log("History Data",this.props);
-     const permissionNav=navigation.items;
+     let permissionNav=navigation.items;
      console.log("List of Navigation Item::",permissionNav);
     //console.log("###########",navigation.items);
     console.log("route Path",this.route);
@@ -98,7 +98,7 @@ class RecruitDefaultLayout extends Component {
             <Suspense>
             {/* <AppSidebarNav {...this.props} router={router}/> */}
             {/* <NavConfig navConfig={navigation} permissionList={this.state.permissionList}/> */}
-            <NavConfig items= {permissionNav} userName={userName}/>
+            <NavConfig items= {permissionNav} {...this.props} router={router} userName={userName}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />

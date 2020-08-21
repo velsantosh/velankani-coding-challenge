@@ -3,30 +3,57 @@ export default {
   items: [
     
     {
-      name :'Manage User',
+      name :'User',
       actual_name: 'MANAGE_USER',
-      url: '/manageUser/users',
       icon: 'icon-user',
-      
+      children:[
+        {
+          name: 'Manage User',
+          url: '/manageUser/users',
+         
+        },
+        {
+          name: 'Manage Permission',
+          url: '/manageUser/managePermission',
+         
+        }
+      ]
      },
-	 {
-      name :'Manage Permission',
-      actual_name: 'MANAGE_PERMISSION',
-      url: '/manageUser/managePermission',
-      icon: 'icon-pencil',
-      
-     },
+	 
     {
-      name :'Manage Question',
+      name :'Question',
       actual_name: 'MANAGE_QUESTION',
-       url: '/manageQuestion/questionList',
       icon: 'icon-pencil',
+      children:[
+        {
+          name: 'Manage Question',
+          url: '/manageQuestion/questionList'
+         
+        },
+        {
+          name: 'Manage Template',
+          url: '/manageQuestionTemplate',
+         
+        }
+      ]
     },
     {
-      name :'Schedule Test',
+      name :'Schedule Challenge',
       actual_name: 'ASSIGN_QUESTION',
-      url: '/assignQuestion/AssignedQuestion',
-      icon: 'icon-calendar'
+      icon: 'icon-calendar',
+      children:[
+        {
+          name: 'Schedule Test',
+          url: '/assignQuestion/AssignedQuestion',
+         
+        },
+        {
+          name: 'Schedule Request',
+          actual_name: 'SCHEDULE_TEST',
+          url: '/scheduleTest',
+         
+        }
+      ]
     },
     {
       name :'Take Test',
@@ -51,17 +78,12 @@ export default {
       url: '/manageQuestion/addQuestion',
       icon: 'icon-pencil',
     },
-    {
-      name:'Editor',
-      actual_name: 'Editor',
-      url: '/base/tables',
-      icon: 'icon-pencil',
-    },
-    {
-      name :'Schedule Request',
-      actual_name: 'SCHEDULE_TEST',
-      url: '/scheduleTest',
-      icon: 'icon-calendar',
-    },
+    
+    // {
+    //   name :'Schedule Request',
+    //   actual_name: 'SCHEDULE_TEST',
+    //   url: '/scheduleTest',
+    //   icon: 'icon-calendar',
+    // },
   ]
 };
