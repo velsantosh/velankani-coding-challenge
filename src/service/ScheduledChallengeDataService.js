@@ -33,8 +33,9 @@ class ScheduledChallengeDataService {
     submitScheduledSubQuestionResultsByUserId(subQuesResultSet) {
 
         console.log("submitScheduledSubQuestionResultsByUserId submitted : ", subQuesResultSet);
-        return axios.post(`http://vcti.com:8765/srvservice/addSubjRes`, subQuesResultSet, {
-            headers: {
+        return axios.post(`http://localhost:8083/srvservice/addSubjRes`, subQuesResultSet, {
+           // return axios.post(`http://vcti.com:8765/srvservice/addSubjRes`, subQuesResultSet, {
+                headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
             crossdomain: true
@@ -88,6 +89,30 @@ class ScheduledChallengeDataService {
         );
     }
 
+
+    updateScheduleVideoStreamFlag(assigneduid, videoStreamFlag) {
+        //console.log('executed service')
+        return axios.put(`http://localhost:8083/update/scheduleddata/${assigneduid}/${videoStreamFlag}`,
+       // return axios.put(`http://vcti.com:8765/update/scheduleddata/${assigneduid}/${videoStreamFlag}`,
+        {
+            headers: {
+                'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+            },
+            crossdomain: true
+        });
+    }
+    
+    getAllVideoStreamingCandidateData(assigneruid) {
+        //console.log('executed service')
+        return axios.get(`http://10.0.250.140:8083/schedule/videostream/${assigneruid}`,
+       // return axios.put(`http://vcti.com:8765/schedule/videostream/${assigneruid}`,
+        {
+            headers: {
+                'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+            },
+            crossdomain: true
+        });
+    }
 }
 
 export default new ScheduledChallengeDataService()

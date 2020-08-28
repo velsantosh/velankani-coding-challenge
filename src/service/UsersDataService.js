@@ -8,13 +8,14 @@ class UsersDataService {
     
     
     validateLogin(userName, password){
-         return axios.get(`${apiBaseUrl}/validateLogin/${userName}/${password}`)
-        //return axios.get(`http://localhost:8081/validateLogin/${userName}/${password}`)
+        // return axios.get(`${apiBaseUrl}/validateLogin/${userName}/${password}`)
+        console.log("userName-----------");
+        return axios.get(`https://10.0.250.140:8081/validateLogin/${userName}/${password}`)
     }
 
     getPermission(userName){
-         return axios.get(`${apiBaseUrl}/permByUserId/${userName}`)
-        //return axios.get(`http://localhost:8081/permByUserId/${userName}`)
+        // return axios.get(`${apiBaseUrl}/permByUserId/${userName}`)
+        return axios.get(`https://10.0.250.140:8081/permByUserId/${userName}`)
     }
 
     getAllUser(){
@@ -47,8 +48,8 @@ class UsersDataService {
     }
 
     retrieveUserByUserId(id) {
-        return axios.get(`${apiBaseUrl}/user/userid/${id}`);
-        //return axios.get(`http://localhost:8081/user/userid/${id}`);
+       // return axios.get(`${apiBaseUrl}/user/userid/${id}`);
+        return axios.get(`http://localhost:8081/user/userid/${id}`);
     }
 
     updateUser(id, user) {

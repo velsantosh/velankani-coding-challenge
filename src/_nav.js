@@ -58,8 +58,19 @@ export default {
     {
       name :'Take Test',
       actual_name: 'TAKE_TEST',
-      url: '/takechallenge',
       icon: 'icon-puzzle',
+      children:[
+        {
+          name: 'Take Test',
+          url: '/takechallenge'
+         
+        },
+        {
+          name: 'Video Chat',
+          url: '/videochat',
+         
+        }
+      ]
     },
     {
       name: 'Test',

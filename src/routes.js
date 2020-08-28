@@ -41,6 +41,10 @@ const RecruitDefault = React.lazy(() => import('./containers/RecruitDefaultLayou
 const UserEdit = React.lazy(() => import('./views/Users/UserEdit'));
 
 const TakeTest = React.lazy(() => import('./views/Component/TakeChallenge/TakeTest'));
+const VideoStream = React.lazy(() => import('./views/Component/TakeChallenge/VideoStream'));
+const Video = React.lazy(() => import('./components/Video'));
+const VideoChat = React.lazy(() => import('./views/Component/TakeChallenge/VideoChat'));
+
 const CandidatesReport=React.lazy(()=>import('./views/Component/Report/CandidatesReport'))
 const ScheduleRequestReport=React.lazy(()=>import('./views/Component/Report/ScheduleRequestReport'))
 const TakeChallenge = React.lazy(() => import('./views/Component/TakeChallenge/TakeChallenge'));
@@ -144,12 +148,20 @@ const routes = [
   { path: '/takechallenge', name: 'TakeChallenge', component: TakeChallenge },
   { path: '/taketest', name: 'TakeTest', component: TakeTest },
   {path: '/takeobjectivetest', name: 'ObjectiveQuestionWizard', component: ObjectiveQuestionWizard},
-  {path: '/testAccordion', name: 'ObjectiveQuestionWizard', component: TestAccordion},
-  {path: '/solveQuestion', name: 'ObjectiveQuestionWizard', component: SolveQuestion},
+  {path: '/testAccordion', name: 'TestAccordion', component: TestAccordion},
+  {path: '/solveQuestion', name: 'SolveQuestion', component: SolveQuestion},
   {path: '/subQuestionsList', name: 'SubQuestionsList', component: SubQuestionsList},
-  {path: '/subSchedQuestionsList', name: 'SubQuestionsList', component: SubSchedQuestionsList},
+  {path: '/subSchedQuestionsList', name: 'SubSchedQuestionsList', component: SubSchedQuestionsList},
 
-  {path: '/selectQuestions', name: 'SelectQuestions', component: SelectQuestions}
+  { path: '/selectQuestions', name: 'SelectQuestions', component: SelectQuestions},
+
+  { path: '/videostream', name: 'VideoStream', component: VideoStream },
+  { path: '/videochat', name: 'VideoChat', component: VideoChat },
+
+
+  { path: '/testVideoStream/:roomId', name: 'VideoStream', component: Video },
+
+
 
 ];
 

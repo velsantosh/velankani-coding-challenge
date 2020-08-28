@@ -1,6 +1,0 @@
-	tar -cvf uichanges.tar src/views/AssignQuestions/QuestionTypeSelection/AssignedQuestion.js
-	tar -uvf uichanges.tar src/views/AssignQuestions/QuestionTypeSelection/Counter.js
-	tar -uvf uichanges.tar src/views/AssignQuestions/QuestionTypeSelection/PopulateAll.js
-	tar -uvf uichanges.tar src/views/AssignQuestions/QuestionTypeSelection/QuestionModal.js
-	tar -uvf uichanges.tar src/views/Component/Report/CandidateReportRow.js
-	tar -uvf uichanges.tar src/views/Component/TakeChallenge/Test/SubSchedQuestionsList.js

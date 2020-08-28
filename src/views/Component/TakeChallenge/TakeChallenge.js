@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import * as actionTypes from "../../../store/Actions";
 import classes from "./TakeChallenge.module.css";
 import Modals from '../../Notifications/Modals/Modals';
+import Video from '../../../components/Video';
 
 class TakeChallenge extends Component {
   constructor(props) {
@@ -19,13 +20,17 @@ class TakeChallenge extends Component {
       schedSubQuestions: [],
       schedObjQuestions: [],
       screenTilte: "Complete your scheduled Question",
-      value: false
+      value: false,
+      responseApi: '',
+      vedioStram : false
     };
     console.log("takechallenge -> props:", this.props);
   }
 
   async componentDidMount() {
     console.log("takechallenge -> componentDidMount");
+    this.callVedioChat();
+
     if (this.props.location.state) {
       this.setState({
         noSubScheduledQues: this.props.location.state.noSubScheduledQues
@@ -33,6 +38,15 @@ class TakeChallenge extends Component {
     }
     this.checkScheduledData();
   }
+
+
+  callVedioChat() {
+   
+    console.log(" loggedin userName   ====>", this.props.userName);
+
+    this.setState({ vedioStram: true });
+    }
+
   checkScheduledData() {
     const subQuestions = [];
     const objQuestions = [];
@@ -58,6 +72,7 @@ class TakeChallenge extends Component {
   }
 
   updateChallengeStatus() {
+    ScheduledChallengeDataService.updateScheduleVideoStreamFlag(this.props.userName, "false");
     ScheduledChallengeDataService.updateChallengeStatus(this.props.userName.length > 0 && this.props.userName)
       .then(
         response => {
@@ -68,8 +83,12 @@ class TakeChallenge extends Component {
 
   render() {
 
+
+
     const redirectToLogin = this.state.redirectToLogin;
     if (redirectToLogin === true) {
+
+      
       return (
         <Modals message={`Thanks, Our Recruitment team will update you.`} linkValue={"/login"}></Modals>
       );
@@ -164,6 +183,7 @@ class TakeChallenge extends Component {
                */}
                 {this.state.schedSubQuestions.length > 0 ? scheduledSubjQuest : null}
                 {this.state.schedObjQuestions.length > 0 ? scheduledObjQuest : null}
+                
               </CardGroup>
             </Col>
           </Row>

@@ -40,6 +40,10 @@ class RecruitDefaultHeader extends Component {
           <NavItem className="px-3">
             <NavLink to="/settings" className="nav-link">Settings</NavLink>
           </NavItem>
+          <NavItem className="px-3">
+            <NavLink to="/videostream" className="nav-link">Test Vedio Stream</NavLink>
+          </NavItem>
+
         </Nav>
         <Nav className="ml-auto" navbar>
           {/* <NavItem className="d-md-down-none">

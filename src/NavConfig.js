@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import navigation from './_nav';
-import UsersDataService from '../../velankani-coding-challenge-master_Final/src/service/UsersDataService'
+import UsersDataService from "../../velankani-coding-challenge/src/service/UsersDataService"
 import NavItems from './NavItems';
 // import AdminDefaultLayout from './containers/AdminDefaultLayout/AdminDefaultLayout';
 import { Redirect } from 'react-router-dom';
@@ -23,6 +23,8 @@ class NavConfig extends Component {
   componentDidMount(){
     
     if (window.performance) {
+            console.log("getPermission for user: ",this.props.userName)
+
       if (performance.navigation.type === 1) {
         this.setState({
           redirectToLogin :true
@@ -65,7 +67,7 @@ getPermission(){
                return this.state.permissionList.includes(item.actual_name);
           });
         }else{
-          return (<Redirect to="/" />);
+          return null;
         }
   console.log("Component based on User Permission",itemnav);
 

@@ -2,11 +2,12 @@
   "name": "@coreui/coreui-free-react-admin-template",
   "version": "2.6.0",
   "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
-  "author": "Łukasz Holeczek",
+  "author": "Velankani",
   "homepage": "http://vcti.com",
   "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
   "license": "MIT",
   "private": true,
+  "proxy": "http://localhost:8000",
   "repository": {
     "type": "git",
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
@@ -26,6 +27,7 @@
     "core-js": "^3.6.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "express": "^4.16.4",
     "file-saver": "^2.0.2",
     "flag-icon-css": "^3.4.6",
     "font-awesome": "^4.7.0",
@@ -59,19 +61,25 @@
     "react-redux": "^7.2.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
+    "react-scripts": "2.1.8",
     "react-test-renderer": "^16.13.1",
     "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
     "save": "^2.4.0",
-    "simple-line-icons": "^2.4.1"
+    "shortid": "^2.2.14",
+    "simple-line-icons": "^2.4.1",
+    "simple-peer": "^9.7.2",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set HTTPS=true&&react-scripts start",
+    "start:local": "node server/server.js & export NODE_ENV=local && react-scripts start",
+    "build": "export NODE_ENV=production &&  react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
