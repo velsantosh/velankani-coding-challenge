@@ -1,14 +1,35 @@
 
-.app-header .nav-item .nav-link {
-    color: grey;
-    font-weight:bold;
-    border-top: 4px solid #e7e7e7 !important;
+.app-header .nav-item .nav-link{
+  color: #20a8d8;
+  font-weight:bold;
+  margin-left:50px;
+  /* border-top: 4px solid black !important; */
 }
+/* .app-header .nav-item .nav-link {
+  color: grey;
+  font-weight:bold;
+  border-top: 4px solid #e7e7e7 !important;
+} */
+
 .app-header .nav-item .nav-link :focus {
-    color: black;
+  color: white !important;
 }
+
+/* .app-header .nav-item .nav-link :focus {
+  color: black;
+} */
+
 .app-header .nav-item .nav-link.active {
+  /* border-top: 4px solid white !important; */
+  color: white !important;
+}
+
+/* .app-header .nav-item .nav-link.active {
    border-top: 4px solid black !important;
+} */
+
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus{
+  color:white !important
 }
 
 .headingPrimary {
@@ -81,3 +102,28 @@ table thead .caret {
   text-transform: uppercase;
   font-weight: bold;
 }
+.sidebar {
+  background: #509a94 !important;
+}
+
+.sidebar .nav-link:hover {
+   color: #fff !important;;
+   background: #8ee0d9 !important;;
+}
+
+.sidebar .nav-link.active {
+   color: white !important;;
+   background: #2c635e !important;;
+}
+
+.sidebar .nav-link.active .nav-icon {
+   color: white !important;
+}
+.sidebar .nav-link .nav-icon{
+   color: white !important;
+}
+
+/* .table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+ background-color:#8ee0d9; 
+} */

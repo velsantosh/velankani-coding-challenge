@@ -3,7 +3,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-
+import classes from "./RecruitDefaultLayout.module.css";
+import cx from "classnames";
 
 import {
   AppAside,
@@ -55,7 +56,8 @@ class RecruitDefaultLayout extends Component {
       backgroundColor:'#e7e7e7'
     };
     const mainContainerStyle ={
-      backgroundColor: 'white '
+      backgroundColor:'white'
+      // backgroundColor:'#e7e7e7'
     };
     const marginBottom ={
       marginBottom :'20px'
@@ -86,7 +88,8 @@ class RecruitDefaultLayout extends Component {
      return (
        
       <div className="app">
-        <AppHeader style={hfColor} fixed>
+        {/* <AppHeader style={hfColor} fixed> */}
+        <AppHeader className={cx(classes.hfStyle)} fixed>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader onLogout={e=>this.signOut(e)}/>
           </Suspense>
@@ -132,7 +135,8 @@ class RecruitDefaultLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter style={hfColor}>
+        {/* <AppFooter style={hfColor}> */}
+        <AppFooter className={cx(classes.hfStyle)}>
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classes from "./RecruitDefaultLayout.module.css";
+import cx from "classnames";
 
 const propTypes = {
   children: PropTypes.node,
@@ -15,8 +17,9 @@ class RecruitDefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span><a href="https://velankani.com">VSPL</a> &copy; 2019 .</span>
-        <span className="ml-auto">Powered by <a href="https://velankani.com">Velankani Coding Tool</a></span>
+        {/* <span><a href="https://velankani.com">VSPL</a> &copy; 2019 .</span> */}
+        {/* <span className="ml-auto">Powered by <a href="https://velankani.com">Velankani</a></span> */}
+        <span className={cx(classes.footerContent)}>Powered by <a href="https://vcti.io/">VCTI</a></span>
       </React.Fragment>
     );
   }

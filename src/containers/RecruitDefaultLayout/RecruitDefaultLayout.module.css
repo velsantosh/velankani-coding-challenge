@@ -1,0 +1,12 @@
+.hfStyle{
+    /* background-color: #d2f3ff; */
+    background-image: linear-gradient(to right, #d2f3ff,#20a8d8);
+}
+
+.footerContent {
+    color:black !important;
+    margin-Left : auto !important;
+}
+.footerContent a{
+    color:white;
+}

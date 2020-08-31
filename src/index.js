@@ -8,6 +8,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 // import {BrowserRouter as Router} from 'react-router-dom'; 
+import '../node_modules/font-awesome/css/font-awesome.min.css'; 
+import 'font-awesome/css/font-awesome.min.css';
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";

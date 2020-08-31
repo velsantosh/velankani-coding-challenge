@@ -6,6 +6,10 @@ import NavItems from './NavItems';
 import { Redirect } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import {AppSidebarNav2 as AppSidebarNav} from '@coreui/react';
+import { connect } from "react-redux";
+import * as actionTypes from "./store/Actions";
+import navigation from './_nav';
+
 class NavConfig extends Component {
   constructor(props) {
     super(props)
@@ -70,6 +74,7 @@ getPermission(){
           return null;
         }
   console.log("Component based on User Permission",itemnav);
+  this.props.setSidebarData(itemnav);
 
 console.log("State User Permission",this.state.navMenu);
   return(
@@ -83,7 +88,23 @@ console.log("State User Permission",this.state.navMenu);
 
 }
 
-export default NavConfig
+const mapDispatchToProps = dispatch => {
+  return {
+  setSidebarData : sidebarData =>
+  dispatch({type : actionTypes.SETSIDEBARDATA, value: sidebarData})
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+      sidebarData : state.sidebarData
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)( NavConfig)
 
 
 

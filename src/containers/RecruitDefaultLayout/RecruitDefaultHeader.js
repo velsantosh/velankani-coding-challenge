@@ -4,8 +4,8 @@ import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, 
 import PropTypes from 'prop-types';
 
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/download.png'
-import sygnet from '../../assets/img/brand/download.png'
+import logo from '../../assets/img/brand/vcti.png'
+import sygnet from '../../assets/img/brand/vcti.png'
 import classes from "./RecruitDefaultHeader.module.css";
 import cx from "classnames";
 
@@ -23,15 +23,15 @@ class RecruitDefaultHeader extends Component {
     
     return (
       <React.Fragment >
-        <AppSidebarToggler className="d-lg-none" display="md" mobile />
-        <AppNavbarBrand
-          full={{ src: logo, width: 85, height: 50, alt: 'Velankani' }}
+        {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
+        <AppNavbarBrand className={cx(classes.logoStyle)} 
+          full={{ src: logo, width: 180, height: 100, alt: 'Velankani' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'Velankani' }} 
         />
-        <AppSidebarToggler className="d-md-down-none" display="lg" />
+        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
 
         <Nav className="d-md-down-none" navbar >
-          <NavItem className="px-3">
+          {/* <NavItem className="px-3">
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>
           <NavItem className="px-3">
@@ -39,45 +39,20 @@ class RecruitDefaultHeader extends Component {
           </NavItem>
           <NavItem className="px-3">
             <NavLink to="/settings" className="nav-link">Settings</NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem className="px-3">
-            <NavLink to="/videostream" className="nav-link">Test Vedio Stream</NavLink>
+            <NavLink to="/videostream" className="nav-link">Test Video Stream</NavLink>
           </NavItem>
 
         </Nav>
         <Nav className="ml-auto" navbar>
-          {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
-          </NavItem> */}
-          {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
-          </NavItem> */}
-          <UncontrolledDropdown nav direction="down">
-            <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/vcti.jpg'} className="img-avatar" alt="User" />
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-              {/* <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
-              <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
-              <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem> */}
-              <DropdownItem divider />
-              <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-              <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+        <h3>Velankani Coding Challenge Tool</h3>
         </Nav>
-        {/* <AppAsideToggler className="d-md-down-none" display="lg"/> */}
-        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
+        <Nav className="ml-auto" navbar>
+        <button className={cx(classes.logoutBtn)} onClick={e => this.props.onLogout(e)}>
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </button>
+        </Nav>
       </React.Fragment>
     );
   }

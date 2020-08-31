@@ -132,7 +132,7 @@ class Users extends Component {
       text: 'Role',
       sort: true,
       headerStyle: { color: '#47bff7' },
-      formatter: this.roleFormatter,
+      //formatter: this.roleFormatter,
     }
     ]
 
