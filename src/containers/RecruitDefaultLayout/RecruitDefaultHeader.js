@@ -4,8 +4,8 @@ import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, 
 import PropTypes from 'prop-types';
 
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/vcti.png'
-import sygnet from '../../assets/img/brand/vcti.png'
+import logo from '../../assets/img/brand/vcti.PNG'
+import sygnet from '../../assets/img/brand/vcti.PNG'
 import classes from "./RecruitDefaultHeader.module.css";
 import cx from "classnames";
 
