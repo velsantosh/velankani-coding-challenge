@@ -25,7 +25,7 @@ class RecruitDefaultHeader extends Component {
       <React.Fragment >
         {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
         <AppNavbarBrand className={cx(classes.logoStyle)} 
-          full={{ src: logo, width: 180, height: 100, alt: 'Velankani' }}
+          full={{ src: logo, width: 120, height: 100, alt: 'Velankani' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'Velankani' }} 
         />
         {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}

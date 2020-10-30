@@ -38,7 +38,7 @@ export default {
       ]
     },
     {
-      name :'Schedule Challenge',
+      name :'Schedule',
       actual_name: 'ASSIGN_QUESTION',
       icon: 'icon-calendar',
       children:[
