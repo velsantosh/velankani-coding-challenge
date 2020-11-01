@@ -51,8 +51,9 @@ export class VideoStream extends Component {
           onClick: (e, column, columnIndex, row, rowIndex) => {
             console.log("row.assigneduid ", row);    
            // this.props.history.push(`/testVideoStream/${row.assigneduid}`); 
-            const url = `https://10.0.250.140:3000/#/testVideoStream/${row.assigneduid}`;
-            window.open(url, '_blank');
+           const url = `http://localhost:3000/#/testVideoStream/${row.assigneduid}`;
+          // const url = `https://10.0.250.140:3000/#/testVideoStream/${row.assigneduid}`;
+           window.open(url, '_blank');
 
           }      
         }

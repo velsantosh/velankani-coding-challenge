@@ -22,8 +22,8 @@ export class VideoChat extends Component {
         console.log("this.props.history",this.props.history);
         
 
-     //const url = `http://localhost:3000/#/testVideoStream/${this.props.userName}`;
-     const url = `https://10.0.250.140:3000/#/testVideoStream/${this.props.userName}`;
+     const url = `http://localhost:3000/#/testVideoStream/${this.props.userName}`;
+     //const url = `https://10.0.250.140:3000/#/testVideoStream/${this.props.userName}`;
 
       // window.open(url, '_blank','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no ,width=720,height=800');
       window.open(url, '_blank');

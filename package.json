@@ -77,7 +77,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "start:local": "node server/server.js & export NODE_ENV=local && react-scripts start",
     "build": "export NODE_ENV=production &&  react-scripts build",
     "test": "react-scripts test",
