@@ -192,7 +192,6 @@ export class ManagePermission extends Component {
                         <option key={4} value={"4"}>{"CANDIDATE"}</option>
                         <option key={5} value={"5"}>{"INTERVIEWER"}</option>
                         <option key={6} value={"6"}>{"GUEST"}</option>
-                        <option key={7} value={"7"}>{"TEST"}</option>
                     </select>  
                     </InputGroup>
                     </Row>

@@ -22,7 +22,7 @@ class TakeChallenge extends Component {
       screenTilte: "Complete your scheduled Question",
       value: false,
       responseApi: '',
-      vedioStram : false
+      vedioStram: false
     };
     console.log("takechallenge -> props:", this.props);
   }
@@ -41,11 +41,11 @@ class TakeChallenge extends Component {
 
 
   callVedioChat() {
-   
+
     console.log(" loggedin userName   ====>", this.props.userName);
 
     this.setState({ vedioStram: true });
-    }
+  }
 
   checkScheduledData() {
     const subQuestions = [];
@@ -82,13 +82,9 @@ class TakeChallenge extends Component {
   }
 
   render() {
-
-
-
     const redirectToLogin = this.state.redirectToLogin;
     if (redirectToLogin === true) {
 
-      
       return (
         <Modals message={`Thanks, Our Recruitment team will update you.`} linkValue={"/login"}></Modals>
       );
@@ -183,7 +179,7 @@ class TakeChallenge extends Component {
                */}
                 {this.state.schedSubQuestions.length > 0 ? scheduledSubjQuest : null}
                 {this.state.schedObjQuestions.length > 0 ? scheduledObjQuest : null}
-                
+
               </CardGroup>
             </Col>
           </Row>
@@ -193,7 +189,6 @@ class TakeChallenge extends Component {
         </Container>
       </>
     );
-
   }
 }
 

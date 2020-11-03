@@ -144,6 +144,7 @@ class SolveQuestion extends Component {
             className: "ExampleClass",
             timeTook: this.msToTime(secondsRemaining),
             clicksonRunTest : this.state.runTestClickCounter,
+            compilationStatus :"",
             key: key
         };
 
@@ -152,7 +153,8 @@ class SolveQuestion extends Component {
                 response => {
                     console.log("submitScheduledSubQuestionResultsByUserId testCaseResults: ", response)
                     if (response.data) {
-                        this.setState({ testCaseResults: "Test result submitted successfully : " + this.state.runTestClickCounter });
+                        //this.setState({ testCaseResults: "Test result submitted successfully : " + this.state.runTestClickCounter });
+                        this.setState({ testCaseResults: "Test result submitted successfully." });
                     }
                     else {
                         this.setState({ testCaseResults: "Test program compailation failed, and submitted successfully" });
@@ -298,8 +300,8 @@ class SolveQuestion extends Component {
                 <p style={{
                     backgroundColor: "lightblue", marginLeft: '2%',
                     fontSize: '18px', bottomRight: "40"
-                }}>result submitted successfully..</p>
-
+                }}></p>
+                {/* result submitted successfully.. */}
                 <Link to={scheduledQuestionList}>
                     <Button style={buttonContainer} block outline color="primary" value="SUBJECTIVE">Back to QuestionList</Button>
                 </Link>

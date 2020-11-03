@@ -1,5 +1,7 @@
 var app = require('express')();
-var server = require('https').Server(app);
+var cors = require('cors');
+app.use(cors({credentials: true, origin: '*:*'}));
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 server.listen(8000,() => {
