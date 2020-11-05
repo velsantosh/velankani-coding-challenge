@@ -9,6 +9,8 @@ import UsersDataService from '../service/UsersDataService'
 
 class Video extends React.Component {
   constructor() {
+
+
     super();
     this.state = {
       localStream: {},
@@ -24,14 +26,29 @@ class Video extends React.Component {
       isCandidate: true
     };
   }
+
+
   videoCall = new VideoCall();
 
   componentDidMount() {
     const socket = io(process.env.REACT_APP_SIGNALING_SERVER);
     const component = this;
     this.setState({ socket });
+   
+    console.log("User Data this.props ::", this.props)
+    console.log("User Data this.props.location ::", this.props.location)
+    console.log("User Data this.props.match ::", this.props.match.params.roomId);
+    let userName = null;
+    if (this.props.userName != null)
+    {
+       userName = this.props.match.params.roomId;
 
-    UsersDataService.retrieveUserByUserId(this.props.userName)
+    }    else {
+      userName = this.props.userName;
+    }
+
+    console.log("after setting name",userName);
+    UsersDataService.retrieveUserByUserId(userName)
       .then(
         response => {
           console.log("User Data ::", response.data)
@@ -43,9 +60,12 @@ class Video extends React.Component {
       )
 
 
-    const { roomId } = this.props.userName;
+    const { roomId } = userName;
+    console.log("roomId --->", roomId)
+    console.log("roomId userName--->", userName)
+
     this.getUserMedia().then(() => {
-      socket.emit('join', { roomId: roomId });
+      socket.emit('join', { roomId: userName });
     });
 
     socket.on('init', () => {
@@ -54,7 +74,7 @@ class Video extends React.Component {
     });
     socket.on('ready', () => {
       console.log("from ready method")
-      component.enter(roomId);
+      component.enter(userName);
     });
     socket.on('desc', data => {
       console.log("from desc method")

@@ -3,11 +3,11 @@
   "version": "2.6.0",
   "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
   "author": "Velankani",
-  "homepage": "http://vcti.com",
+  "homepage": "http://vcct.blr.velankani.com",
   "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
   "license": "MIT",
   "private": true,
-  "proxy": "http://localhost:8000",
+  "proxy": "http://vcct.blr.velankani.com:8000",
   "repository": {
     "type": "git",
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
