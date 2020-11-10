@@ -31,6 +31,7 @@ class Video extends React.Component {
   videoCall = new VideoCall();
 
   componentDidMount() {
+    debugger;
     const socket = io(process.env.REACT_APP_SIGNALING_SERVER);
     const component = this;
     this.setState({ socket });
@@ -63,8 +64,11 @@ class Video extends React.Component {
     const { roomId } = userName;
     console.log("roomId --->", roomId)
     console.log("roomId userName--->", userName)
+    console.log("roomId userName--->", this.getUserMedia())
 
     this.getUserMedia().then(() => {
+      console.log("roomId userName---> getUserMedia", userName)
+
       socket.emit('join', { roomId: userName });
     });
 
@@ -98,12 +102,15 @@ class Video extends React.Component {
 
   getUserMedia(cb) {
     return new Promise((resolve, reject) => {
+      debugger;
+     var test = navigator.mediaDevices;
+     console.log("getUSerMedia ----- test",test);
       navigator.getUserMedia = navigator.getUserMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.msGetUserMedia ||
         navigator.mozGetUserMedia;
-        
+        debugger;
       const op = {
         video: {
           width: { min: 160, ideal: 640, max: 1280 },
@@ -111,8 +118,9 @@ class Video extends React.Component {
         },
         audio: true
       };
-      navigator.mediaDevices.getUserMedia(
-        op,
+      navigator.getUserMedia(
+      //  navigator.mediaDevices.getUserMedia(
+          op,
         stream => {
           this.setState({ streamUrl: stream, localStream: stream });
           console.log("stream----", stream);

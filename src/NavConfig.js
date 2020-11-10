@@ -20,14 +20,16 @@ class NavConfig extends Component {
       navMenu:this.props.items,
       redirectToLogin :false
     }
-     
+    console.log("getPermission for user 222: ",this.props);
+
     //this.handleAddNavitem = this.handleAddNavitem.bind(this)
   }
   
   componentDidMount(){
     
     if (window.performance) {
-            console.log("getPermission for user: ",this.props.userName)
+      console.log("getPermission for user 222: ",this.props);
+      console.log("getPermission for user 11: ",this.props.userName);
 
       if (performance.navigation.type === 1) {
         this.setState({
@@ -47,7 +49,7 @@ class NavConfig extends Component {
 getPermission(){
   
    let userName = this.props.userName;
-      console.log("getPermission for user: ",userName)
+      console.log("getPermission for user: 222 ",userName)
       UsersDataService.getPermission(userName)
             .then(
                response => {

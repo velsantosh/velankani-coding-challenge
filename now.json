@@ -11,7 +11,7 @@
   ],
   "env": {
     "SIGNALING_SERVER": "@signaling-server",
-    "REACT_APP_SIGNALING_SERVER": "http://10.0.250.140:8000",
+    "REACT_APP_SIGNALING_SERVER": "https://vcct.blr.velankani.com:8000",
     "REACT_APP_STUN_SERVERS": "stun:stun4.l.google.com:19302",
     "REACT_APP_TURN_SERVERS": "turn:numb.viagenie.ca",
     "REACT_APP_TURN_USERNAME": "afsar.tanveer@gmail.com",
