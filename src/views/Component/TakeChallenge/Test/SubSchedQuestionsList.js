@@ -165,7 +165,7 @@ class SubSchedQuestionsList extends Component {
     },
     {
       dataField: 'statement',
-      text: 'Statement',
+      text: 'Question Statement',
       sort: true,
       align: 'left',
       headerAlign: 'center',

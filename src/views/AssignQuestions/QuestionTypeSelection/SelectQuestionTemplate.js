@@ -247,7 +247,7 @@ class SelectQuestionTemplate extends Component {
         ]
         const columnsQ = [{
             dataField: 'statement',
-            text: 'Statement'
+            text: 'Question Statement'
         }]
         const options = {
             page: 1,  // page that shows as default

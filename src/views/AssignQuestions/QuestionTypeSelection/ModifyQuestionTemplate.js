@@ -230,7 +230,7 @@ class ModifyQuestionTemplate extends Component {
             ,
         {
             dataField: 'statement',
-            text: 'Statement',
+            text: 'Question Statement',
             sort: true,
             headerStyle: { color: '#47bff7' },
             formatter: this.statementFormatter,
