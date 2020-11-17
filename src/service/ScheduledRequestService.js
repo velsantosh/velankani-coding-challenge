@@ -6,7 +6,7 @@ class ScheduledRequestService {
 
     getAllScheduledRequests() {
         // return axios.get(`http://vcti.com:8765/srvservice/schedule/request`,
-        return axios.get(`https://localhost:8083/schedule/request`,
+        return axios.get(`https://vcct.blr.velankani.com:8083/schedule/request`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
