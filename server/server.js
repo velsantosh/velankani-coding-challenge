@@ -20,7 +20,7 @@ server.listen(8000, '0.0.0.0');
 
 const io = require('socket.io').listen(server);
 //const redis = require('socket.io-redis');
-//io.adapter(redis({host :'vcct.blr.velankani.com', port : 8000}))
+//io.adapter(redis({host :'localhost', port : 8000}))
 
 
 io.on('connection', function (socket) {

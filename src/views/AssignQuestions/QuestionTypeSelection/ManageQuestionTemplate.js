@@ -228,7 +228,7 @@ class ManageQuestionTemplate extends Component {
             <div className="animated fadeIn">
                 <Container>
                     <Row className={cx(classes.filterContainer)}>
-                        <div className="col-md-6 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
+                         {/* <div className="col-md-6 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
                             <h4>Type</h4>
 
                             <abbr class="no-border" style={marginRight}>
@@ -242,9 +242,9 @@ class ManageQuestionTemplate extends Component {
                                 <Button block outline className={cx(classes.filterBtn,
                                     this.state.activeType === "objective" ? classes.showActive : ""
                                 )} color="primary" onClick={this.handleType.bind(this)} value="objective">Objective</Button>
-                            </abbr>
-                        </div>
-                        <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '18%' }}>
+                            </abbr> 
+                                </div> */}
+                        <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '2%' }}>
                             <h4>Technology</h4>
 
                             <abbr class="no-border" style={marginRight}>
@@ -262,7 +262,7 @@ class ManageQuestionTemplate extends Component {
 
 
                     <Row xs={2} md={4} lg={6}>
-                        <Col md={{ span: 6, offset: 7 }}>
+                        <Col md={{ span: 6, offset: 9 }}>
                             <Link to="/createQuestionTemplate">
                                 <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Create Question Template</Button>
                             </Link>
@@ -270,7 +270,7 @@ class ManageQuestionTemplate extends Component {
                     </Row>
 
                     <Row xs="12" className="justify-content-center">
-                        <Col xl={10}>
+                        <Col xl={12}>
 
                             {this.state.questTemplate.length > 0
                                 &&

@@ -10,7 +10,7 @@ class ScheduledChallengeDataService {
 
         // return axios.get(`${apiBaseUrl}/schQuesByUid/${userId}`,
         // return axios.get(`http://vcti.com:8765/srvservice/schQuesByUid/${userId}`,
-        return axios.get(`https://vcct.blr.velankani.com:8083/schQuesByUid/?userId=${userId}`,
+        return axios.get(`https://localhost:8083/schQuesByUid/?userId=${userId}`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
@@ -24,7 +24,7 @@ class ScheduledChallengeDataService {
 
         console.log("submitScheduledQuestionResultsByUserId submitted : ", objQuesResultSet);
         //  return axios.post(`http://vcti.com:8765/srvservice/addObjResList`, objQuesResultSet ,{
-        return axios.post(`https://vcct.blr.velankani.com:8083/addObjResList`, objQuesResultSet, {
+        return axios.post(`https://localhost:8083/addObjResList`, objQuesResultSet, {
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
@@ -37,7 +37,7 @@ class ScheduledChallengeDataService {
 
         console.log("submitScheduledSubQuestionResultsByUserId submitted : ", subQuesResultSet);
         // return axios.post(`http://vcti.com:8765/srvservice/addSubjRes`, subQuesResultSet, {
-        return axios.post(`https://vcct.blr.velankani.com:8083/addSubjRes`, subQuesResultSet, {
+        return axios.post(`https://localhost:8083/addSubjRes`, subQuesResultSet, {
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
@@ -50,7 +50,7 @@ class ScheduledChallengeDataService {
 
         console.log("submitScheduledSubQuestionResultsListByUserId submitted : ", subQuesResultSet);
         // return axios.post(`http://vcti.com:8765/srvservice/addSubQResList`, subQuesResultSet,{
-        return axios.post(`https://vcct.blr.velankani.com:8083/addSubQResList`, subQuesResultSet, {
+        return axios.post(`https://localhost:8083/addSubQResList`, subQuesResultSet, {
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
@@ -61,7 +61,7 @@ class ScheduledChallengeDataService {
 
         console.log("runScheduledQuestionTestCases submitted : ", validateProgramContent);
         // return axios.post(`http://vcti.com:8765/srvservice/runSubjQuesTestCode`, validateProgramContent,{
-        return axios.post(`https://vcct.blr.velankani.com:8082/runSubjQuesTestCode`, validateProgramContent, {
+        return axios.post(`https://localhost:8082/runSubjQuesTestCode`, validateProgramContent, {
             headers: {
                 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
             },
@@ -72,7 +72,7 @@ class ScheduledChallengeDataService {
     getScheduledQuestionByCandidateId(candidateId) {
 
         // return axios.get(`http://vcti.com:8765/srvservice/schQuesByCandidate/${candidateId}`,
-        return axios.get(`https://vcct.blr.velankani.com:8083/schQuesByCandidate/?userId=${candidateId}`,
+        return axios.get(`https://localhost:8083/schQuesByCandidate/?userId=${candidateId}`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
@@ -86,7 +86,7 @@ class ScheduledChallengeDataService {
 
         // return axios.get(`${apiBaseUrl}/updateChallengeStatus/${userId}`,
         //  return axios.put(`http://vcti.com:8765/srvservice/updateChallengeStatus/${candidateId}`,
-        return axios.put(`https://vcct.blr.velankani.com:8083/updateChallengeStatus/?candidateId=${candidateId}`,
+        return axios.put(`https://localhost:8083/updateChallengeStatus/?candidateId=${candidateId}`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
@@ -100,7 +100,7 @@ class ScheduledChallengeDataService {
     updateScheduleVideoStreamFlag(assigneduid, videoStreamFlag) {
         //console.log('executed service')
         // return axios.put(`http://vcti.com:8765/srvservice/update/scheduleddata/${assigneduid}/${videoStreamFlag}`,
-        return axios.put(`https://vcct.blr.velankani.com:8083/update/scheduleddata/${assigneduid}/${videoStreamFlag}`,
+        return axios.put(`https://localhost:8083/update/scheduleddata/${assigneduid}/${videoStreamFlag}`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
@@ -112,7 +112,7 @@ class ScheduledChallengeDataService {
     getAllVideoStreamingCandidateData(assigneruid) {
         //console.log('executed service')
         // return axios.get(`http://vcti.com:8765/srvservice/schedule/videostream/${assigneruid}`,
-        return axios.get(`https://vcct.blr.velankani.com:8083/schedule/videostream/?userId=${assigneruid}`,
+        return axios.get(`https://localhost:8083/schedule/videostream/?userId=${assigneruid}`,
             {
                 headers: {
                     'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
