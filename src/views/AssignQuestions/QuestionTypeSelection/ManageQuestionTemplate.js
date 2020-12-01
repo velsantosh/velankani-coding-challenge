@@ -52,7 +52,10 @@ class ManageQuestionTemplate extends Component {
     handleTech(e) {
         this.setState({
             activeTechnology: e.target.value
-        }, () => { this.getQuestionsByTypeTech(this.state.activeType, this.state.activeTechnology); });
+        }, () => { 
+           // this.getQuestionsByTypeTech(this.state.activeType, this.state.activeTechnology);
+            this.getAllQuestionTemplates();
+         });
     }
 
     getAllQuestionTemplates() {
@@ -228,7 +231,7 @@ class ManageQuestionTemplate extends Component {
             <div className="animated fadeIn">
                 <Container>
                     <Row className={cx(classes.filterContainer)}>
-                        <div className="col-md-6 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
+                        {/* <div className="col-md-6 big-line btn-group" id="type" style={{ padding: '.5rem' }}>
                             <h4>Type</h4>
 
                             <abbr class="no-border" style={marginRight}>
@@ -243,8 +246,8 @@ class ManageQuestionTemplate extends Component {
                                     this.state.activeType === "objective" ? classes.showActive : ""
                                 )} color="primary" onClick={this.handleType.bind(this)} value="objective">Objective</Button>
                             </abbr>
-                        </div>
-                        <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '18%' }}>
+                        </div> */}
+                        <div className="col-md-6 big-line btn-group" id="technology" style={{ padding: '.5rem', left: '2%' }}>
                             <h4>Technology</h4>
 
                             <abbr class="no-border" style={marginRight}>
@@ -262,7 +265,7 @@ class ManageQuestionTemplate extends Component {
 
 
                     <Row xs={2} md={4} lg={6}>
-                        <Col md={{ span: 6, offset: 7 }}>
+                        <Col md={{ span: 6, offset: 9 }}>
                             <Link to="/createQuestionTemplate">
                                 <Button className="btn btn-primary mb-1" className={cx(classes.createBtn)}>Create Question Template</Button>
                             </Link>
